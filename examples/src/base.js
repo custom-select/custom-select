@@ -1,4 +1,4 @@
-import fullSelect from "./../../build/full-select"
+import fullSelect from "./../../build/"
 
 const mySelect = fullSelect(null, {
   scrollToSelected: false,

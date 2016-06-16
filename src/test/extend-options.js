@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../full-select';
+import fullSelect from './../';
 
 test('Custom options extend check', assert => {
   const actual = fullSelect(null, { scrollToSelected: false, newOption: 123 }).getOptions();
