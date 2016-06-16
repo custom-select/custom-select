@@ -1,7 +1,7 @@
 {
   "name": "full-select",
   "description": "A lightweight JS script for custom select creation.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "build/full-select.js",
   "repository": {
     "type": "git",
@@ -11,13 +11,11 @@
     "url": "https://github.com/gionatan-lombardi/full-select/issues"
   },
   "scripts": {
-    "clean": "rimraf build && mkdir build",
+    "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",
     "test": "cross-env NODE_PATH=src tape -r babel-register src/test/index.js",
     "prebuild": "npm run clean",
-    "build": "babel -s -d build src",
-    "examples-clean": "rimraf examples/build && mkdir examples/build",
-    "examples-build": "browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
-    "prepublish": "npm run clean && npm run test && npm run build && npm run examples-clean && npm run examples-build"
+    "build": "babel -s -d build src && browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
+    "prepublish": "npm run clean && npm run test && npm run build"
   },
   "keywords": [
     "select",
