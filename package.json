@@ -1,7 +1,7 @@
 {
   "name": "full-select",
   "description": "A lightweight JS script for custom select creation.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "build",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",
-    "test": "cross-env NODE_PATH=src tape -r babel-register src/test/index.js",
+    "test": "cross-env NODE_PATH=src browserify -t babelify src/test/index.js | tape-run",
     "prebuild": "npm run clean",
     "build": "babel -s -d build src && browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
     "prepublish": "npm run clean && npm run test && npm run build"
@@ -29,7 +29,8 @@
     "babelify": "^7.3.0",
     "cross-env": "^1.0.8",
     "rimraf": "^2.5.2",
-    "tape": "^4.5.1"
+    "tape": "^4.5.1",
+    "tape-run": "^2.1.4"
   },
   "dependencies": {
     "jvg": "^2.0.1"

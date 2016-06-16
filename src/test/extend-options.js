@@ -10,7 +10,7 @@ test('Custom options extend check', assert => {
     containerClass: 'full-select-container',
     scrollToSelected: false,
     newOption: 123
-  }
+  };
 
   assert.deepEqual(actual, expected,
     'should return true');

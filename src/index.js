@@ -22,6 +22,7 @@ const defaultOptions = {
 export default function fullSelect(element, customOptions) {
 
   const options = jvg.extend(defaultOptions, customOptions);
+  const selects = document.querySelectorAll(element);
 
   return ( function init() {
     
