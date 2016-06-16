@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Full Select</title>
+    <style type="text/css">
+      body {
+        font-family: Arial;
+        font-size: 1.4rem;
+      }
+      .full-select-container {
+        position: relative;
+      }
+      .full-select-opener {
+        border-radius: 3px;
+        background-color: #ccc;
+        padding: 10px;
+        display: inline-block;
+        cursor: pointer;
+      }
+      .full-select-field {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .full-select-panel {
+        max-height: 0;
+        transition: max-height .5s ease-out;
+        overflow: hidden;
+        background-color: #eee;
+        position: absolute;
+        top: 100%;
+      }
+      .full-select-panel.is-open {
+        max-height: 10rem;
+      }
+      .full-select-option {
+        padding: 10px;
+      }
+      .full-select-option.has-focus {
+        background-color: red;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h1>Hello, Custom Select!</h1>
+    <select id="mySelect" class="full-select-field">
+        <option value>Select...</option>
+        <option value="foo">Foo</option>
+        <option value="buzz">Buzz</option>
+    </select>
+
+    <script src="build/base.js"></script>
+  </body>
+</html>

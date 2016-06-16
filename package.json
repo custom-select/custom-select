@@ -1,0 +1,54 @@
+{
+  "name": "full-select",
+  "description": "A lightweight JS script for custom select creation.",
+  "version": "0.0.1",
+  "main": "build/full-select.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gionatan-lombardi/full-select.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gionatan-lombardi/full-select/issues"
+  },
+  "scripts": {
+    "clean": "rimraf build && mkdir build",
+    "test": "cross-env NODE_PATH=src tape -r babel-register src/test/index.js",
+    "prebuild": "npm run clean",
+    "build": "babel -s -d build src",
+    "examples-clean": "rimraf examples/build && mkdir examples/build",
+    "examples-build": "browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
+    "prepublish": "npm run clean && npm run test && npm run build && npm run examples-clean && npm run examples-build"
+  },
+  "keywords": [
+    "select",
+    "custom select",
+    "html select"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "babelify": "^7.3.0",
+    "cross-env": "^1.0.8",
+    "rimraf": "^2.5.2",
+    "tape": "^4.5.1"
+  },
+  "dependencies": {
+    "jvg": "^2.0.1"
+  },
+  "author": {
+    "name": "Gionatan Lombardi",
+    "url": "https://github.com/gionatan-lombardi"
+  },
+  "contributors": [
+    {
+      "name": "Marco Nucara",
+      "url": "https://github.com/nuky89"
+    },
+    {
+      "name": "Simone Scalbi",
+      "url": "https://github.com/pennywiz"
+    }
+  ],
+  "license": "MIT"
+}
