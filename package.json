@@ -14,7 +14,7 @@
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",
     "test": "cross-env NODE_PATH=src browserify -t babelify src/test/index.js | tape-run",
     "prebuild": "npm run clean",
-    "build": "babel -s -d build src && browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
+    "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/index.min.js -t [ babelify --presets [ es2015 ] ] -p [minifyify --no-map] && browserify examples/src/base.js -o examples/build/base.js -t [ babelify --presets [ es2015 ] ]",
     "prepublish": "npm run clean && npm run test && npm run build"
   },
   "keywords": [
@@ -30,9 +30,11 @@
     "cross-env": "^1.0.8",
     "rimraf": "^2.5.2",
     "tape": "^4.5.1",
-    "tape-run": "^2.1.4"
+    "tape-run": "^2.1.4",
+    "minifyify": "^7.3.3"
   },
   "dependencies": {
+    "browserify": "^13.0.1",
     "jvg": "^2.0.1"
   },
   "author": {
