@@ -9,7 +9,7 @@
  * MIT License
  */
 
-import jvg from 'jvg';
+import "babel-polyfill";
 
 const defaultOptions = {
   panelClass: 'full-select-panel',
@@ -21,7 +21,7 @@ const defaultOptions = {
 
 export default function fullSelect(element, customOptions) {
 
-  const options = jvg.extend(defaultOptions, customOptions);
+  const options = Object.assign(defaultOptions, customOptions);
   const selects = document.querySelectorAll(element);
 
   return ( function init() {
