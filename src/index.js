@@ -9,8 +9,6 @@
  * MIT License
  */
 
-import "babel-polyfill";
-
 const defaultOptions = {
   panelClass: 'full-select-panel',
   optionClass: 'full-select-option',
