@@ -1,8 +1,8 @@
 import fullSelect from "./../../build/"
 
-const mySelect = fullSelect(null, {
+const mySelect = fullSelect('select', {
   scrollToSelected: false,
   newOption: 123
-}).getOptions();
+});
 
 console.log(mySelect);

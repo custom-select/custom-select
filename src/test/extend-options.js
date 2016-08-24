@@ -2,8 +2,12 @@ import test from 'tape';
 import fullSelect from './../';
 
 test('Custom options extend check', assert => {
-  const actual = fullSelect(null, { scrollToSelected: false, newOption: 123 }).getOptions();
-  const expected = {
+  document.body.innerHTML = '';
+  var select = document.createElement("select");
+  document.body.appendChild(select);
+
+  var actual = fullSelect('select', { scrollToSelected: false, newOption: 123 })[0].getOptions();
+  var expected = {
     panelClass: 'full-select-panel',
     optionClass: 'full-select-option',
     openerClass: 'full-select-opener',

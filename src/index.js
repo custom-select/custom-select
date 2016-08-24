@@ -20,16 +20,45 @@ const defaultOptions = {
 export default function fullSelect(element, customOptions) {
 
   const options = Object.assign(defaultOptions, customOptions);
-  const selects = document.querySelectorAll(element);
+  var nodeList = [];
+  var selects = []
 
-  return ( function init() {
-    
+  function createSelect(el, options) {
+
     // Public Exposed Methods
     return {
       getOptions: () => {
         return options;
       }
     };
+
+  }
+
+  return ( function init() {
+
+    if (element && element instanceof HTMLElement && element.tagName.toUpperCase() === "SELECT") {
+      nodeList.push(element)
+    } else if (element && typeof element === 'string') { 
+      let elementsList = document.querySelectorAll(element);
+      for (let i = 0, l = elementsList.length; i < l; ++i) {
+        if (elementsList[i] instanceof HTMLElement && elementsList[i].tagName.toUpperCase() === "SELECT") {
+          nodeList.push(elementsList[i]);
+        }
+      }
+    } else if (element && element.length) {
+      for (let i = 0, l = element.length; i < l; ++i) {
+        if (element[i] instanceof HTMLElement && element[i].tagName.toUpperCase() === "SELECT")
+          nodeList.push(element[i]);
+      }
+    }
+
+    for (let i = 0, l = nodeList.length; i < l; ++i) {
+      selects.push(createSelect(nodeList[i], options));
+    }
+
+    // Returns all instances with methods
+    return selects;
+
   })()
 
 }
