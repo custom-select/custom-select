@@ -12,6 +12,7 @@ test('Custom options extend check', assert => {
     optionClass: 'full-select-option',
     openerClass: 'full-select-opener',
     containerClass: 'full-select-container',
+    optgroupClass: 'full-select-optgroup',
     scrollToSelected: false,
     newOption: 123
   };

@@ -10,25 +10,49 @@
  */
 
 const defaultOptions = {
+  containerClass: 'full-select-container',
+  openerClass: 'full-select-opener',
   panelClass: 'full-select-panel',
   optionClass: 'full-select-option',
-  openerClass: 'full-select-opener',
-  containerClass: 'full-select-container',
+  optgroupClass: 'full-select-optgroup',
   scrollToSelected: true
 }
 
-export default function fullSelect(element, customOptions) {
+export default function fullSelect(element, options) {
 
-  const options = Object.assign(defaultOptions, customOptions);
+  var options = Object.assign(defaultOptions, options);
   var nodeList = [];
   var selects = []
 
-  function createSelect(el, options) {
+  function createSelect(el, cstOptions) {
+
+    var container = document.createElement("div");
+    container.className = cstOptions.containerClass;
+
+    var opener = document.createElement("span");
+    opener.className = cstOptions.openerClass;
+    opener.setAttribute('tabindex', '0');
+    opener.innerHTML = '<span>' + ( el.selectedIndex !== -1 ? el.options[el.selectedIndex].text : '' ) + '</span>';
+
+    var panel = document.createElement("div");
+    panel.className = cstOptions.panelClass;
+    panel.innerHTML = el.innerHTML
+      .replace(/<optgroup/g, '<div class="' + cstOptions.optgroupClass + '"')
+      .replace(/optgroup>/g, 'div>')
+      .replace(/<option/g, '<div class="' + cstOptions.optionClass + '"')
+      .replace(/option>/g, 'div>')
+      .replace(/value="/g, 'data-value="')
+      .replace(/value='/g, 'data-value=\'');
+
+    container.innerHTML = opener.outerHTML + el.outerHTML + panel.outerHTML;
+    el.outerHTML = container.outerHTML;
+
+
 
     // Public Exposed Methods
     return {
       getOptions: () => {
-        return options;
+        return cstOptions;
       }
     };
 
