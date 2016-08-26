@@ -40,13 +40,42 @@ function builder(select, cstOptions) {
   // with some tag and attributes replacement
   var panel = document.createElement("div");
   panel.className = cstOptions.panelClass;
-  panel.innerHTML = select.innerHTML
-    .replace(/<optgroup/g, '<div class="' + cstOptions.optgroupClass + '"')
-    .replace(/optgroup>/g, 'div>')
-    .replace(/<option/g, '<div class="' + cstOptions.optionClass + '"')
-    .replace(/option>/g, 'div>')
-    .replace(/value="/g, 'data-value="')
-    .replace(/value='/g, 'data-value=\'');
+
+  let panelContent = (function parseSelect(node){
+    
+    let cstList = [];
+
+    for(let i=0, l=node.children.length; i<l; i++){
+      if(node.children[i].tagName.toUpperCase() === "OPTGROUP"){
+        let cstOptgroup = document.createElement("div");
+        cstOptgroup.classList.add(cstOptions.optgroupClass);
+        cstOptgroup.dataset.label = node.children[i].label;
+        
+        let subNodes = parseSelect(node.children[i]);
+        for(let j=0, l=subNodes.length; j<l; j++){
+          cstOptgroup.appendChild(subNodes[j]);
+        }
+
+        cstList.push(cstOptgroup);
+      }else if(node.children[i].tagName.toUpperCase() === "OPTION"){
+        var cstOption = document.createElement("div");
+        cstOption.classList.add(cstOptions.optionClass);
+        cstOption.textContent = node.children[i].text;
+        cstOption.dataset.value = node.children[i].value;
+        cstOption.fullSelectOriginalOption = node.children[i];
+        if(node.children[i].selected)
+          cstOption.classList.add('is-selected');
+        cstList.push(cstOption);
+      }
+    }
+
+    return cstList;
+
+  })(select);
+
+  for(let i=0, l=panelContent.length; i<l; i++){
+    panel.appendChild(panelContent[i]);
+  }
 
   // Injects the container in the original DOM position of the select
   container.appendChild(opener);
@@ -88,12 +117,6 @@ function builder(select, cstOptions) {
     // Opens only the clicked one
     opener.classList.add('is-active');
     panel.classList.add('is-open');
-
-    // TODO: Sets the selected option
-    var selectedOption = ( select.selectedIndex !== -1 ? select.options[select.selectedIndex] : false )
-    if (selectedOption) {
-      panel.querySelector('div[data-value="' + selectedOption.value + '"]').classList.add('is-selected');
-    }
 
     isOpen = true;
 
