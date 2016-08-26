@@ -18,20 +18,26 @@ const defaultOptions = {
   scrollToSelected: true
 }
 
-function customSelect(el, cstOptions) {
+function builder(el, cstOptions) {
 
   var isOpen = false;
+  var containerClass = "fullSelect";
 
   // Custom Select Markup
   
+  // Creates the container/wrapper
   var container = document.createElement("div");
-  container.className = cstOptions.containerClass;
+  container.className = cstOptions.containerClass + " " + containerClass;
 
+  // Creates the opener
   var opener = document.createElement("span");
   opener.className = cstOptions.openerClass;
   opener.setAttribute('tabindex', '0');
   opener.innerHTML = '<span>' + ( el.selectedIndex !== -1 ? el.options[el.selectedIndex].text : '' ) + '</span>';
 
+  // Creates the panel
+  // and injects the markup of the select inside
+  // with some tag and attributes replacement
   var panel = document.createElement("div");
   panel.className = cstOptions.panelClass;
   panel.innerHTML = el.innerHTML
@@ -42,6 +48,7 @@ function customSelect(el, cstOptions) {
     .replace(/value="/g, 'data-value="')
     .replace(/value='/g, 'data-value=\'');
 
+  // Injects the container in the original DOM position of the select
   container.appendChild(opener);
   el.parentNode.replaceChild(container, el);
   container.appendChild(el);
@@ -55,31 +62,40 @@ function customSelect(el, cstOptions) {
 
   function handleEvent(e) {
     
+    // On click on the opener opens/closes the panel
     if (e.target === opener || opener.contains(e.target)) {
       if (isOpen) {
-        closePanel();
+        close();
       } else {
-        openPanel();
+        open();
       }
     } else {
-      closePanel();
+      if (isOpen) {
+        close();
+      }
     }
 
   }
 
-  function openPanel() { 
+  function open() { 
 
-        // Opens only the clicked one
-        opener.classList.add('is-active');
-        panel.classList.add('is-open');
+    // Closes all instances of plugin
+    var openedFullSelect = document.querySelector("." + containerClass + " .is-open")
+    if (openedFullSelect) {
+      openedFullSelect.parentNode.fullSelect.close();
+    }
 
-        // TODO: Sets the selected option
+    // Opens only the clicked one
+    opener.classList.add('is-active');
+    panel.classList.add('is-open');
 
-        isOpen = true;
+    // TODO: Sets the selected option
+
+    isOpen = true;
 
   }
 
-  function closePanel() {
+  function close() {
 
     opener.classList.remove('is-active');
     panel.classList.remove('is-open');
@@ -92,24 +108,30 @@ function customSelect(el, cstOptions) {
   }
 
   // Public Exposed Methods
-  return {
-    getOptions: () => {
-      return cstOptions;
-    }
+  // and stores the plugin in the HTMLElement
+  return container.fullSelect = {
+    getOptions: () => cstOptions,
+    open: open,
+    close: close,
+    isOpen: () => isOpen
   };
+
 
 }
 
 export default function fullSelect(element, options) {
 
+  // Overrides the default options with the ones provided by the user
   var options = Object.assign(defaultOptions, options);
   var nodeList = [];
   var selects = []
 
   return ( function init() {
 
+    // The plugin is called on a single HTMLElement
     if (element && element instanceof HTMLElement && element.tagName.toUpperCase() === "SELECT") {
       nodeList.push(element)
+    // The plugin is called on a selector
     } else if (element && typeof element === 'string') { 
       let elementsList = document.querySelectorAll(element);
       for (let i = 0, l = elementsList.length; i < l; ++i) {
@@ -117,6 +139,7 @@ export default function fullSelect(element, options) {
           nodeList.push(elementsList[i]);
         }
       }
+    // The plugin is called on any HTMLElements list (NodeList, HTMLCollection, Array, etc.)
     } else if (element && element.length) {
       for (let i = 0, l = element.length; i < l; ++i) {
         if (element[i] instanceof HTMLElement && element[i].tagName.toUpperCase() === "SELECT")
@@ -124,11 +147,13 @@ export default function fullSelect(element, options) {
       }
     }
 
+    // Launches the plugin over every HTMLElement
+    // And stores every plugin instance
     for (let i = 0, l = nodeList.length; i < l; ++i) {
-      selects.push(customSelect(nodeList[i], options));
+      selects.push(builder(nodeList[i], options));
     }
 
-    // Returns all instances with methods
+    // Returns all plugin instances
     return selects;
 
   })()

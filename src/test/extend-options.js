@@ -2,6 +2,7 @@ import test from 'tape';
 import fullSelect from './../';
 
 test('Custom options extend check', assert => {
+
   document.body.innerHTML = '';
   var select = document.createElement("select");
   document.body.appendChild(select);
@@ -19,6 +20,6 @@ test('Custom options extend check', assert => {
 
   assert.deepEqual(actual, expected,
     'should return true');
-
   assert.end();
+
 });
