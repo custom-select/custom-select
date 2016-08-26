@@ -33,15 +33,21 @@
         background-color: #eee;
         position: absolute;
         top: 100%;
+        z-index: 1;
       }
       .full-select-panel.is-open {
         max-height: 10rem;
+        overflow-y: auto
       }
       .full-select-option {
         padding: 10px;
       }
       .full-select-option.has-focus {
         background-color: red;
+      }
+      .full-select-option.is-selected::before {
+        content: "✔";
+        padding-right: 10px;
       }
     </style>
 

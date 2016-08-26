@@ -18,7 +18,7 @@ const defaultOptions = {
   scrollToSelected: true
 }
 
-function builder(el, cstOptions) {
+function builder(select, cstOptions) {
 
   var isOpen = false;
   var containerClass = "fullSelect";
@@ -33,14 +33,14 @@ function builder(el, cstOptions) {
   var opener = document.createElement("span");
   opener.className = cstOptions.openerClass;
   opener.setAttribute('tabindex', '0');
-  opener.innerHTML = '<span>' + ( el.selectedIndex !== -1 ? el.options[el.selectedIndex].text : '' ) + '</span>';
+  opener.innerHTML = '<span>' + ( select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '' ) + '</span>';
 
   // Creates the panel
   // and injects the markup of the select inside
   // with some tag and attributes replacement
   var panel = document.createElement("div");
   panel.className = cstOptions.panelClass;
-  panel.innerHTML = el.innerHTML
+  panel.innerHTML = select.innerHTML
     .replace(/<optgroup/g, '<div class="' + cstOptions.optgroupClass + '"')
     .replace(/optgroup>/g, 'div>')
     .replace(/<option/g, '<div class="' + cstOptions.optionClass + '"')
@@ -50,8 +50,8 @@ function builder(el, cstOptions) {
 
   // Injects the container in the original DOM position of the select
   container.appendChild(opener);
-  el.parentNode.replaceChild(container, el);
-  container.appendChild(el);
+  select.parentNode.replaceChild(container, select);
+  container.appendChild(select);
   container.appendChild(panel);
 
   // Event Init
@@ -90,6 +90,10 @@ function builder(el, cstOptions) {
     panel.classList.add('is-open');
 
     // TODO: Sets the selected option
+    var selectedOption = ( select.selectedIndex !== -1 ? select.options[select.selectedIndex] : false )
+    if (selectedOption) {
+      panel.querySelector('div[data-value="' + selectedOption.value + '"]').classList.add('is-selected');
+    }
 
     isOpen = true;
 
