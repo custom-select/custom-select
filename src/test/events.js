@@ -88,3 +88,39 @@ test('On click outside the selects closes the opened one', assert => {
   assert.end();
 
 });
+
+test('On click on an option sets selected class', assert => {
+
+  document.getElementsByClassName(options.openerClass)[1].parentNode.fullSelect.open();
+  document.getElementsByClassName(options.optionClass)[2].click();
+
+  var actual = document.querySelectorAll('.' + options.optionClass)[2].classList.contains('is-selected');
+  var expected = true;
+  
+  assert.deepEqual(actual, expected,
+    'should return true');
+  assert.end();
+
+});
+
+test('... and focus class', assert => {
+
+  var actual = document.getElementsByClassName(options.optionClass)[2].classList.contains('has-focus');
+  var expected = true;
+  
+  assert.deepEqual(actual, expected,
+    'should return true');
+  assert.end();
+
+});
+
+test('... and closes the select', assert => {
+
+  var actual = document.getElementsByTagName('select')[1].parentNode.fullSelect.isOpen();
+  var expected = false;
+  
+  assert.deepEqual(actual, expected,
+    'should return false');
+  assert.end();
+
+});

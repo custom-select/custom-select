@@ -38,6 +38,8 @@ function builder(select, cstOptions) {
   // Creates the panel
   // and injects the markup of the select inside
   // with some tag and attributes replacement
+  var focusedElement;
+  var selectedElement;
   var panel = document.createElement("div");
   panel.className = cstOptions.panelClass;
 
@@ -45,26 +47,28 @@ function builder(select, cstOptions) {
     
     let cstList = [];
 
-    for(let i=0, l=node.children.length; i<l; i++){
-      if(node.children[i].tagName.toUpperCase() === "OPTGROUP"){
+    for (let i=0, l=node.children.length; i<l; i++) {
+      if (node.children[i].tagName.toUpperCase() === "OPTGROUP") {
         let cstOptgroup = document.createElement("div");
         cstOptgroup.classList.add(cstOptions.optgroupClass);
         cstOptgroup.dataset.label = node.children[i].label;
         
         let subNodes = parseSelect(node.children[i]);
-        for(let j=0, l=subNodes.length; j<l; j++){
+        for (let j=0, l=subNodes.length; j<l; j++) {
           cstOptgroup.appendChild(subNodes[j]);
         }
 
         cstList.push(cstOptgroup);
-      }else if(node.children[i].tagName.toUpperCase() === "OPTION"){
+      } else if (node.children[i].tagName.toUpperCase() === "OPTION") {
         var cstOption = document.createElement("div");
         cstOption.classList.add(cstOptions.optionClass);
         cstOption.textContent = node.children[i].text;
         cstOption.dataset.value = node.children[i].value;
         cstOption.fullSelectOriginalOption = node.children[i];
-        if(node.children[i].selected)
-          cstOption.classList.add('is-selected');
+        if (node.children[i].selected){
+          cstOption.classList.add('is-selected', 'has-focus');
+          selectedElement = focusedElement = cstOption;
+        }
         cstList.push(cstOption);
       }
     }
@@ -73,7 +77,7 @@ function builder(select, cstOptions) {
 
   })(select);
 
-  for(let i=0, l=panelContent.length; i<l; i++){
+  for (let i=0, l=panelContent.length; i<l; i++){
     panel.appendChild(panelContent[i]);
   }
 
@@ -85,25 +89,44 @@ function builder(select, cstOptions) {
 
   // Event Init
   
-  document.addEventListener('click', handleEvent)
+  document.addEventListener('click', clickEvent);
+  panel.addEventListener('mouseover', mouseoverEvent);
 
   // Private Fuctions
 
-  function handleEvent(e) {
+  function clickEvent(e) {
     
-    // On click on the opener opens/closes the panel
+    // Opener click
     if (e.target === opener || opener.contains(e.target)) {
       if (isOpen) {
         close();
       } else {
         open();
       }
+    // Option click
+    } else if (e.target.classList.contains(cstOptions.optionClass) && panel.contains(e.target)) {
+      focusedElement.classList.remove('has-focus');
+      selectedElement.classList.remove('is-selected');
+      e.target.classList.add('is-selected', 'has-focus');
+      selectedElement = focusedElement = e.target;
+
+      close();
     } else {
       if (isOpen) {
         close();
       }
     }
 
+  }
+
+  function mouseoverEvent(e){
+
+    if (e.target.classList.contains(cstOptions.optionClass)) {
+      focusedElement.classList.remove('has-focus');
+      e.target.classList.add('has-focus');
+      focusedElement = e.target;
+    }
+    
   }
 
   function open() { 
