@@ -18,45 +18,93 @@ const defaultOptions = {
   scrollToSelected: true
 }
 
+function customSelect(el, cstOptions) {
+
+  var isOpen = false;
+
+  // Custom Select Markup
+  
+  var container = document.createElement("div");
+  container.className = cstOptions.containerClass;
+
+  var opener = document.createElement("span");
+  opener.className = cstOptions.openerClass;
+  opener.setAttribute('tabindex', '0');
+  opener.innerHTML = '<span>' + ( el.selectedIndex !== -1 ? el.options[el.selectedIndex].text : '' ) + '</span>';
+
+  var panel = document.createElement("div");
+  panel.className = cstOptions.panelClass;
+  panel.innerHTML = el.innerHTML
+    .replace(/<optgroup/g, '<div class="' + cstOptions.optgroupClass + '"')
+    .replace(/optgroup>/g, 'div>')
+    .replace(/<option/g, '<div class="' + cstOptions.optionClass + '"')
+    .replace(/option>/g, 'div>')
+    .replace(/value="/g, 'data-value="')
+    .replace(/value='/g, 'data-value=\'');
+
+  container.appendChild(opener);
+  el.parentNode.replaceChild(container, el);
+  container.appendChild(el);
+  container.appendChild(panel);
+
+  // Event Init
+  
+  document.addEventListener('click', handleEvent)
+
+  // Private Fuctions
+
+  function handleEvent(e) {
+    
+    if (e.target === opener || opener.contains(e.target)) {
+      if (isOpen) {
+        closePanel();
+      } else {
+        openPanel();
+      }
+    } else {
+      closePanel();
+    }
+
+  }
+
+  function openPanel() { 
+
+        // Opens only the clicked one
+        opener.classList.add('is-active');
+        panel.classList.add('is-open');
+
+        // TODO: Sets the selected option
+
+        isOpen = true;
+
+  }
+
+  function closePanel() {
+
+    opener.classList.remove('is-active');
+    panel.classList.remove('is-open');
+    
+    // TODO: remove focus
+    // panel.querySelector('.has-focus').classList.remove('has-focus');
+    
+    isOpen = false;
+
+  }
+
+  // Public Exposed Methods
+  return {
+    getOptions: () => {
+      return cstOptions;
+    }
+  };
+
+}
+
 export default function fullSelect(element, options) {
 
   var options = Object.assign(defaultOptions, options);
   var nodeList = [];
   var selects = []
-
-  function createSelect(el, cstOptions) {
-
-    var container = document.createElement("div");
-    container.className = cstOptions.containerClass;
-
-    var opener = document.createElement("span");
-    opener.className = cstOptions.openerClass;
-    opener.setAttribute('tabindex', '0');
-    opener.innerHTML = '<span>' + ( el.selectedIndex !== -1 ? el.options[el.selectedIndex].text : '' ) + '</span>';
-
-    var panel = document.createElement("div");
-    panel.className = cstOptions.panelClass;
-    panel.innerHTML = el.innerHTML
-      .replace(/<optgroup/g, '<div class="' + cstOptions.optgroupClass + '"')
-      .replace(/optgroup>/g, 'div>')
-      .replace(/<option/g, '<div class="' + cstOptions.optionClass + '"')
-      .replace(/option>/g, 'div>')
-      .replace(/value="/g, 'data-value="')
-      .replace(/value='/g, 'data-value=\'');
-
-    container.innerHTML = opener.outerHTML + el.outerHTML + panel.outerHTML;
-    el.outerHTML = container.outerHTML;
-
-
-
-    // Public Exposed Methods
-    return {
-      getOptions: () => {
-        return cstOptions;
-      }
-    };
-
-  }
 
   return ( function init() {
 
@@ -77,7 +125,7 @@ export default function fullSelect(element, options) {
     }
 
     for (let i = 0, l = nodeList.length; i < l; ++i) {
-      selects.push(createSelect(nodeList[i], options));
+      selects.push(customSelect(nodeList[i], options));
     }
 
     // Returns all instances with methods

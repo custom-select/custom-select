@@ -7,3 +7,5 @@ const mySelect = fullSelect('select', {
 
 console.log(mySelect);
 mySelect[0].getOptions();
+
+// window.fullSelect = fullSelect;

@@ -1,3 +1,4 @@
-import './selector';
+import './init';
 import './extend-options';
-import './custom-panel';
+import './markup';
+import './click-events';
