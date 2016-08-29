@@ -16,7 +16,7 @@
       .full-select-opener {
         border-radius: 3px;
         background-color: #ccc;
-        padding: 10px;
+        padding: 0.5em;
         display: inline-block;
         cursor: pointer;
       }
@@ -40,15 +40,25 @@
         overflow-y: auto
       }
       .full-select-option {
-        padding: 10px;
+        padding: 0.5em;
       }
       .full-select-option.has-focus {
         background-color: red;
       }
       .full-select-option.is-selected::before {
         content: "✔";
-        padding-right: 10px;
+        padding-right: 0.5em;
       }
+      .full-select-optgroup > .full-select-option {
+        padding-left: 2em;
+      }
+      .full-select-optgroup::before {
+        content: attr(data-label);
+        display: block;
+        padding: 0.5em;
+        color: #888;
+      }
+
     </style>
 
   </head>
@@ -63,11 +73,11 @@
       <option value>Select...</option>
       <optgroup label="Cips">
         <option value="zizz">Zizz</option>
-        <optgroup label="Lips">
-          <option value="frizz">Frizz</option>
-          <option value="prizz">Prizz</option>
-          <option value="lorem" selected>Lorem ipsum Id sit laborum aliquip reprehenderit qui ea veniam amet anim pariatur magna proident enim quis laborum cupidatat proident ex commodo.</option>
-        </optgroup>
+      </optgroup>
+      <optgroup label="Lips">
+        <option value="frizz">Frizz</option>
+        <option value="prizz">Prizz</option>
+        <option value="lorem" selected>Lorem ipsum Id sit laborum aliquip reprehenderit qui ea veniam amet anim pariatur magna proident enim quis laborum cupidatat proident ex commodo.</option>
       </optgroup>
     </select>
     <script src="build/base.js"></script>
