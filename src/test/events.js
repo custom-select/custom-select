@@ -6,7 +6,7 @@ var options;
 test('On click opens the panel', assert => {
   document.body.innerHTML = '';
 
-  var select = document.createElement('select');
+  const select = document.createElement('select');
   select.innerHTML = `
     <option value="">Select...</option>
     <optgroup label="Cips">
@@ -17,7 +17,7 @@ test('On click opens the panel', assert => {
     </optgroup>`;
   document.body.appendChild(select);
 
-  var cstSelects = fullSelect('select');
+  const cstSelects = fullSelect('select');
   options = cstSelects[0].getOptions();
 
   document.getElementsByClassName(options.openerClass)[0].children[0].click();
@@ -32,7 +32,7 @@ test('On click opens the panel', assert => {
 });
 
 test('On click on second select closes the first...', assert => {
-  var select = document.createElement('select');
+  const select = document.createElement('select');
   select.innerHTML = `
     <option value="">Select...</option>
     <option value="zizz">Zizz</option>

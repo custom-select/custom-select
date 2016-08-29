@@ -52,8 +52,7 @@ function builder(el, cstOptions) {
     opener.classList.remove(isActiveClass);
     panel.classList.remove(isOpenClass);
 
-    // TODO: remove focus
-    // panel.querySelector('hasFocusClass).classList.remove(hasFocusClass);
+    focusedElement = selectedElement;
 
     isOpen = false;
   }
