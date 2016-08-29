@@ -100,6 +100,15 @@ function builder(el, cstOptions) {
     }
   }
 
+  function keydownEvent(e) {
+    if (!isOpen) {
+      // On "Arrow down", "Arrow up" and "Space" keys opens the panel
+      if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32) {
+        open();
+      }
+    }
+  }
+
   function changeEvent() {
     setSelectedElement(select.options[select.selectedIndex].fullSelectCstOption);
   }
@@ -108,12 +117,14 @@ function builder(el, cstOptions) {
     document.addEventListener('click', clickEvent);
     panel.addEventListener('mouseover', mouseoverEvent);
     select.addEventListener('change', changeEvent);
+    container.addEventListener('keydown', keydownEvent);
   }
 
   function removeEvents() {
     document.removeEventListener('click', clickEvent);
     panel.removeEventListener('mouseover', mouseoverEvent);
     select.removeEventListener('change', changeEvent);
+    container.removeEventListener('keydown', keydownEvent);
   }
 
   function enable() {

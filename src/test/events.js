@@ -144,3 +144,19 @@ test('... and updates opener text', assert => {
     'should return Frizz');
   assert.end();
 });
+
+test('On keydown: arrow down', assert => {
+  // first select
+  const e = new KeyboardEvent('keydown', {});
+  Object.defineProperty(e, 'keyCode', { value: 40 });
+
+  document.getElementsByTagName('select')[0].parentNode.focus();
+  document.getElementsByTagName('select')[0].parentNode.dispatchEvent(e);
+
+  const actual = document.getElementsByTagName('select')[0].parentNode.fullSelect.isOpen;
+  const expected = true;
+
+  assert.deepEqual(actual, expected,
+    'should return true');
+  assert.end();
+});
