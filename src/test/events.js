@@ -134,3 +134,13 @@ test('... and there is only one selected option', assert => {
     'should return 1');
   assert.end();
 });
+
+test('... and updates opener text', assert => {
+  const actual = document.getElementsByTagName('select')[0]
+    .parentNode.getElementsByClassName(options.openerClass)[0].children[0].textContent;
+  const expected = 'Frizz';
+
+  assert.deepEqual(actual, expected,
+    'should return Frizz');
+  assert.end();
+});

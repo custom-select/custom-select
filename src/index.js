@@ -62,8 +62,7 @@ function builder(el, cstOptions) {
     selectedElement.classList.remove(isSelectedClass);
     cstOption.classList.add(isSelectedClass, hasFocusClass);
     selectedElement = focusedElement = cstOption;
-    opener.children[0].textContent =
-      select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '';
+    opener.children[0].textContent = selectedElement.fullSelectOriginalOption.text;
   }
 
   function setValue(value) {
