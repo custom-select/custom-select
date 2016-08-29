@@ -1,11 +1,10 @@
 import test from 'tape';
 import fullSelect from './../';
 
-var options;
 var select1;
 var select2;
 
-test('With the public provided method opens the panel', assert => {
+test('With the public provided method disable the select', assert => {
   document.body.innerHTML = '';
 
   select1 = document.createElement('select');
@@ -20,11 +19,11 @@ test('With the public provided method opens the panel', assert => {
   document.body.appendChild(select1);
 
   const cstSelect = fullSelect('select');
-  options = cstSelect[0].getOptions();
+  cstSelect[0].getOptions();
 
-  select1.parentNode.fullSelect.open();
+  select1.parentNode.fullSelect.disable();
 
-  const actual = select1.parentNode.fullSelect.isOpen;
+  const actual = select1.disabled;
   const expected = true;
 
   assert.deepEqual(actual, expected,
@@ -32,8 +31,9 @@ test('With the public provided method opens the panel', assert => {
   assert.end();
 });
 
-test('With the public provided method opens the second select and closes the first...', assert => {
+test('Init a second disabled select', assert => {
   select2 = document.createElement('select');
+  select2.disabled = true;
   select2.innerHTML = `
     <option value="">Select...</option>
     <option value="zizz">Zizz</option>
@@ -42,22 +42,21 @@ test('With the public provided method opens the second select and closes the fir
 
   fullSelect(select2);
 
-  document.querySelectorAll('.fullSelect')[1].fullSelect.open();
-
-  const actual = select1.parentNode.fullSelect.isOpen;
-  const expected = false;
-
-  assert.deepEqual(actual, expected,
-    'should return false');
-  assert.end();
-});
-
-test('... and checks if the second is currently open', assert => {
-  const actual = document.getElementsByClassName(options.panelClass)[1]
-    .classList.contains('is-open');
+  const actual = select2.parentNode.fullSelect.isDisabled;
   const expected = true;
 
   assert.deepEqual(actual, expected,
     'should return true');
+  assert.end();
+});
+
+test('With the public provided method enable the first select', assert => {
+  select1.parentNode.fullSelect.enable();
+
+  const actual = select1.parentNode.classList.contains('is-disabled');
+  const expected = false;
+
+  assert.deepEqual(actual, expected,
+    'should return false');
   assert.end();
 });

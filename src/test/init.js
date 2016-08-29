@@ -2,8 +2,8 @@ import test from 'tape';
 import fullSelect from './../';
 
 test('Check the library instances with an HTMLElement', assert => {
-  var select = document.createElement("select");
-  select.setAttribute("id", "mySelect");
+  var select = document.createElement('select');
+  select.setAttribute('id', 'mySelect');
   document.body.appendChild(select);
   const actual = fullSelect(document.getElementById('mySelect'));
   assert.deepEqual(actual.length, 1,
@@ -13,8 +13,8 @@ test('Check the library instances with an HTMLElement', assert => {
 
 test('Check the library instances with a HTMLCollection', assert => {
   document.body.innerHTML = '';
-  var select1 = document.createElement("select");
-  var select2 = document.createElement("select");
+  const select1 = document.createElement('select');
+  const select2 = document.createElement('select');
   document.body.appendChild(select1);
   document.body.appendChild(select2);
   const actual = fullSelect(document.getElementsByTagName('select'));
@@ -25,8 +25,8 @@ test('Check the library instances with a HTMLCollection', assert => {
 
 test('Check the library instances with a NodeList', assert => {
   document.body.innerHTML = '';
-  var select1 = document.createElement("select");
-  var select2 = document.createElement("select");
+  const select1 = document.createElement('select');
+  const select2 = document.createElement('select');
   document.body.appendChild(select1);
   document.body.appendChild(select2);
   const actual = fullSelect(document.querySelectorAll('select'));
@@ -37,7 +37,7 @@ test('Check the library instances with a NodeList', assert => {
 
 test('Check the library instances with a selector', assert => {
   document.body.innerHTML = '';
-  var select = document.createElement("select");
+  const select = document.createElement('select');
   document.body.appendChild(select);
   const actual = fullSelect('select');
   assert.deepEqual(actual.length, 1,
@@ -55,8 +55,8 @@ test('Check the library instances with a not select selector', assert => {
 
 test('Check the library instances with an array of selects', assert => {
   document.body.innerHTML = '';
-  var select1 = document.createElement("select");
-  var select2 = document.createElement("select");
+  const select1 = document.createElement('select');
+  const select2 = document.createElement('select');
   document.body.appendChild(select1);
   document.body.appendChild(select2);
   const actual = fullSelect([select1, select2]);
@@ -67,7 +67,7 @@ test('Check the library instances with an array of selects', assert => {
 
 test('Check the library instances with an mixed array', assert => {
   document.body.innerHTML = '';
-  var select = document.createElement("select");
+  const select = document.createElement('select');
   document.body.appendChild(select);
   const actual = fullSelect([1, select]);
   assert.deepEqual(actual.length, 1,
@@ -77,8 +77,9 @@ test('Check the library instances with an mixed array', assert => {
 
 test('Check the library instances with 10000 selects', assert => {
   document.body.innerHTML = '';
-  for (let i = 0; i < 10000; ++i)
-    document.body.appendChild(document.createElement("select"));
+  for (let i = 0; i < 10000; ++i) {
+    document.body.appendChild(document.createElement('select'));
+  }
   const actual = fullSelect('select');
   assert.deepEqual(actual.length, 10000,
     'should return 10000');

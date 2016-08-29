@@ -1,10 +1,10 @@
 /**
  * full-select
  * A lightweight JS script for custom select creation.
- * 
+ *
  * v0.0.1
  * (https://github.com/gionatan-lombardi/full-select)
- * 
+ *
  * Copyright (c) 2016 Gionatan Lombardi
  * MIT License
  */
@@ -15,58 +15,145 @@ const defaultOptions = {
   panelClass: 'full-select-panel',
   optionClass: 'full-select-option',
   optgroupClass: 'full-select-optgroup',
-  scrollToSelected: true
-}
+  scrollToSelected: true,
+};
 
-function builder(select, cstOptions) {
-
+function builder(el, cstOptions) {
   var isOpen = false;
-  var containerClass = "fullSelect";
+  const containerClass = 'fullSelect';
+  const isSelectedClass = 'is-selected';
+  const hasFocusClass = 'has-focus';
+  const isDisabledClass = 'is-disabled';
+  const isActiveClass = 'is-active';
+  const isOpenClass = 'is-open';
+  var select = el;
+  var container;
+  var opener;
+  var focusedElement;
+  var selectedElement;
+  var panel;
 
-  // Custom Select Markup
-  
+  // Private Fuctions
+  function open() {
+    // Closes all instances of plugin
+    var openedFullSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
+    if (openedFullSelect) {
+      openedFullSelect.parentNode.fullSelect.close();
+    }
+
+    // Opens only the clicked one
+    opener.classList.add(isActiveClass);
+    panel.classList.add(isOpenClass);
+
+    isOpen = true;
+  }
+
+  function close() {
+    opener.classList.remove(isActiveClass);
+    panel.classList.remove(isOpenClass);
+
+    // TODO: remove focus
+    // panel.querySelector('hasFocusClass).classList.remove(hasFocusClass);
+
+    isOpen = false;
+  }
+
+  function clickEvent(e) {
+    // Opener click
+    if (e.target === opener || opener.contains(e.target)) {
+      if (isOpen) {
+        close();
+      } else {
+        open();
+      }
+    // Option click
+    } else if (e.target.classList.contains(cstOptions.optionClass) && panel.contains(e.target)) {
+      focusedElement.classList.remove(hasFocusClass);
+      selectedElement.classList.remove(isSelectedClass);
+      e.target.classList.add(isSelectedClass, hasFocusClass);
+      selectedElement = focusedElement = e.target;
+
+      close();
+    } else if (isOpen) {
+      close();
+    }
+  }
+
+  function mouseoverEvent(e) {
+    if (e.target.classList.contains(cstOptions.optionClass)) {
+      focusedElement.classList.remove(hasFocusClass);
+      e.target.classList.add(hasFocusClass);
+      focusedElement = e.target;
+    }
+  }
+
+  function addEvents() {
+    document.addEventListener('click', clickEvent);
+    panel.addEventListener('mouseover', mouseoverEvent);
+  }
+
+  function removeEvents() {
+    document.removeEventListener('click', clickEvent);
+    panel.removeEventListener('mouseover', mouseoverEvent);
+  }
+
+  function enable() {
+    if (select.disabled) {
+      container.classList.remove(isDisabledClass);
+      select.disabled = false;
+      addEvents();
+    }
+  }
+
+  function disable() {
+    if (!select.disabled) {
+      container.classList.add(isDisabledClass);
+      select.disabled = true;
+      removeEvents();
+    }
+  }
+
   // Creates the container/wrapper
-  var container = document.createElement("div");
-  container.className = cstOptions.containerClass + " " + containerClass;
+  container = document.createElement('div');
+  container.classList.add(cstOptions.containerClass, containerClass);
 
   // Creates the opener
-  var opener = document.createElement("span");
+  opener = document.createElement('span');
   opener.className = cstOptions.openerClass;
   opener.setAttribute('tabindex', '0');
-  opener.innerHTML = '<span>' + ( select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '' ) + '</span>';
+  opener.innerHTML = `<span>
+   ${(select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '')}
+   </span>`;
 
   // Creates the panel
   // and injects the markup of the select inside
   // with some tag and attributes replacement
-  var focusedElement;
-  var selectedElement;
-  var panel = document.createElement("div");
+  panel = document.createElement('div');
   panel.className = cstOptions.panelClass;
 
-  let panelContent = (function parseSelect(node){
-    
-    let cstList = [];
+  const panelContent = (function parseSelect(node) {
+    const cstList = [];
 
-    for (let i=0, l=node.children.length; i<l; i++) {
-      if (node.children[i].tagName.toUpperCase() === "OPTGROUP") {
-        let cstOptgroup = document.createElement("div");
+    for (let i = 0, li = node.children.length; i < li; i++) {
+      if (node.children[i].tagName.toUpperCase() === 'OPTGROUP') {
+        const cstOptgroup = document.createElement('div');
         cstOptgroup.classList.add(cstOptions.optgroupClass);
         cstOptgroup.dataset.label = node.children[i].label;
-        
-        let subNodes = parseSelect(node.children[i]);
-        for (let j=0, l=subNodes.length; j<l; j++) {
+
+        const subNodes = parseSelect(node.children[i]);
+        for (let j = 0, lj = subNodes.length; j < lj; j++) {
           cstOptgroup.appendChild(subNodes[j]);
         }
 
         cstList.push(cstOptgroup);
-      } else if (node.children[i].tagName.toUpperCase() === "OPTION") {
-        var cstOption = document.createElement("div");
+      } else if (node.children[i].tagName.toUpperCase() === 'OPTION') {
+        const cstOption = document.createElement('div');
         cstOption.classList.add(cstOptions.optionClass);
         cstOption.textContent = node.children[i].text;
         cstOption.dataset.value = node.children[i].value;
         cstOption.fullSelectOriginalOption = node.children[i];
-        if (node.children[i].selected){
-          cstOption.classList.add('is-selected', 'has-focus');
+        if (node.children[i].selected) {
+          cstOption.classList.add(isSelectedClass, hasFocusClass);
           selectedElement = focusedElement = cstOption;
         }
         cstList.push(cstOption);
@@ -74,10 +161,9 @@ function builder(select, cstOptions) {
     }
 
     return cstList;
+  }(select));
 
-  })(select);
-
-  for (let i=0, l=panelContent.length; i<l; i++){
+  for (let i = 0, l = panelContent.length; i < l; i++) {
     panel.appendChild(panelContent[i]);
   }
 
@@ -88,124 +174,61 @@ function builder(select, cstOptions) {
   container.appendChild(panel);
 
   // Event Init
-  
-  document.addEventListener('click', clickEvent);
-  panel.addEventListener('mouseover', mouseoverEvent);
-
-  // Private Fuctions
-
-  function clickEvent(e) {
-    
-    // Opener click
-    if (e.target === opener || opener.contains(e.target)) {
-      if (isOpen) {
-        close();
-      } else {
-        open();
-      }
-    // Option click
-    } else if (e.target.classList.contains(cstOptions.optionClass) && panel.contains(e.target)) {
-      focusedElement.classList.remove('has-focus');
-      selectedElement.classList.remove('is-selected');
-      e.target.classList.add('is-selected', 'has-focus');
-      selectedElement = focusedElement = e.target;
-
-      close();
-    } else {
-      if (isOpen) {
-        close();
-      }
-    }
-
-  }
-
-  function mouseoverEvent(e){
-
-    if (e.target.classList.contains(cstOptions.optionClass)) {
-      focusedElement.classList.remove('has-focus');
-      e.target.classList.add('has-focus');
-      focusedElement = e.target;
-    }
-
-  }
-
-  function open() { 
-
-    // Closes all instances of plugin
-    var openedFullSelect = document.querySelector("." + containerClass + " .is-open")
-    if (openedFullSelect) {
-      openedFullSelect.parentNode.fullSelect.close();
-    }
-
-    // Opens only the clicked one
-    opener.classList.add('is-active');
-    panel.classList.add('is-open');
-
-    isOpen = true;
-
-  }
-
-  function close() {
-
-    opener.classList.remove('is-active');
-    panel.classList.remove('is-open');
-    
-    // TODO: remove focus
-    // panel.querySelector('.has-focus').classList.remove('has-focus');
-    
-    isOpen = false;
-
+  if (select.disabled) {
+    container.classList.add(isDisabledClass);
+  } else {
+    addEvents();
   }
 
   // Public Exposed Methods
   // and stores the plugin in the HTMLElement
-  return container.fullSelect = {
+  container.fullSelect = {
     getOptions: () => cstOptions,
-    open: open,
-    close: close,
-    get isOpen() { return isOpen }
+    open,
+    close,
+    enable,
+    disable,
+    get isDisabled() { return select.disabled; },
+    get isOpen() { return isOpen; },
   };
-
-
+  return container.fullSelect;
 }
 
 export default function fullSelect(element, options) {
-
   // Overrides the default options with the ones provided by the user
-  var options = Object.assign(defaultOptions, options);
   var nodeList = [];
-  var selects = []
+  const selects = [];
 
-  return ( function init() {
-
+  return (function init() {
     // The plugin is called on a single HTMLElement
-    if (element && element instanceof HTMLElement && element.tagName.toUpperCase() === "SELECT") {
-      nodeList.push(element)
+    if (element && element instanceof HTMLElement && element.tagName.toUpperCase() === 'SELECT') {
+      nodeList.push(element);
     // The plugin is called on a selector
-    } else if (element && typeof element === 'string') { 
-      let elementsList = document.querySelectorAll(element);
+    } else if (element && typeof element === 'string') {
+      const elementsList = document.querySelectorAll(element);
       for (let i = 0, l = elementsList.length; i < l; ++i) {
-        if (elementsList[i] instanceof HTMLElement && elementsList[i].tagName.toUpperCase() === "SELECT") {
+        if (elementsList[i] instanceof HTMLElement
+          && elementsList[i].tagName.toUpperCase() === 'SELECT') {
           nodeList.push(elementsList[i]);
         }
       }
     // The plugin is called on any HTMLElements list (NodeList, HTMLCollection, Array, etc.)
     } else if (element && element.length) {
       for (let i = 0, l = element.length; i < l; ++i) {
-        if (element[i] instanceof HTMLElement && element[i].tagName.toUpperCase() === "SELECT")
+        if (element[i] instanceof HTMLElement
+          && element[i].tagName.toUpperCase() === 'SELECT') {
           nodeList.push(element[i]);
+        }
       }
     }
 
     // Launches the plugin over every HTMLElement
     // And stores every plugin instance
     for (let i = 0, l = nodeList.length; i < l; ++i) {
-      selects.push(builder(nodeList[i], options));
+      selects.push(builder(nodeList[i], Object.assign(defaultOptions, options)));
     }
 
     // Returns all plugin instances
     return selects;
-
-  })()
-
+  }());
 }
