@@ -66,6 +66,15 @@ function builder(el, cstOptions) {
       select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '';
   }
 
+  function setValue(value) {
+    let toSelect = select.querySelector(`option[value='${value}']`);
+    if (!toSelect) {
+      toSelect = select.options[0];
+    }
+    toSelect.selected = true;
+    setSelectedElement(toSelect.fullSelectCstOption);
+  }
+
   function clickEvent(e) {
     // Opener click
     if (e.target === opener || opener.contains(e.target)) {
@@ -203,7 +212,7 @@ function builder(el, cstOptions) {
     disable,
     get value() { return select.value; },
     set value(val) {
-      // TODO
+      setValue(val);
     },
     get isDisabled() { return select.disabled; },
     get isOpen() { return isOpen; },
