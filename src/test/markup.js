@@ -8,9 +8,9 @@ test('Custom panel replicated markup check', assert => {
     <option value="">Select...</option>
     <optgroup label="Cips">
       <option value="zizz">Zizz</option>
-      <optgroup label="Lips">
-        <option value="frizz">Frizz</option>
-      </optgroup>
+    </optgroup>
+    <optgroup label="Lips">
+      <option value="frizz">Frizz</option>
     </optgroup>`;
   document.body.appendChild(select);
   fullSelect('select');

@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Full Select</title>
+    <script>
+      if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        document.documentElement.classList.add('is-touch');
+      }
+    </script>
     <style type="text/css">
       body {
         font-family: Arial;
@@ -23,13 +28,15 @@
         display: inline-block;
         cursor: pointer;
       }
-      .full-select-container select {
+      html:not(.is-touch) .full-select-container select {
         visibility: hidden;
+      }
+      .full-select-container select {
         position: absolute;
         top: 0;
         left: 0;
       }
-      .full-select-panel {
+      html:not(.is-touch) .full-select-panel {
         max-height: 0;
         transition: max-height .5s ease-out;
         overflow: hidden;
@@ -38,7 +45,10 @@
         top: 100%;
         z-index: 1;
       }
-      .full-select-panel.is-open {
+      html.is-touch .full-select-panel {
+        display: none;
+      }
+      html:not(.is-touch) .full-select-panel.is-open {
         max-height: 10rem;
         overflow-y: auto
       }
@@ -61,7 +71,6 @@
         padding: 0.5em;
         color: #888;
       }
-
     </style>
 
   </head>
@@ -78,8 +87,11 @@
         <option value="zizz">Zizz</option>
       </optgroup>
       <optgroup label="Lips">
-        <option value="frizz">Frizz</option>
-        <option value="prizz">Prizz</option>
+        <option value="fruit">mango</option>
+        <option value="flower">rose</option>
+        <option value="fruit">pineapple</option>
+        <option value="flower">lotus</option>
+        <option value="flower">lily</option>
         <option value="lorem" selected>Lorem ipsum Id sit laborum aliquip reprehenderit qui ea veniam amet anim pariatur magna proident enim quis laborum cupidatat proident ex commodo.</option>
       </optgroup>
     </select>

@@ -57,6 +57,15 @@ function builder(el, cstOptions) {
     isOpen = false;
   }
 
+  function setSelectedElement(cstOption) {
+    focusedElement.classList.remove(hasFocusClass);
+    selectedElement.classList.remove(isSelectedClass);
+    cstOption.classList.add(isSelectedClass, hasFocusClass);
+    selectedElement = focusedElement = cstOption;
+    opener.children[0].textContent =
+      select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '';
+  }
+
   function clickEvent(e) {
     // Opener click
     if (e.target === opener || opener.contains(e.target)) {
@@ -67,11 +76,8 @@ function builder(el, cstOptions) {
       }
     // Option click
     } else if (e.target.classList.contains(cstOptions.optionClass) && panel.contains(e.target)) {
-      focusedElement.classList.remove(hasFocusClass);
-      selectedElement.classList.remove(isSelectedClass);
-      e.target.classList.add(isSelectedClass, hasFocusClass);
-      selectedElement = focusedElement = e.target;
-
+      setSelectedElement(e.target);
+      selectedElement.fullSelectOriginalOption.selected = true;
       close();
     } else if (isOpen) {
       close();
@@ -86,14 +92,20 @@ function builder(el, cstOptions) {
     }
   }
 
+  function changeEvent() {
+    setSelectedElement(select.options[select.selectedIndex].fullSelectCstOption);
+  }
+
   function addEvents() {
     document.addEventListener('click', clickEvent);
     panel.addEventListener('mouseover', mouseoverEvent);
+    select.addEventListener('change', changeEvent);
   }
 
   function removeEvents() {
     document.removeEventListener('click', clickEvent);
     panel.removeEventListener('mouseover', mouseoverEvent);
+    select.removeEventListener('change', changeEvent);
   }
 
   function enable() {
@@ -130,7 +142,8 @@ function builder(el, cstOptions) {
   panel = document.createElement('div');
   panel.className = cstOptions.panelClass;
 
-  const panelContent = (function parseSelect(node) {
+  const panelContent = (function parseSelect(currentNode) {
+    const node = currentNode;
     const cstList = [];
 
     for (let i = 0, li = node.children.length; i < li; i++) {
@@ -151,6 +164,7 @@ function builder(el, cstOptions) {
         cstOption.textContent = node.children[i].text;
         cstOption.dataset.value = node.children[i].value;
         cstOption.fullSelectOriginalOption = node.children[i];
+        node.children[i].fullSelectCstOption = cstOption;
         if (node.children[i].selected) {
           cstOption.classList.add(isSelectedClass, hasFocusClass);
           selectedElement = focusedElement = cstOption;
@@ -187,6 +201,10 @@ function builder(el, cstOptions) {
     close,
     enable,
     disable,
+    get value() { return select.value; },
+    set value(val) {
+      // TODO
+    },
     get isDisabled() { return select.disabled; },
     get isOpen() { return isOpen; },
   };

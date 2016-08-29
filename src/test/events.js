@@ -11,9 +11,9 @@ test('On click opens the panel', assert => {
     <option value="">Select...</option>
     <optgroup label="Cips">
       <option value="zizz">Zizz</option>
-      <optgroup label="Lips">
-        <option value="frizz">Frizz</option>
-      </optgroup>
+    </optgroup>
+    <optgroup label="Lips">
+      <option value="frizz">Frizz</option>
     </optgroup>`;
   document.body.appendChild(select);
 
@@ -84,6 +84,7 @@ test('On click outside the selects closes the opened one', assert => {
 });
 
 test('On click on an option sets selected class', assert => {
+  // first select
   document.getElementsByClassName(options.openerClass)[1].parentNode.fullSelect.open();
   document.getElementsByClassName(options.optionClass)[2].click();
 
@@ -107,10 +108,29 @@ test('... and focus class', assert => {
 });
 
 test('... and closes the select', assert => {
-  const actual = document.getElementsByTagName('select')[1].parentNode.fullSelect.isOpen;
+  const actual = document.getElementsByTagName('select')[0].parentNode.fullSelect.isOpen;
   const expected = false;
 
   assert.deepEqual(actual, expected,
     'should return false');
+  assert.end();
+});
+
+test('... and sets the original select value', assert => {
+  const actual = document.getElementsByTagName('select')[0].value;
+  const expected = 'frizz';
+
+  assert.deepEqual(actual, expected,
+    'should return frizz');
+  assert.end();
+});
+
+test('... and there is only one selected option', assert => {
+  const actual = document.getElementsByTagName('select')[0]
+    .parentNode.querySelectorAll('.is-selected').length;
+  const expected = 1;
+
+  assert.deepEqual(actual, expected,
+    'should return 1');
   assert.end();
 });
