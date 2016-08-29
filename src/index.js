@@ -126,7 +126,7 @@ function builder(select, cstOptions) {
       e.target.classList.add('has-focus');
       focusedElement = e.target;
     }
-    
+
   }
 
   function open() { 
@@ -163,7 +163,7 @@ function builder(select, cstOptions) {
     getOptions: () => cstOptions,
     open: open,
     close: close,
-    isOpen: () => isOpen
+    get isOpen() { return isOpen }
   };
 
 

@@ -25,7 +25,7 @@ test('With the public provided method opens the panel', assert => {
 
   select1.parentNode.fullSelect.open();
 
-  var actual = select1.parentNode.fullSelect.isOpen();
+  var actual = select1.parentNode.fullSelect.isOpen;
   var expected = true;
   
   assert.deepEqual(actual, expected,
@@ -47,7 +47,7 @@ test('With the public provided method opens the second select and closes the fir
 
   document.querySelectorAll('.fullSelect')[1].fullSelect.open();
 
-  var actual = select1.parentNode.fullSelect.isOpen();
+  var actual = select1.parentNode.fullSelect.isOpen;
   var expected = false;
   
   assert.deepEqual(actual, expected,

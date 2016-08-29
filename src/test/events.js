@@ -116,7 +116,7 @@ test('... and focus class', assert => {
 
 test('... and closes the select', assert => {
 
-  var actual = document.getElementsByTagName('select')[1].parentNode.fullSelect.isOpen();
+  var actual = document.getElementsByTagName('select')[1].parentNode.fullSelect.isOpen;
   var expected = false;
   
   assert.deepEqual(actual, expected,
