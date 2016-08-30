@@ -34,6 +34,9 @@ function builder(el, builderParams) {
   var selectedElement;
   var panel;
 
+  var resetSearchTimeout;
+  var searchKey = '';
+
   //
   // Inner Functions
   //
@@ -144,7 +147,8 @@ function builder(el, builderParams) {
     } else {
       switch (e.keyCode) {
         case 13:
-          // On "Enter" selects the focused element as the selected one
+        case 32:
+          // On "Enter" or "Space" selects the focused element as the selected one
           setSelectedElement(focusedElement);
           // Sets the corrisponding select's option to selected updating the select's value too
           selectedElement.fullSelectOriginalOption.selected = true;
@@ -154,6 +158,7 @@ function builder(el, builderParams) {
           // On "Escape" closes the panel
           close();
           break;
+
         case 38:
           // On "Arrow up" set focus to the prev option if present
           moveFocuesedElement(-1);
@@ -163,6 +168,32 @@ function builder(el, builderParams) {
           moveFocuesedElement(+1);
           break;
         default:
+          // search in panel (autocomplete)
+          if (e.keyCode >= 48 && e.keyCode <= 90) {
+            // clear existing reset timeout
+            if (resetSearchTimeout) {
+              clearTimeout(resetSearchTimeout);
+            }
+
+            // reset timeout for empty search key
+            resetSearchTimeout = setTimeout(() => {
+              searchKey = '';
+            }, 1500);
+
+            // update search keyword appending the current key
+            searchKey += e.key || String.fromCharCode(e.keyCode);
+
+            // search the element
+            for (let options = panel.getElementsByClassName(builderParams.optionClass), i = 0,
+              l = options.length; i < l; i++) {
+              // removed cause not supported by IE:
+              // if (options[i].text.startsWith(searchKey))
+              if (options[i].textContent.toLowerCase().substr(0, searchKey.length) === searchKey) {
+                setFocusedElement(options[i]);
+                break;
+              }
+            }
+          }
           break;
       }
     }
