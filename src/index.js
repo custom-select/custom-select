@@ -142,27 +142,28 @@ function builder(el, cstOptions) {
         open();
       }
     } else {
-      // On "Enter" selects the focused element as the selected one
-      if (e.keyCode === 13) {
-        setSelectedElement(focusedElement);
-        // Sets the corrisponding select's option to selected updating the select's value too
-        selectedElement.fullSelectOriginalOption.selected = true;
-        close();
-      }
-
-      // On "Escape" closes the panel
-      if (e.keyCode === 27) {
-        close();
-      }
-
-      // On "Arrow down" set focus to the next option if present
-      if (e.keyCode === 40) {
-        moveFocuesedElement(+1);
-      }
-
-      // On "Arrow up" set focus to the prev option if present
-      if (e.keyCode === 38) {
-        moveFocuesedElement(-1);
+      switch (e.keyCode) {
+        case 13:
+          // On "Enter" selects the focused element as the selected one
+          setSelectedElement(focusedElement);
+          // Sets the corrisponding select's option to selected updating the select's value too
+          selectedElement.fullSelectOriginalOption.selected = true;
+          close();
+          break;
+        case 27:
+          // On "Escape" closes the panel
+          close();
+          break;
+        case 38:
+          // On "Arrow up" set focus to the prev option if present
+          moveFocuesedElement(-1);
+          break;
+        case 40:
+          // On "Arrow down" set focus to the next option if present
+          moveFocuesedElement(+1);
+          break;
+        default:
+          break;
       }
     }
   }
