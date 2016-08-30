@@ -75,13 +75,13 @@ function builder(el, builderParams) {
 
   function moveFocuesedElement(direction) {
     // Get all the .full-select-options
-    const optionsList = panel.getElementsByClassName(builderParams.optionClass);
     // Get the index of the current focused one
-    const currentFocusedIndex = [].indexOf.call(optionsList, focusedElement);
+    const currentFocusedIndex =
+      [].indexOf.call(select.options, focusedElement.fullSelectOriginalOption);
     // If the next or prev custom option exist
     // Sets it as the new focused one
-    if (optionsList[currentFocusedIndex + direction]) {
-      setFocusedElement(optionsList[currentFocusedIndex + direction]);
+    if (select.options[currentFocusedIndex + direction]) {
+      setFocusedElement(select.options[currentFocusedIndex + direction].fullSelectCstOption);
     }
   }
 
