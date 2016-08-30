@@ -34,6 +34,37 @@ function builder(el, cstOptions) {
   var panel;
 
   // Private Fuctions
+  function setFocusedElement(cstOption) {
+    focusedElement.classList.remove(hasFocusClass);
+    focusedElement = cstOption;
+    focusedElement.classList.add(hasFocusClass);
+  }
+
+  function setSelectedElement(cstOption) {
+    focusedElement.classList.remove(hasFocusClass);
+    selectedElement.classList.remove(isSelectedClass);
+    cstOption.classList.add(isSelectedClass, hasFocusClass);
+    selectedElement = focusedElement = cstOption;
+    opener.children[0].textContent = selectedElement.fullSelectOriginalOption.text;
+  }
+
+  function setValue(value) {
+    let toSelect = select.querySelector(`option[value='${value}']`);
+    if (!toSelect) {
+      toSelect = select.options[0];
+    }
+    toSelect.selected = true;
+    setSelectedElement(toSelect.fullSelectCstOption);
+  }
+
+  function moveFocuesedElement(direction) {
+    const optionsList = panel.getElementsByClassName(cstOptions.optionClass);
+    const currentFocusedIndex = [].indexOf.call(optionsList, focusedElement);
+    if (optionsList[currentFocusedIndex + direction]) {
+      setFocusedElement(optionsList[currentFocusedIndex + direction]);
+    }
+  }
+
   function open() {
     // Closes all instances of plugin
     var openedFullSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
@@ -52,26 +83,9 @@ function builder(el, cstOptions) {
     opener.classList.remove(isActiveClass);
     panel.classList.remove(isOpenClass);
 
-    focusedElement = selectedElement;
+    setFocusedElement(selectedElement);
 
     isOpen = false;
-  }
-
-  function setSelectedElement(cstOption) {
-    focusedElement.classList.remove(hasFocusClass);
-    selectedElement.classList.remove(isSelectedClass);
-    cstOption.classList.add(isSelectedClass, hasFocusClass);
-    selectedElement = focusedElement = cstOption;
-    opener.children[0].textContent = selectedElement.fullSelectOriginalOption.text;
-  }
-
-  function setValue(value) {
-    let toSelect = select.querySelector(`option[value='${value}']`);
-    if (!toSelect) {
-      toSelect = select.options[0];
-    }
-    toSelect.selected = true;
-    setSelectedElement(toSelect.fullSelectCstOption);
   }
 
   function clickEvent(e) {
@@ -94,9 +108,7 @@ function builder(el, cstOptions) {
 
   function mouseoverEvent(e) {
     if (e.target.classList.contains(cstOptions.optionClass)) {
-      focusedElement.classList.remove(hasFocusClass);
-      e.target.classList.add(hasFocusClass);
-      focusedElement = e.target;
+      setFocusedElement(e.target);
     }
   }
 
@@ -105,6 +117,30 @@ function builder(el, cstOptions) {
       // On "Arrow down", "Arrow up" and "Space" keys opens the panel
       if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32) {
         open();
+      }
+    } else {
+      // On "Enter" selects the focused element
+      if (e.keyCode === 13) {
+        setSelectedElement(focusedElement);
+        selectedElement.fullSelectOriginalOption.selected = true;
+
+        // and close
+        close();
+      }
+
+      // On "Escape"
+      if (e.keyCode === 27) {
+        // close
+        close();
+      }
+
+      // On "Arrow down" set focues to the next option
+      if (e.keyCode === 40) {
+        moveFocuesedElement(+1);
+      }
+
+      if (e.keyCode === 38) {
+        moveFocuesedElement(-1);
       }
     }
   }
