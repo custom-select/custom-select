@@ -9,11 +9,11 @@ test('On click opens the panel', assert => {
   const select = document.createElement('select');
   select.innerHTML = `
     <option value="">Select...</option>
-    <optgroup label="Cips">
-      <option value="zizz">Zizz</option>
+    <optgroup label="Cars">
+      <option value="ferrari">Ferrari</option>
     </optgroup>
-    <optgroup label="Lips">
-      <option value="frizz">Frizz</option>
+    <optgroup label="Motorcycles">
+      <option value="honda">Honda</option>
     </optgroup>`;
   document.body.appendChild(select);
 
@@ -35,8 +35,8 @@ test('On click on second select closes the first...', assert => {
   const select = document.createElement('select');
   select.innerHTML = `
     <option value="">Select...</option>
-    <option value="zizz">Zizz</option>
-    <option value="frizz">Frizz</option>`;
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>`;
   document.body.appendChild(select);
 
   fullSelect(select);
@@ -118,10 +118,10 @@ test('... and closes the select', assert => {
 
 test('... and sets the original select value', assert => {
   const actual = document.getElementsByTagName('select')[0].value;
-  const expected = 'frizz';
+  const expected = 'honda';
 
   assert.deepEqual(actual, expected,
-    'should return frizz');
+    'should return honda');
   assert.end();
 });
 
@@ -138,25 +138,73 @@ test('... and there is only one selected option', assert => {
 test('... and updates opener text', assert => {
   const actual = document.getElementsByTagName('select')[0]
     .parentNode.getElementsByClassName(options.openerClass)[0].children[0].textContent;
-  const expected = 'Frizz';
+  const expected = 'Honda';
 
   assert.deepEqual(actual, expected,
-    'should return Frizz');
+    'should return Honda');
   assert.end();
 });
 
-test('On keydown: arrow down', assert => {
+test('On keydown: ArrowDown opens the panel', assert => {
   // first select
+  const currentContainer = document.getElementsByTagName('select')[0].parentNode;
   const e = new KeyboardEvent('keydown', {});
-  Object.defineProperty(e, 'keyCode', { value: 40 });
+  Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
 
-  document.getElementsByTagName('select')[0].parentNode.focus();
-  document.getElementsByTagName('select')[0].parentNode.dispatchEvent(e);
+  currentContainer.focus();
+  currentContainer.dispatchEvent(e);
 
-  const actual = document.getElementsByTagName('select')[0].parentNode.fullSelect.isOpen;
-  const expected = true;
+  let actual = currentContainer.fullSelect.isOpen;
+  let expected = true;
 
   assert.deepEqual(actual, expected,
     'should return true');
+
+  assert.test('... with a second ArrowDown the focus remains on the last option', q => {
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+    expected = 'honda';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... an ArrowUp sets the focus on the prev option', q => {
+    e.keyCode = 38;
+
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+    expected = 'ferrari';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... a second ArrowUp sets the focus on first option', q => {
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+    expected = '';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... with a third ArrowUp the focus remains on the first option', q => {
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+    expected = '';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
   assert.end();
 });
