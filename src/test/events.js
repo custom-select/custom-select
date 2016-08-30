@@ -36,7 +36,8 @@ test('On click on second select closes the first...', assert => {
   select.innerHTML = `
     <option value="">Select...</option>
     <option value="apple">Apple</option>
-    <option value="banana">Banana</option>`;
+    <option value="banana">Banana</option>;
+    <option value="avocado">Avocado</option>`;
   document.body.appendChild(select);
 
   fullSelect(select);
@@ -145,20 +146,27 @@ test('... and updates opener text', assert => {
   assert.end();
 });
 
-test('On keydown: ArrowDown opens the panel', assert => {
-  // first select
+test('On keydown on the first select...', assert => {
+  var actual;
+  var expected;
+
+  // first select container
   const currentContainer = document.getElementsByTagName('select')[0].parentNode;
   const e = new KeyboardEvent('keydown', {});
-  Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
 
   currentContainer.focus();
-  currentContainer.dispatchEvent(e);
 
-  let actual = currentContainer.fullSelect.isOpen;
-  let expected = true;
+  assert.test('... ArrowDown opens the panel', q => {
+    Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
+    currentContainer.dispatchEvent(e);
 
-  assert.deepEqual(actual, expected,
-    'should return true');
+    actual = currentContainer.fullSelect.isOpen;
+    expected = true;
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
 
   assert.test('... with a second ArrowDown the focus remains on the last option', q => {
     currentContainer.dispatchEvent(e);
@@ -205,6 +213,116 @@ test('On keydown: ArrowDown opens the panel', assert => {
       'should return true');
     q.end();
   });
+
+  assert.end();
+});
+
+test('On keydown on the second select...', assert => {
+  var actual;
+  var expected;
+
+  // Second select container
+  const currentContainer = document.getElementsByTagName('select')[1].parentNode;
+  const e = new KeyboardEvent('keydown', {});
+
+  currentContainer.focus();
+
+  assert.test('... Space opens the panel', q => {
+    Object.defineProperty(e, 'keyCode', { value: 32, writable: true });
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.getElementsByClassName(options.panelClass)[0]
+      .classList.contains('is-open');
+    expected = true;
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... letter "a" sets focus on the apple option', q => {
+    e.keyCode = 65;
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').textContent;
+    expected = 'Apple';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... adding letter "v" sets focus on the avocado option', q => {
+    e.keyCode = 86;
+    currentContainer.dispatchEvent(e);
+
+    actual = currentContainer.querySelector('.has-focus').textContent;
+    expected = 'Avocado';
+
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
+
+  assert.test('... after 2 secs with letter "b" sets focus on banana option', q => {
+    setTimeout(() => {
+      e.keyCode = 66;
+      currentContainer.dispatchEvent(e);
+
+      actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+      expected = 'banana';
+
+      q.deepEqual(actual, expected,
+        'should return true');
+      q.end();
+    }, 2000);
+  });
+
+  // assert.test('... with a second ArrowDown the focus remains on the last option', q => {
+  //   currentContainer.dispatchEvent(e);
+  //
+  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+  //   expected = 'honda';
+  //
+  //   q.deepEqual(actual, expected,
+  //     'should return true');
+  //   q.end();
+  // });
+  //
+  // assert.test('... an ArrowUp sets the focus on the prev option', q => {
+  //   e.keyCode = 38;
+  //
+  //   currentContainer.dispatchEvent(e);
+  //
+  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+  //   expected = 'ferrari';
+  //
+  //   q.deepEqual(actual, expected,
+  //     'should return true');
+  //   q.end();
+  // });
+  //
+  // assert.test('... a second ArrowUp sets the focus on first option', q => {
+  //   currentContainer.dispatchEvent(e);
+  //
+  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+  //   expected = '';
+  //
+  //   q.deepEqual(actual, expected,
+  //     'should return true');
+  //   q.end();
+  // });
+  //
+  // assert.test('... with a third ArrowUp the focus remains on the first option', q => {
+  //   currentContainer.dispatchEvent(e);
+  //
+  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
+  //   expected = '';
+  //
+  //   q.deepEqual(actual, expected,
+  //     'should return true');
+  //   q.end();
+  // });
 
   assert.end();
 });
