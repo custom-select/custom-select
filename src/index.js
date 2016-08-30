@@ -10,7 +10,7 @@
  * MIT License
  */
 
-const defaultOptions = {
+const defaultParams = {
   containerClass: 'full-select-container',
   openerClass: 'full-select-opener',
   panelClass: 'full-select-panel',
@@ -19,7 +19,7 @@ const defaultOptions = {
   scrollToSelected: true,
 };
 
-function builder(el, cstOptions) {
+function builder(el, builderParams) {
   var isOpen = false;
   const containerClass = 'fullSelect';
   const isSelectedClass = 'is-selected';
@@ -72,7 +72,7 @@ function builder(el, cstOptions) {
 
   function moveFocuesedElement(direction) {
     // Get all the .full-select-options
-    const optionsList = panel.getElementsByClassName(cstOptions.optionClass);
+    const optionsList = panel.getElementsByClassName(builderParams.optionClass);
     // Get the index of the current focused one
     const currentFocusedIndex = [].indexOf.call(optionsList, focusedElement);
     // If the next or prev custom option exist
@@ -117,7 +117,7 @@ function builder(el, cstOptions) {
         open();
       }
     // Custom Option click
-    } else if (e.target.classList.contains(cstOptions.optionClass) && panel.contains(e.target)) {
+    } else if (e.target.classList.contains(builderParams.optionClass) && panel.contains(e.target)) {
       setSelectedElement(e.target);
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.fullSelectOriginalOption.selected = true;
@@ -130,7 +130,7 @@ function builder(el, cstOptions) {
 
   function mouseoverEvent(e) {
     // On mouse move over and options it bacames the focused one
-    if (e.target.classList.contains(cstOptions.optionClass)) {
+    if (e.target.classList.contains(builderParams.optionClass)) {
       setFocusedElement(e.target);
     }
   }
@@ -207,11 +207,11 @@ function builder(el, cstOptions) {
 
   // Creates the container/wrapper
   container = document.createElement('div');
-  container.classList.add(cstOptions.containerClass, containerClass);
+  container.classList.add(builderParams.containerClass, containerClass);
 
   // Creates the opener
   opener = document.createElement('span');
-  opener.className = cstOptions.openerClass;
+  opener.className = builderParams.openerClass;
   opener.setAttribute('tabindex', '0');
   opener.innerHTML = `<span>
    ${(select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '')}
@@ -221,7 +221,7 @@ function builder(el, cstOptions) {
   // and injects the markup of the select inside
   // with some tag and attributes replacement
   panel = document.createElement('div');
-  panel.className = cstOptions.panelClass;
+  panel.className = builderParams.panelClass;
 
   // With a recursive IIFE loops through the select's DOM tree (options and optgroup)
   // And creates the custom panel's DOM tree (divs with different classes and attributes)
@@ -232,7 +232,7 @@ function builder(el, cstOptions) {
     for (let i = 0, li = node.children.length; i < li; i++) {
       if (node.children[i].tagName.toUpperCase() === 'OPTGROUP') {
         const cstOptgroup = document.createElement('div');
-        cstOptgroup.classList.add(cstOptions.optgroupClass);
+        cstOptgroup.classList.add(builderParams.optgroupClass);
         cstOptgroup.dataset.label = node.children[i].label;
 
         const subNodes = parseSelect(node.children[i]);
@@ -243,7 +243,7 @@ function builder(el, cstOptions) {
         cstList.push(cstOptgroup);
       } else if (node.children[i].tagName.toUpperCase() === 'OPTION') {
         const cstOption = document.createElement('div');
-        cstOption.classList.add(cstOptions.optionClass);
+        cstOption.classList.add(builderParams.optionClass);
         cstOption.textContent = node.children[i].text;
         cstOption.dataset.value = node.children[i].value;
         // IMPORTANT: Stores in a property of the created custom option
@@ -283,7 +283,7 @@ function builder(el, cstOptions) {
 
   // Stores the plugin public exposed methods an properties directly in the container HTMLElement
   container.fullSelect = {
-    getOptions: () => cstOptions,
+    getOptions: () => builderParams,
     open,
     close,
     enable,
@@ -300,7 +300,7 @@ function builder(el, cstOptions) {
   return container.fullSelect;
 }
 
-export default function fullSelect(element, options) {
+export default function fullSelect(element, customParams) {
   // Overrides the default options with the ones provided by the user
   var nodeList = [];
   const selects = [];
@@ -331,7 +331,7 @@ export default function fullSelect(element, options) {
     // Launches the plugin over every HTMLElement
     // And stores every plugin instance
     for (let i = 0, l = nodeList.length; i < l; ++i) {
-      selects.push(builder(nodeList[i], Object.assign(defaultOptions, options)));
+      selects.push(builder(nodeList[i], Object.assign(defaultParams, customParams)));
     }
 
     // Returns all plugin instances
