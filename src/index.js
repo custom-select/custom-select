@@ -181,14 +181,14 @@ function builder(el, builderParams) {
             }, 1500);
 
             // update search keyword appending the current key
-            searchKey += e.key || String.fromCharCode(e.keyCode);
+            searchKey += String.fromCharCode(e.keyCode);
 
             // search the element
             for (let options = panel.getElementsByClassName(builderParams.optionClass), i = 0,
               l = options.length; i < l; i++) {
               // removed cause not supported by IE:
               // if (options[i].text.startsWith(searchKey))
-              if (options[i].textContent.toLowerCase().substr(0, searchKey.length) === searchKey) {
+              if (options[i].textContent.toUpperCase().substr(0, searchKey.length) === searchKey) {
                 setFocusedElement(options[i]);
                 break;
               }
