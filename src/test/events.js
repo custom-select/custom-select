@@ -36,7 +36,8 @@ test('On click on second select closes the first...', assert => {
   select.innerHTML = `
     <option value="">Select...</option>
     <option value="apple">Apple</option>
-    <option value="banana">Banana</option>`;
+    <option value="banana">Banana</option>;
+    <option value="avocado">Avocado</option>`;
   document.body.appendChild(select);
 
   fullSelect(select);
@@ -145,20 +146,26 @@ test('... and updates opener text', assert => {
   assert.end();
 });
 
-test('On keydown: ArrowDown opens the panel', assert => {
-  // first select
+test('On keydown on the first select...', assert => {
+  var actual;
+  var expected;
+
+  // first select container
   const currentContainer = document.getElementsByTagName('select')[0].parentNode;
   const e = new KeyboardEvent('keydown', {});
   Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
 
-  currentContainer.focus();
-  currentContainer.dispatchEvent(e);
+  assert.test('... ArrowDown opens the panel', q => {
+    currentContainer.focus();
+    currentContainer.dispatchEvent(e);
 
-  let actual = currentContainer.fullSelect.isOpen;
-  let expected = true;
+    actual = currentContainer.fullSelect.isOpen;
+    expected = true;
 
-  assert.deepEqual(actual, expected,
-    'should return true');
+    q.deepEqual(actual, expected,
+      'should return true');
+    q.end();
+  });
 
   assert.test('... with a second ArrowDown the focus remains on the last option', q => {
     currentContainer.dispatchEvent(e);
