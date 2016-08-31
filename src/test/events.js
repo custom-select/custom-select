@@ -24,9 +24,8 @@ test('On click opens the panel', assert => {
 
   const actual = document.getElementsByClassName(options.panelClass)[0]
     .classList.contains('is-open');
-  const expected = true;
 
-  assert.deepEqual(actual, expected,
+  assert.true(actual,
     'should return true');
   assert.end();
 });
@@ -46,9 +45,8 @@ test('On click on second select closes the first...', assert => {
 
   const actual = document.getElementsByClassName(options.panelClass)[0]
     .classList.contains('is-open');
-  const expected = false;
 
-  assert.deepEqual(actual, expected,
+  assert.false(actual,
     'should return false');
   assert.end();
 });
@@ -56,9 +54,8 @@ test('On click on second select closes the first...', assert => {
 test('... activates the second opener', assert => {
   const actual = document.getElementsByClassName(options.openerClass)[1]
     .classList.contains('is-active');
-  const expected = true;
 
-  assert.deepEqual(actual, expected,
+  assert.true(actual,
     'should return true');
   assert.end();
 });
@@ -66,9 +63,8 @@ test('... activates the second opener', assert => {
 test('... opens the second panel.', assert => {
   const actual = document.getElementsByClassName(options.panelClass)[1]
     .classList.contains('is-open');
-  const expected = true;
 
-  assert.deepEqual(actual, expected,
+  assert.true(actual,
     'should return true');
   assert.end();
 });
@@ -91,9 +87,8 @@ test('On click on an option sets selected class', assert => {
 
   const actual = document.querySelectorAll(`.${options.optionClass}`)[2]
     .classList.contains('is-selected');
-  const expected = true;
 
-  assert.deepEqual(actual, expected,
+  assert.true(actual,
     'should return true');
   assert.end();
 });
@@ -101,18 +96,16 @@ test('On click on an option sets selected class', assert => {
 test('... and focus class', assert => {
   const actual = document.getElementsByClassName(options.optionClass)[2]
     .classList.contains('has-focus');
-  const expected = true;
 
-  assert.deepEqual(actual, expected,
+  assert.true(actual,
     'should return true');
   assert.end();
 });
 
 test('... and closes the select', assert => {
   const actual = document.getElementsByTagName('select')[0].parentNode.fullSelect.isOpen;
-  const expected = false;
 
-  assert.deepEqual(actual, expected,
+  assert.false(actual,
     'should return false');
   assert.end();
 });
@@ -161,9 +154,8 @@ test('On keydown on the first select...', assert => {
     currentContainer.dispatchEvent(e);
 
     actual = currentContainer.fullSelect.isOpen;
-    expected = true;
 
-    q.deepEqual(actual, expected,
+    q.true(actual,
       'should return true');
     q.end();
   });
@@ -175,7 +167,7 @@ test('On keydown on the first select...', assert => {
     expected = 'honda';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return honda');
     q.end();
   });
 
@@ -188,7 +180,7 @@ test('On keydown on the first select...', assert => {
     expected = 'ferrari';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return ferrari');
     q.end();
   });
 
@@ -199,7 +191,7 @@ test('On keydown on the first select...', assert => {
     expected = '';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return ""');
     q.end();
   });
 
@@ -210,7 +202,7 @@ test('On keydown on the first select...', assert => {
     expected = '';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return ""');
     q.end();
   });
 
@@ -233,9 +225,8 @@ test('On keydown on the second select...', assert => {
 
     actual = currentContainer.getElementsByClassName(options.panelClass)[0]
       .classList.contains('is-open');
-    expected = true;
 
-    q.deepEqual(actual, expected,
+    q.true(actual,
       'should return true');
     q.end();
   });
@@ -248,7 +239,7 @@ test('On keydown on the second select...', assert => {
     expected = 'Apple';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return Apple');
     q.end();
   });
 
@@ -260,7 +251,7 @@ test('On keydown on the second select...', assert => {
     expected = 'Avocado';
 
     q.deepEqual(actual, expected,
-      'should return true');
+      'should return Avocado');
     q.end();
   });
 
@@ -273,7 +264,7 @@ test('On keydown on the second select...', assert => {
       expected = 'banana';
 
       q.deepEqual(actual, expected,
-        'should return true');
+        'should return banana');
       q.end();
     }, 2000);
   });
