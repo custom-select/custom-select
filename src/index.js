@@ -232,18 +232,18 @@ function builder(el, builderParams) {
     }
   }
 
-  function insertIn(targetPar, toInsertPar, updateOriginalNode) {
+  function append(nodePar, appendIntoOriginal, targetPar) {
     // if insert element isn't any HTMLElements list (NodeList, HTMLCollection, Array, etc.)
     // it's pushed into an array
     var target;
-    if (targetPar.tagName.toUpperCase() === 'SELECT') {
+    if (typeof targetPar === 'undefined' || targetPar.tagName.toUpperCase() === 'SELECT') {
       target = panel;
     } else if (targetPar.tagName.toUpperCase() === 'OPTGROUP') {
       target = targetPar.fullSelectCstOptgroup;
     } else {
       target = targetPar;
     }
-    const toInsert = toInsertPar instanceof HTMLElement ? [toInsertPar] : toInsertPar;
+    const node = nodePar instanceof HTMLElement ? [nodePar] : nodePar;
 
     // With a recursive IIFE loops through the select's DOM tree (options and optgroup)
     // And creates the custom panel's DOM tree (divs with different classes and attributes)
@@ -294,23 +294,19 @@ function builder(el, builderParams) {
         }
       }
       return cstList;
-    }(toInsert));
+    }(node));
 
     // Injects the created DOM content in the panel
     for (let i = 0, l = insertMarkup.length; i < l; i++) {
       target.appendChild(insertMarkup[i]);
-      if (updateOriginalNode) {
+      if (appendIntoOriginal) {
         if (target === panel) {
-          select.appendChild(toInsert[i]);
+          select.appendChild(node[i]);
         } else {
-          target.fullSelectOriginalOptgroup.appendChild(toInsert[i]);
+          target.fullSelectOriginalOptgroup.appendChild(node[i]);
         }
       }
     }
-  }
-
-  function insert(toInsert, updateOriginalNode) {
-    insertIn(panel, toInsert, updateOriginalNode);
   }
 
   //
@@ -335,7 +331,7 @@ function builder(el, builderParams) {
   panel = document.createElement('div');
   panel.className = builderParams.panelClass;
 
-  insertIn(panel, select.children, false);
+  append(select.children, false);
 
   // Injects the container in the original DOM position of the select
   container.appendChild(opener);
@@ -363,8 +359,7 @@ function builder(el, builderParams) {
     },
     get isDisabled() { return select.disabled; },
     get isOpen() { return isOpen; },
-    insertIn: (target, toInsert) => insertIn(target, toInsert, true),
-    insert: (toInsert) => insert(toInsert, true),
+    append: (node, target) => append(node, true, target),
   };
 
   // Returns the plugin instance, with the public exposed methods and properties

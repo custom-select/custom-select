@@ -6,7 +6,7 @@ let option;
 let actual;
 let expected;
 
-test('Instance library and insert an option at the end', assert => {
+test('Instance library and append an option at the end', assert => {
   document.body.innerHTML = '';
   select = document.createElement('select');
   select.innerHTML = `
@@ -25,7 +25,7 @@ test('Instance library and insert an option at the end', assert => {
   option.value = 'mustang';
   option.text = 'Mustang';
 
-  fullselect.insert([option]);
+  fullselect.append([option]);
 
   assert.test('... and the last option has the correct value', q => {
     actual = select.options[4].value;
@@ -74,7 +74,7 @@ test('Insert an option at the end of a specified custom optgroup', assert => {
   option.value = 'tesla';
   option.text = 'Tesla';
 
-  select.parentNode.fullSelect.insertIn(optGroupTarget, option);
+  select.parentNode.fullSelect.append(option, optGroupTarget);
 
   actual = select.parentNode.children[2].children[2].children[2].textContent;
   expected = 'Tesla';
@@ -90,7 +90,7 @@ test('Insert an option at the end of a specified original optgroup', assert => {
   option.value = 'mazda';
   option.text = 'Mazda';
 
-  select.parentNode.fullSelect.insertIn(optGroupTarget, option);
+  select.parentNode.fullSelect.append(option, optGroupTarget);
 
   actual = select.parentNode.children[2].children[2].children[3].textContent;
   expected = 'Mazda';
@@ -111,7 +111,7 @@ test('Insert an option at the end of a specified original optgroup', assert => {
 //
 //   optgroup.appendChild(option);
 //
-//   select.parentNode.fullSelect.insert(optgroup);
+//   select.parentNode.fullSelect.append(optgroup);
 //   assert.test('... and the last custom option in that group is the added one', q => {
 //     actual = select.parentNode.children[2].children[4].getAttribute('');
 //     expected = 'Tesla';
