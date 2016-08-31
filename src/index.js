@@ -383,6 +383,9 @@ function builder(el, builderParams) {
     get isOpen() { return isOpen; },
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
+    opener,
+    select,
+    panel,
   };
 
   // Returns the plugin instance, with the public exposed methods and properties
