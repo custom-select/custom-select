@@ -232,9 +232,58 @@ function builder(el, builderParams) {
     }
   }
 
+  // Form a given select children DOM tree (options and optgroup),
+  // Creates the corresponding custom HTMLElements list (divs with different classes and attributes)
+  function parseMarkup(children) {
+    const nodeList = children;
+    const cstList = [];
+
+    for (let i = 0, li = nodeList.length; i < li; i++) {
+      if (nodeList[i].tagName.toUpperCase() === 'OPTGROUP') {
+        const cstOptgroup = document.createElement('div');
+        cstOptgroup.classList.add(builderParams.optgroupClass);
+        cstOptgroup.dataset.label = nodeList[i].label;
+
+        // IMPORTANT: Stores in a property of the created custom option group
+        // a hook to the the corrisponding select's option group
+        cstOptgroup.fullSelectOriginalOptgroup = nodeList[i];
+
+        // IMPORTANT: Stores in a property of select's option group
+        // a hook to the created custom option group
+        nodeList[i].fullSelectCstOptgroup = cstOptgroup;
+
+        const subNodes = parseMarkup(nodeList[i].children);
+        for (let j = 0, lj = subNodes.length; j < lj; j++) {
+          cstOptgroup.appendChild(subNodes[j]);
+        }
+
+        cstList.push(cstOptgroup);
+      } else if (nodeList[i].tagName.toUpperCase() === 'OPTION') {
+        const cstOption = document.createElement('div');
+        cstOption.classList.add(builderParams.optionClass);
+        cstOption.textContent = nodeList[i].text;
+        cstOption.dataset.value = nodeList[i].value;
+
+        // IMPORTANT: Stores in a property of the created custom option
+        // a hook to the the corrisponding select's option
+        cstOption.fullSelectOriginalOption = nodeList[i];
+
+        // IMPORTANT: Stores in a property of select's option
+        // a hook to the created custom option
+        nodeList[i].fullSelectCstOption = cstOption;
+
+        // If the select's option is selected
+        if (nodeList[i].selected) {
+          cstOption.classList.add(isSelectedClass, hasFocusClass);
+          selectedElement = focusedElement = cstOption;
+        }
+        cstList.push(cstOption);
+      }
+    }
+    return cstList;
+  }
+
   function append(nodePar, appendIntoOriginal, targetPar) {
-    // if insert element isn't any HTMLElements list (NodeList, HTMLCollection, Array, etc.)
-    // it's pushed into an array
     var target;
     if (typeof targetPar === 'undefined' || targetPar.tagName.toUpperCase() === 'SELECT') {
       target = panel;
@@ -243,62 +292,16 @@ function builder(el, builderParams) {
     } else {
       target = targetPar;
     }
+
+    // If the node provided is an HTMLElement it is stored in an array
     const node = nodePar instanceof HTMLElement ? [nodePar] : nodePar;
 
-    // With a recursive IIFE loops through the select's DOM tree (options and optgroup)
-    // And creates the custom panel's DOM tree (divs with different classes and attributes)
-    const insertMarkup = (function parseSelect(children) {
-      const nodeList = children;
-      const cstList = [];
-
-      for (let i = 0, li = nodeList.length; i < li; i++) {
-        if (nodeList[i].tagName.toUpperCase() === 'OPTGROUP') {
-          const cstOptgroup = document.createElement('div');
-          cstOptgroup.classList.add(builderParams.optgroupClass);
-          cstOptgroup.dataset.label = nodeList[i].label;
-
-          // IMPORTANT: Stores in a property of the created custom option group
-          // a hook to the the corrisponding select's option group
-          cstOptgroup.fullSelectOriginalOptgroup = nodeList[i];
-
-          // IMPORTANT: Stores in a property of select's option group
-          // a hook to the created custom option group
-          nodeList[i].fullSelectCstOptgroup = cstOptgroup;
-
-          const subNodes = parseSelect(nodeList[i].children);
-          for (let j = 0, lj = subNodes.length; j < lj; j++) {
-            cstOptgroup.appendChild(subNodes[j]);
-          }
-
-          cstList.push(cstOptgroup);
-        } else if (nodeList[i].tagName.toUpperCase() === 'OPTION') {
-          const cstOption = document.createElement('div');
-          cstOption.classList.add(builderParams.optionClass);
-          cstOption.textContent = nodeList[i].text;
-          cstOption.dataset.value = nodeList[i].value;
-
-          // IMPORTANT: Stores in a property of the created custom option
-          // a hook to the the corrisponding select's option
-          cstOption.fullSelectOriginalOption = nodeList[i];
-
-          // IMPORTANT: Stores in a property of select's option
-          // a hook to the created custom option
-          nodeList[i].fullSelectCstOption = cstOption;
-
-          // If the select's option is selected
-          if (nodeList[i].selected) {
-            cstOption.classList.add(isSelectedClass, hasFocusClass);
-            selectedElement = focusedElement = cstOption;
-          }
-          cstList.push(cstOption);
-        }
-      }
-      return cstList;
-    }(node));
+    // The custom markup to append
+    const markupToInsert = parseMarkup(node);
 
     // Injects the created DOM content in the panel
-    for (let i = 0, l = insertMarkup.length; i < l; i++) {
-      target.appendChild(insertMarkup[i]);
+    for (let i = 0, l = markupToInsert.length; i < l; i++) {
+      target.appendChild(markupToInsert[i]);
       if (appendIntoOriginal) {
         if (target === panel) {
           select.appendChild(node[i]);
@@ -307,6 +310,25 @@ function builder(el, builderParams) {
         }
       }
     }
+  }
+
+  function insertBefore(node, targetPar) {
+    var target;
+    if (targetPar.tagName.toUpperCase() === 'OPTION') {
+      target = targetPar.fullSelectCstOption;
+    } else if (targetPar.tagName.toUpperCase() === 'OPTGROUP') {
+      target = targetPar.fullSelectCstOptgroup;
+    } else {
+      return false;
+    }
+
+  // The custom markup to append
+    const markupToInsert = parseMarkup([node]);
+
+    target.parentNode.insertBefore(markupToInsert[0], target);
+    targetPar.parentNode.insertBefore(node, targetPar);
+
+    return markupToInsert[0];
   }
 
   //
@@ -360,6 +382,7 @@ function builder(el, builderParams) {
     get isDisabled() { return select.disabled; },
     get isOpen() { return isOpen; },
     append: (node, target) => append(node, true, target),
+    insertBefore: (node, target) => insertBefore(node, target),
   };
 
   // Returns the plugin instance, with the public exposed methods and properties
