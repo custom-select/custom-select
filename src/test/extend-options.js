@@ -6,7 +6,7 @@ test('Custom options extend check', assert => {
   const select = document.createElement('select');
   document.body.appendChild(select);
 
-  const actual = fullSelect('select', { scrollToSelected: false, newOption: 123 })[0].getOptions();
+  const actual = fullSelect('select', { scrollToSelected: false, newOption: 123 })[0].pluginOptions;
   const expected = {
     panelClass: 'full-select-panel',
     optionClass: 'full-select-option',

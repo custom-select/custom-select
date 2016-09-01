@@ -68,7 +68,7 @@ test('Empty select: re-append all removed', assert => {
   });
 
   assert.test('... and the custom select contains all the options', q => {
-    actual = fullselect.panel.getElementsByClassName(fullselect.getOptions().optionClass).length;
+    actual = fullselect.panel.getElementsByClassName(fullselect.pluginOptions.optionClass).length;
     expected = 4;
     q.deepEqual(actual, expected,
       'the elements should be 4');

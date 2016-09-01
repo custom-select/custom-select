@@ -18,7 +18,7 @@ test('On click opens the panel', assert => {
   document.body.appendChild(select);
 
   const cstSelects = fullSelect('select');
-  options = cstSelects[0].getOptions();
+  options = cstSelects[0].pluginOptions;
 
   document.getElementsByClassName(options.openerClass)[0].children[0].click();
 

@@ -19,7 +19,7 @@ test('With the public provided method disable the select', assert => {
   document.body.appendChild(select1);
 
   const cstSelect = fullSelect('select');
-  cstSelect[0].getOptions();
+  cstSelect[0].pluginOptions;
 
   select1.parentNode.fullSelect.disable();
 

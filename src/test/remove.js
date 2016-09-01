@@ -48,7 +48,7 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the custom options are one less', q => {
-    actual = fullselect.panel.getElementsByClassName(fullselect.getOptions().optionClass);
+    actual = fullselect.panel.getElementsByClassName(fullselect.pluginOptions.optionClass);
     expected = 3;
     q.deepEqual(actual.length, expected,
       'should be 3');
@@ -79,7 +79,7 @@ test('Remove an option group', assert => {
   });
 
   assert.test('... and the custom option group is not in the panel anymore', q => {
-    actual = [].indexOf.call(select.getElementsByTagName(fullselect.getOptions().optgroupClass),
+    actual = [].indexOf.call(select.getElementsByTagName(fullselect.pluginOptions.optgroupClass),
       removedGroup.fullSelectOriginalOptgroup);
     expected = -1;
     q.deepEqual(actual, expected,

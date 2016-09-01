@@ -20,7 +20,7 @@ test('With the public provided method opens the panel', assert => {
   document.body.appendChild(select1);
 
   const cstSelect = fullSelect('select');
-  options = cstSelect[0].getOptions();
+  options = cstSelect[0].pluginOptions;
 
   select1.parentNode.fullSelect.open();
 
