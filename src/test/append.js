@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 let select;
 let option;
@@ -20,13 +20,13 @@ test('Instance library and append an option at the end', assert => {
     </optgroup>`;
   document.body.appendChild(select);
 
-  const fullselect = fullSelect('select')[0];
+  const customselect = customSelect('select')[0];
 
   option = document.createElement('option');
   option.value = 'mustang';
   option.text = 'Mustang';
 
-  fullselect.append([option]);
+  customselect.append([option]);
 
   assert.test('... and the last option has the correct value', q => {
     actual = select.options[4].value;
@@ -46,7 +46,7 @@ test('Instance library and append an option at the end', assert => {
 
 
   assert.test('... and the added custom option is selectable', q => {
-    select.parentNode.fullSelect.open();
+    select.parentNode.customSelect.open();
     select.parentNode.children[2].children[3].click();
 
     actual = select.parentNode.children[2].children[3].classList.contains('is-selected');
@@ -74,7 +74,7 @@ test('Insert an option at the end of a specified custom optgroup', assert => {
   option.value = 'tesla';
   option.text = 'Tesla';
 
-  assert.throws(() => select.parentNode.fullSelect.append(option, optGroupTarget), TypeError,
+  assert.throws(() => select.parentNode.customSelect.append(option, optGroupTarget), TypeError,
     'should throw TypeError');
   assert.end();
 });
@@ -86,7 +86,7 @@ test('Insert an option at the end of a specified original optgroup', assert => {
   option.value = 'mazda';
   option.text = 'Mazda';
 
-  select.fullSelect.append(option, optGroupTarget);
+  select.customSelect.append(option, optGroupTarget);
 
   actual = select.parentNode.children[2].children[2].children[2].textContent;
   expected = 'Mazda';
@@ -106,9 +106,9 @@ test('Insert an optgroup at the end', assert => {
 
   optgroup.appendChild(option);
 
-  select.parentNode.fullSelect.append(optgroup);
+  select.parentNode.customSelect.append(optgroup);
 
-  actual = select.fullSelect.panel.children[4].dataset.label;
+  actual = select.customSelect.panel.children[4].dataset.label;
   expected = 'Bike';
   assert.equal(actual, expected,
     'should return Bike');
@@ -116,7 +116,7 @@ test('Insert an optgroup at the end', assert => {
 });
 
 test('Use a string as a the node parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.append('a string'); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.append('a string'); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
@@ -126,33 +126,33 @@ test('Use an object as a the target parameter', assert => {
   option.value = 'skateboard';
   option.text = 'Skateboard';
 
-  assert.throws(() => { select.parentNode.fullSelect.append(option, { foo: 'foo' }); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.append(option, { foo: 'foo' }); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Use an option not contained in the select as a the target parameter', assert => {
   var invalidTarget = document.createElement('optgroup');
-  assert.throws(() => { select.parentNode.fullSelect.append(option, invalidTarget); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.append(option, invalidTarget); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Use an invalid argument', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.append(new RegExp()); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.append(new RegExp()); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Use an undefined argument', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.append(); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.append(); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Use an empty array as an argument', assert => {
   expected = [];
-  actual = select.parentNode.fullSelect.append(expected);
+  actual = select.parentNode.customSelect.append(expected);
   assert.deepEqual(actual, expected,
     'should throw the same empty array');
   assert.end();

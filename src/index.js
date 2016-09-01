@@ -1,27 +1,27 @@
 /**
- * full-select
+ * custom-select
  * A lightweight JS script for custom select creation.
  * Needs no dependencies.
  *
  * v0.0.1
- * (https://github.com/gionatan-lombardi/full-select)
+ * (https://github.com/gionatan-lombardi/custom-select)
  *
  * Copyright (c) 2016 Gionatan Lombardi & Marco Nucara
  * MIT License
  */
 
 const defaultParams = {
-  containerClass: 'full-select-container',
-  openerClass: 'full-select-opener',
-  panelClass: 'full-select-panel',
-  optionClass: 'full-select-option',
-  optgroupClass: 'full-select-optgroup',
+  containerClass: 'custom-select-container',
+  openerClass: 'custom-select-opener',
+  panelClass: 'custom-select-panel',
+  optionClass: 'custom-select-option',
+  optgroupClass: 'custom-select-optgroup',
   scrollToSelected: true,
 };
 
 function builder(el, builderParams) {
   var isOpen = false;
-  const containerClass = 'fullSelect';
+  const containerClass = 'customSelect';
   const isSelectedClass = 'is-selected';
   const hasFocusClass = 'has-focus';
   const isDisabledClass = 'is-disabled';
@@ -56,7 +56,7 @@ function builder(el, builderParams) {
     selectedElement.classList.remove(isSelectedClass);
     cstOption.classList.add(isSelectedClass, hasFocusClass);
     selectedElement = focusedElement = cstOption;
-    opener.children[0].textContent = selectedElement.fullSelectOriginalOption.text;
+    opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
   }
 
   function setValue(value) {
@@ -69,28 +69,28 @@ function builder(el, builderParams) {
     // The option with the provided value becomes the selected one
     // And changes the select current value
     toSelect.selected = true;
-    // Sets the 1:1 corrisponding .full-select-option as the selected one
-    setSelectedElement(toSelect.fullSelectCstOption);
+    // Sets the 1:1 corrisponding .custom-select-option as the selected one
+    setSelectedElement(toSelect.customSelectCstOption);
   }
 
   function moveFocuesedElement(direction) {
-    // Get all the .full-select-options
+    // Get all the .custom-select-options
     // Get the index of the current focused one
     const currentFocusedIndex =
-      [].indexOf.call(select.options, focusedElement.fullSelectOriginalOption);
+      [].indexOf.call(select.options, focusedElement.customSelectOriginalOption);
     // If the next or prev custom option exist
     // Sets it as the new focused one
     if (select.options[currentFocusedIndex + direction]) {
-      setFocusedElement(select.options[currentFocusedIndex + direction].fullSelectCstOption);
+      setFocusedElement(select.options[currentFocusedIndex + direction].customSelectCstOption);
     }
   }
 
   function open() {
     // If present closes an opened instance of the plugin
     // Only one at time can be open
-    var openedFullSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
-    if (openedFullSelect) {
-      openedFullSelect.parentNode.fullSelect.close();
+    var openedCustomSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
+    if (openedCustomSelect) {
+      openedCustomSelect.parentNode.customSelect.close();
     }
 
     // Opens only the clicked one
@@ -123,7 +123,7 @@ function builder(el, builderParams) {
     } else if (e.target.classList.contains(builderParams.optionClass) && panel.contains(e.target)) {
       setSelectedElement(e.target);
       // Sets the corrisponding select's option to selected updating the select's value too
-      selectedElement.fullSelectOriginalOption.selected = true;
+      selectedElement.customSelectOriginalOption.selected = true;
       close();
     // Click outside the container closes the panel
     } else if (isOpen) {
@@ -151,7 +151,7 @@ function builder(el, builderParams) {
           // On "Enter" or "Space" selects the focused element as the selected one
           setSelectedElement(focusedElement);
           // Sets the corrisponding select's option to selected updating the select's value too
-          selectedElement.fullSelectOriginalOption.selected = true;
+          selectedElement.customSelectOriginalOption.selected = true;
           close();
           break;
         case 27:
@@ -188,7 +188,7 @@ function builder(el, builderParams) {
               // removed cause not supported by IE:
               // if (options[i].text.startsWith(searchKey))
               if (select.options[i].text.toUpperCase().substr(0, searchKey.length) === searchKey) {
-                setFocusedElement(select.options[i].fullSelectCstOption);
+                setFocusedElement(select.options[i].customSelectCstOption);
                 break;
               }
             }
@@ -199,7 +199,7 @@ function builder(el, builderParams) {
   }
 
   function changeEvent() {
-    setSelectedElement(select.options[select.selectedIndex].fullSelectCstOption);
+    setSelectedElement(select.options[select.selectedIndex].customSelectCstOption);
   }
 
   function addEvents() {
@@ -248,11 +248,11 @@ function builder(el, builderParams) {
 
         // IMPORTANT: Stores in a property of the created custom option group
         // a hook to the the corrisponding select's option group
-        cstOptgroup.fullSelectOriginalOptgroup = nodeList[i];
+        cstOptgroup.customSelectOriginalOptgroup = nodeList[i];
 
         // IMPORTANT: Stores in a property of select's option group
         // a hook to the created custom option group
-        nodeList[i].fullSelectCstOptgroup = cstOptgroup;
+        nodeList[i].customSelectCstOptgroup = cstOptgroup;
 
         const subNodes = parseMarkup(nodeList[i].children);
         for (let j = 0, lj = subNodes.length; j < lj; j++) {
@@ -269,11 +269,11 @@ function builder(el, builderParams) {
 
         // IMPORTANT: Stores in a property of the created custom option
         // a hook to the the corrisponding select's option
-        cstOption.fullSelectOriginalOption = nodeList[i];
+        cstOption.customSelectOriginalOption = nodeList[i];
 
         // IMPORTANT: Stores in a property of select's option
         // a hook to the created custom option
-        nodeList[i].fullSelectCstOption = cstOption;
+        nodeList[i].customSelectCstOption = cstOption;
 
         // If the select's option is selected
         if (nodeList[i].selected) {
@@ -296,7 +296,7 @@ function builder(el, builderParams) {
     } else if (targetPar instanceof HTMLElement
       && targetPar.tagName.toUpperCase() === 'OPTGROUP'
       && select.contains(targetPar)) {
-      target = targetPar.fullSelectCstOptgroup;
+      target = targetPar.customSelectCstOptgroup;
     } else {
       throw new TypeError('Invalid Argument');
     }
@@ -314,7 +314,7 @@ function builder(el, builderParams) {
         if (target === panel) {
           select.appendChild(node[i]);
         } else {
-          target.fullSelectOriginalOptgroup.appendChild(node[i]);
+          target.customSelectOriginalOptgroup.appendChild(node[i]);
         }
       }
     }
@@ -326,11 +326,11 @@ function builder(el, builderParams) {
     if (node instanceof HTMLElement
       && node.tagName.toUpperCase() === 'OPTION'
       && select.contains(node)) {
-      cstNode = node.fullSelectCstOption;
+      cstNode = node.customSelectCstOption;
     } else if (node instanceof HTMLElement
       && node.tagName.toUpperCase() === 'OPTGROUP'
       && select.contains(node)) {
-      cstNode = node.fullSelectCstOptgroup;
+      cstNode = node.customSelectCstOptgroup;
     } else {
       throw new TypeError('Invalid Argument');
     }
@@ -352,11 +352,11 @@ function builder(el, builderParams) {
     if (targetPar instanceof HTMLElement
       && targetPar.tagName.toUpperCase() === 'OPTION'
       && select.contains(targetPar)) {
-      target = targetPar.fullSelectCstOption;
+      target = targetPar.customSelectCstOption;
     } else if (targetPar instanceof HTMLElement
       && targetPar.tagName.toUpperCase() === 'OPTGROUP'
       && select.contains(targetPar)) {
-      target = targetPar.fullSelectCstOptgroup;
+      target = targetPar.customSelectCstOptgroup;
     } else {
       throw new TypeError('Invalid Argument');
     }
@@ -408,7 +408,7 @@ function builder(el, builderParams) {
   }
 
   // Stores the plugin public exposed methods and properties, directly in the container HTMLElement
-  container.fullSelect = {
+  container.customSelect = {
     get pluginOptions() { return builderParams; },
     open,
     close,
@@ -431,13 +431,13 @@ function builder(el, builderParams) {
   };
 
   // Stores the plugin directly in the original select
-  select.fullSelect = container.fullSelect;
+  select.customSelect = container.customSelect;
 
   // Returns the plugin instance, with the public exposed methods and properties
-  return container.fullSelect;
+  return container.customSelect;
 }
 
-export default function fullSelect(element, customParams) {
+export default function customSelect(element, customParams) {
   // Overrides the default options with the ones provided by the user
   var nodeList = [];
   const selects = [];

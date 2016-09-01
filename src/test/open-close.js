@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 var options;
 var select1;
@@ -19,12 +19,12 @@ test('With the public provided method opens the panel', assert => {
     </optgroup>`;
   document.body.appendChild(select1);
 
-  const cstSelect = fullSelect('select');
+  const cstSelect = customSelect('select');
   options = cstSelect[0].pluginOptions;
 
-  select1.parentNode.fullSelect.open();
+  select1.parentNode.customSelect.open();
 
-  const actual = select1.parentNode.fullSelect.isOpen;
+  const actual = select1.parentNode.customSelect.isOpen;
   const expected = true;
 
   assert.deepEqual(actual, expected,
@@ -40,11 +40,11 @@ test('With the public provided method opens the second select and closes the fir
     <option value="frizz">Frizz</option>`;
   document.body.appendChild(select2);
 
-  fullSelect(select2);
+  customSelect(select2);
 
-  document.querySelectorAll('.fullSelect')[1].fullSelect.open();
+  document.querySelectorAll('.customSelect')[1].customSelect.open();
 
-  const actual = select1.parentNode.fullSelect.isOpen;
+  const actual = select1.parentNode.customSelect.isOpen;
   const expected = false;
 
   assert.deepEqual(actual, expected,

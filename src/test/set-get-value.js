@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 var select;
 var cstSelect;
@@ -17,7 +17,7 @@ test('With the public property set the value', assert => {
   `;
   document.body.appendChild(select);
 
-  cstSelect = fullSelect('select');
+  cstSelect = customSelect('select');
   cstSelect[0].value = 'flower';
 
   const actual = select.value;
@@ -38,7 +38,7 @@ test('... and use public property to get the value', assert => {
 });
 
 test('... and the correct custom option is selected', assert => {
-  const actual = select.options[1].fullSelectCstOption.classList.contains('is-selected');
+  const actual = select.options[1].customSelectCstOption.classList.contains('is-selected');
   const expected = true;
 
   assert.deepEqual(actual, expected,

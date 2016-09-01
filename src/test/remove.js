@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 let actual;
 let expected;
@@ -16,12 +16,12 @@ select.innerHTML = `
     <option value="audi">Audi</option>
   </optgroup>`;
 document.body.appendChild(select);
-const fullselect = fullSelect('select')[0];
+const customselect = customSelect('select')[0];
 
 test('Remove an option', assert => {
   var target = select.children[2].children[1]; // Audi option
 
-  const removed = fullselect.remove(target);
+  const removed = customselect.remove(target);
 
   assert.test('... and the returned option is the same', q => {
     actual = removed;
@@ -40,7 +40,7 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the custom option is not in the panel anymore', q => {
-    actual = fullselect.panel.querySelectorAll(`[data-value="${removed.getAttribute('value')}"]`);
+    actual = customselect.panel.querySelectorAll(`[data-value="${removed.getAttribute('value')}"]`);
     expected = 0;
     q.deepEqual(actual.length, expected,
       'should be 0');
@@ -48,7 +48,7 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the custom options are one less', q => {
-    actual = fullselect.panel.getElementsByClassName(fullselect.pluginOptions.optionClass);
+    actual = customselect.panel.getElementsByClassName(customselect.pluginOptions.optionClass);
     expected = 3;
     q.deepEqual(actual.length, expected,
       'should be 3');
@@ -59,7 +59,7 @@ test('Remove an option', assert => {
 test('Remove an option group', assert => {
   var targetGroup = select.children[2]; // Auto option group
 
-  const removedGroup = fullselect.remove(targetGroup);
+  const removedGroup = customselect.remove(targetGroup);
 
   assert.test('... and the returned option group is the same', q => {
     actual = removedGroup;
@@ -71,7 +71,7 @@ test('Remove an option group', assert => {
 
   assert.test('... and the option group is not in the select anymore', q => {
     actual = [].indexOf.call(select.getElementsByTagName('optgroup'),
-      removedGroup.fullSelectOriginalOptgroup);
+      removedGroup.customSelectOriginalOptgroup);
     expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
@@ -79,8 +79,8 @@ test('Remove an option group', assert => {
   });
 
   assert.test('... and the custom option group is not in the panel anymore', q => {
-    actual = [].indexOf.call(select.getElementsByTagName(fullselect.pluginOptions.optgroupClass),
-      removedGroup.fullSelectOriginalOptgroup);
+    actual = [].indexOf.call(select.getElementsByTagName(customselect.pluginOptions.optgroupClass),
+      removedGroup.customSelectOriginalOptgroup);
     expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
@@ -89,20 +89,20 @@ test('Remove an option group', assert => {
 });
 
 test('Remove: Use a string as the parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.remove('a string'); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.remove('a string'); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Remove: Use an invalid HTMLElement parameter', assert => {
   const option = document.createElement('option');
-  assert.throws(() => { select.parentNode.fullSelect.remove(option); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.remove(option); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('Remove: Use undefined as parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.remove(undefined); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.remove(undefined); }, TypeError,
     'should throw TypeError');
   assert.end();
 });

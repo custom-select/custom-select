@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Full Select</title>
+    <title>Custom Select</title>
     <script>
       if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
         document.documentElement.classList.add('is-touch');
@@ -15,28 +15,28 @@
         font-family: Arial;
         font-size: 1.4rem;
       }
-      .full-select-container {
+      .custom-select-container {
         position: relative;
       }
-      .full-select-container.is-disabled {
+      .custom-select-container.is-disabled {
         opacity: .2;
       }
-      .full-select-opener {
+      .custom-select-opener {
         border-radius: 3px;
         background-color: #ccc;
         padding: 0.5em;
         display: inline-block;
         cursor: pointer;
       }
-      html:not(.is-touch) .full-select-container select {
+      html:not(.is-touch) .custom-select-container select {
         visibility: hidden;
       }
-      .full-select-container select {
+      .custom-select-container select {
         position: absolute;
         top: 0;
         left: 0;
       }
-      html:not(.is-touch) .full-select-panel {
+      html:not(.is-touch) .custom-select-panel {
         max-height: 0;
         transition: max-height .5s ease-out;
         overflow: hidden;
@@ -45,27 +45,27 @@
         top: 100%;
         z-index: 1;
       }
-      html.is-touch .full-select-panel {
+      html.is-touch .custom-select-panel {
         display: none;
       }
-      html:not(.is-touch) .full-select-panel.is-open {
+      html:not(.is-touch) .custom-select-panel.is-open {
         max-height: 10rem;
         overflow-y: auto
       }
-      .full-select-option {
+      .custom-select-option {
         padding: 0.5em;
       }
-      .full-select-option.has-focus {
+      .custom-select-option.has-focus {
         background-color: red;
       }
-      .full-select-option.is-selected::before {
+      .custom-select-option.is-selected::before {
         content: "✔";
         padding-right: 0.5em;
       }
-      .full-select-optgroup > .full-select-option {
+      .custom-select-optgroup > .custom-select-option {
         padding-left: 2em;
       }
-      .full-select-optgroup::before {
+      .custom-select-optgroup::before {
         content: attr(data-label);
         display: block;
         padding: 0.5em;
@@ -75,7 +75,7 @@
 
   </head>
   <body>
-    <h1>Hello, Full Select!</h1>
+    <h1>Hello, Custom Select!</h1>
     <select id="mySelect">
       <option value>Select...</option>
       <option value="foo">Foo</option>

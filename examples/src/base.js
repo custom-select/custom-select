@@ -1,10 +1,10 @@
-import fullSelect from "./../../build/"
+import customSelect from "./../../build/"
 
-const mySelect = fullSelect('select', {
+const mySelect = customSelect('select', {
   scrollToSelected: false,
   newOption: 123
 });
 
 console.log(mySelect);
 
-// window.fullSelect = fullSelect;
+// window.customSelect = customSelect;

@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 test('Custom panel replicated markup check', assert => {
   document.body.innerHTML = '';
@@ -13,9 +13,9 @@ test('Custom panel replicated markup check', assert => {
       <option value="frizz">Frizz</option>
     </optgroup>`;
   document.body.appendChild(select);
-  fullSelect('select');
+  customSelect('select');
   const actual = select.options.length;
-  const expected = document.querySelectorAll('.full-select-option').length;
+  const expected = document.querySelectorAll('.custom-select-option').length;
   assert.deepEqual(actual, expected,
     'should return 3');
   assert.end();

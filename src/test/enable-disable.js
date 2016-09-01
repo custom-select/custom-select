@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 var select1;
 var select2;
@@ -18,9 +18,9 @@ test('With the public provided method disable the select', assert => {
     </optgroup>`;
   document.body.appendChild(select1);
 
-  fullSelect('select');
+  customSelect('select');
 
-  select1.parentNode.fullSelect.disabled = true;
+  select1.parentNode.customSelect.disabled = true;
 
   const actual = select1.disabled;
   const expected = true;
@@ -39,9 +39,9 @@ test('Init a second disabled select', assert => {
     <option value="frizz">Frizz</option>`;
   document.body.appendChild(select2);
 
-  fullSelect(select2);
+  customSelect(select2);
 
-  const actual = select2.parentNode.fullSelect.disabled;
+  const actual = select2.parentNode.customSelect.disabled;
   const expected = true;
 
   assert.deepEqual(actual, expected,
@@ -51,7 +51,7 @@ test('Init a second disabled select', assert => {
 
 test('With the public provided method enable the first select', assert => {
   // Pass a falsy value instad of false
-  select1.parentNode.fullSelect.disabled = 0;
+  select1.parentNode.customSelect.disabled = 0;
 
   const actual = select1.parentNode.classList.contains('is-disabled');
   const expected = false;

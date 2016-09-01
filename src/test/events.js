@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 var options;
 
@@ -17,7 +17,7 @@ test('On click opens the panel', assert => {
     </optgroup>`;
   document.body.appendChild(select);
 
-  const cstSelects = fullSelect('select');
+  const cstSelects = customSelect('select');
   options = cstSelects[0].pluginOptions;
 
   document.getElementsByClassName(options.openerClass)[0].children[0].click();
@@ -39,7 +39,7 @@ test('On click on second select closes the first...', assert => {
     <option value="avocado">Avocado</option>`;
   document.body.appendChild(select);
 
-  fullSelect(select);
+  customSelect(select);
 
   document.getElementsByClassName(options.openerClass)[1].click();
 
@@ -82,7 +82,7 @@ test('On click outside the selects closes the opened one', assert => {
 
 test('On click on an option sets selected class', assert => {
   // first select
-  document.getElementsByClassName(options.openerClass)[1].parentNode.fullSelect.open();
+  document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open();
   document.getElementsByClassName(options.optionClass)[2].click();
 
   const actual = document.querySelectorAll(`.${options.optionClass}`)[2]
@@ -103,7 +103,7 @@ test('... and focus class', assert => {
 });
 
 test('... and closes the select', assert => {
-  const actual = document.getElementsByTagName('select')[0].parentNode.fullSelect.isOpen;
+  const actual = document.getElementsByTagName('select')[0].parentNode.customSelect.isOpen;
 
   assert.false(actual,
     'should return false');
@@ -153,7 +153,7 @@ test('On keydown on the first select...', assert => {
     Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
     currentContainer.dispatchEvent(e);
 
-    actual = currentContainer.fullSelect.isOpen;
+    actual = currentContainer.customSelect.isOpen;
 
     q.true(actual,
       'should return true');

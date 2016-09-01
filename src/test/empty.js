@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 let actual;
 let expected;
@@ -16,12 +16,12 @@ select.innerHTML = `
     <option value="audi">Audi</option>
   </optgroup>`;
 document.body.appendChild(select);
-const fullselect = fullSelect('select')[0];
+const customselect = customSelect('select')[0];
 let removed;
 
 test('Empty select (remove any option)', assert => {
-  const expectedRemoved = [].slice.call(fullselect.select.children);
-  removed = fullselect.empty();
+  const expectedRemoved = [].slice.call(customselect.select.children);
+  removed = customselect.empty();
 
   assert.test('... and the returned all select child', q => {
     actual = removed;
@@ -40,7 +40,7 @@ test('Empty select (remove any option)', assert => {
   });
 
   assert.test('... and the custom select is empty', q => {
-    actual = fullselect.panel.children.length;
+    actual = customselect.panel.children.length;
     expected = 0;
     q.deepEqual(actual, expected,
       'should be 0');
@@ -57,10 +57,10 @@ test('Empty select (remove any option)', assert => {
 });
 
 test('Empty select: re-append all removed', assert => {
-  fullselect.append(removed);
+  customselect.append(removed);
 
   assert.test('... and the select contains all the options', q => {
-    actual = fullselect.select.options.length;
+    actual = customselect.select.options.length;
     expected = 4;
     q.deepEqual(actual, expected,
       'the elements should be 4');
@@ -68,7 +68,7 @@ test('Empty select: re-append all removed', assert => {
   });
 
   assert.test('... and the custom select contains all the options', q => {
-    actual = fullselect.panel.getElementsByClassName(fullselect.pluginOptions.optionClass).length;
+    actual = customselect.panel.getElementsByClassName(customselect.pluginOptions.optionClass).length;
     expected = 4;
     q.deepEqual(actual, expected,
       'the elements should be 4');

@@ -1,5 +1,5 @@
 import test from 'tape';
-import fullSelect from './../';
+import customSelect from './../';
 
 let option;
 let actual;
@@ -18,7 +18,7 @@ select.innerHTML = `
     <option value="audi">Audi</option>
   </optgroup>`;
 document.body.appendChild(select);
-const fullselect = fullSelect('select')[0];
+const customselect = customSelect('select')[0];
 
 test('Insert an option before an optgroup', assert => {
   target = select.children[1]; // Moto optgroup
@@ -26,7 +26,7 @@ test('Insert an option before an optgroup', assert => {
   option.value = 'mustang';
   option.text = 'Mustang';
 
-  fullselect.insertBefore(option, target);
+  customselect.insertBefore(option, target);
 
   actual = select.children[1].value;
   expected = 'mustang';
@@ -41,7 +41,7 @@ test('Insert an option before an option in a optgroup', assert => {
   option.value = 'subaru';
   option.text = 'Subaru';
 
-  fullselect.insertBefore(option, target);
+  customselect.insertBefore(option, target);
 
   // The new injected custom option
   actual = select.parentNode.children[2].children[2].children[0].dataset.value;
@@ -61,7 +61,7 @@ test('Insert an optgroup with an option before an option', assert => {
   option.value = 'mountain bike';
   option.text = 'Mountain bike';
 
-  fullselect.insertBefore(optgroup, target);
+  customselect.insertBefore(optgroup, target);
 
   // The new injected optgroup
   actual = select.children[1].getAttribute('label');
@@ -73,25 +73,25 @@ test('Insert an optgroup with an option before an option', assert => {
 
 test('InsertBefore: Use a string as the target parameter', assert => {
   option = document.createElement('option');
-  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, 'a string'); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(option, 'a string'); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('InsertBefore: Use undefined as the target parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(option); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('InsertBefore: Use an invalid HTMLElement target parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, option); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(option, option); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
 test('InsertBefore: Use undefined as the node parameter', assert => {
-  assert.throws(() => { select.parentNode.fullSelect.insertBefore(undefined, target); }, TypeError,
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(undefined, target); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
