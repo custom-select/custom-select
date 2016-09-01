@@ -1,6 +1,6 @@
 # custom-select
-A lightweight JS script for custom select creation.  
-**IMPORTANT**: This library is still in development, it's currently unusable.
+A lightweight JS script for custom select creation.
+No dependencies needed.
 
 ## How it works
 Start with a simple select:
@@ -11,5 +11,3 @@ Start with a simple select:
     <option value="buzz">Buzz</option>
 </select>
 ```
-
-  
