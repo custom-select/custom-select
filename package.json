@@ -1,14 +1,14 @@
 {
-  "name": "full-select",
+  "name": "custom-select",
   "description": "A lightweight JS script for custom select creation.",
   "version": "0.0.5",
   "main": "build",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gionatan-lombardi/full-select.git"
+    "url": "https://github.com/gionatan-lombardi/custom-select.git"
   },
   "bugs": {
-    "url": "https://github.com/gionatan-lombardi/full-select/issues"
+    "url": "https://github.com/gionatan-lombardi/custom-select/issues"
   },
   "scripts": {
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",
