@@ -82,7 +82,7 @@ test('On click outside the selects closes the opened one', assert => {
 
 test('On click on an option sets selected class', assert => {
   // first select
-  document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open();
+  document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open = true;
   document.getElementsByClassName(options.optionClass)[2].click();
 
   const actual = document.querySelectorAll(`.${options.optionClass}`)[2]
@@ -103,7 +103,7 @@ test('... and focus class', assert => {
 });
 
 test('... and closes the select', assert => {
-  const actual = document.getElementsByTagName('select')[0].parentNode.customSelect.isOpen;
+  const actual = document.getElementsByTagName('select')[0].parentNode.customSelect.open;
 
   assert.false(actual,
     'should return false');
@@ -153,7 +153,7 @@ test('On keydown on the first select...', assert => {
     Object.defineProperty(e, 'keyCode', { value: 40, writable: true });
     currentContainer.dispatchEvent(e);
 
-    actual = currentContainer.customSelect.isOpen;
+    actual = currentContainer.customSelect.open;
 
     q.true(actual,
       'should return true');

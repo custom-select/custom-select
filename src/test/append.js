@@ -46,7 +46,7 @@ test('Instance library and append an option at the end', assert => {
 
 
   assert.test('... and the added custom option is selectable', q => {
-    select.parentNode.customSelect.open();
+    select.parentNode.customSelect.open = true;
     select.parentNode.children[2].children[3].click();
 
     actual = select.parentNode.children[2].children[3].classList.contains('is-selected');

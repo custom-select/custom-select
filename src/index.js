@@ -85,37 +85,41 @@ function builder(el, builderParams) {
     }
   }
 
-  function open() {
-    // If present closes an opened instance of the plugin
-    // Only one at time can be open
-    var openedCustomSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
-    if (openedCustomSelect) {
-      openedCustomSelect.parentNode.customSelect.close();
+  // Open/Close function (toggle)
+  function open(bool) {
+    // Open
+    if (bool || typeof bool === 'undefined') {
+      // If present closes an opened instance of the plugin
+      // Only one at time can be open
+      const openedCustomSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
+      if (openedCustomSelect) {
+        openedCustomSelect.parentNode.customSelect.open = false;
+      }
+
+      // Opens only the clicked one
+      opener.classList.add(isActiveClass);
+      panel.classList.add(isOpenClass);
+
+      // Sets the global state
+      isOpen = true;
+    // Close
+    } else {
+      opener.classList.remove(isActiveClass);
+      panel.classList.remove(isOpenClass);
+      // When closing the panel the focused custom option must be the selected one
+      setFocusedElement(selectedElement);
+
+      // Sets the global state
+      isOpen = false;
     }
-
-    // Opens only the clicked one
-    opener.classList.add(isActiveClass);
-    panel.classList.add(isOpenClass);
-
-    // Sets the global state
-    isOpen = true;
-  }
-
-  function close() {
-    opener.classList.remove(isActiveClass);
-    panel.classList.remove(isOpenClass);
-    // When closing the panel the focused custom option must be the selected one
-    setFocusedElement(selectedElement);
-
-    // Sets the global state
-    isOpen = false;
+    return isOpen;
   }
 
   function clickEvent(e) {
     // Opener click
     if (e.target === opener || opener.contains(e.target)) {
       if (isOpen) {
-        close();
+        open(false);
       } else {
         open();
       }
@@ -124,10 +128,10 @@ function builder(el, builderParams) {
       setSelectedElement(e.target);
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.customSelectOriginalOption.selected = true;
-      close();
+      open(false);
     // Click outside the container closes the panel
     } else if (isOpen) {
-      close();
+      open(false);
     }
   }
 
@@ -152,11 +156,11 @@ function builder(el, builderParams) {
           setSelectedElement(focusedElement);
           // Sets the corrisponding select's option to selected updating the select's value too
           selectedElement.customSelectOriginalOption.selected = true;
-          close();
+          open(false);
           break;
         case 27:
           // On "Escape" closes the panel
-          close();
+          open(false);
           break;
 
         case 38:
@@ -422,8 +426,10 @@ function builder(el, builderParams) {
   // Stores the plugin public exposed methods and properties, directly in the container HTMLElement
   container.customSelect = {
     get pluginOptions() { return builderParams; },
-    open,
-    close,
+    get open() { return isOpen; },
+    set open(bool) {
+      open(bool);
+    },
     get disabled() { return select.disabled; },
     set disabled(bool) {
       disabled(bool);
@@ -432,7 +438,6 @@ function builder(el, builderParams) {
     set value(val) {
       setValue(val);
     },
-    get isOpen() { return isOpen; },
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
     remove,

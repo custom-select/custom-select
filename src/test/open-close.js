@@ -22,9 +22,9 @@ test('With the public provided method opens the panel', assert => {
   const cstSelect = customSelect('select');
   options = cstSelect[0].pluginOptions;
 
-  select1.parentNode.customSelect.open();
+  select1.customSelect.open = true;
 
-  const actual = select1.parentNode.customSelect.isOpen;
+  const actual = select1.parentNode.customSelect.open;
   const expected = true;
 
   assert.deepEqual(actual, expected,
@@ -32,7 +32,7 @@ test('With the public provided method opens the panel', assert => {
   assert.end();
 });
 
-test('With the public provided method opens the second select and closes the first...', assert => {
+test('Opens the second select and closes the first...', assert => {
   select2 = document.createElement('select');
   select2.innerHTML = `
     <option value="">Select...</option>
@@ -42,9 +42,9 @@ test('With the public provided method opens the second select and closes the fir
 
   customSelect(select2);
 
-  document.querySelectorAll('.customSelect')[1].customSelect.open();
+  document.querySelectorAll('.customSelect')[1].customSelect.open = true;
 
-  const actual = select1.parentNode.customSelect.isOpen;
+  const actual = select1.customSelect.open;
   const expected = false;
 
   assert.deepEqual(actual, expected,
@@ -59,5 +59,16 @@ test('... and checks if the second is currently open', assert => {
 
   assert.deepEqual(actual, expected,
     'should return true');
+  assert.end();
+});
+
+test('With the public provided method closes the second', assert => {
+  document.querySelectorAll('.customSelect')[1].customSelect.open = false;
+
+  const actual = select2.customSelect.panel.classList.contains('is-open');
+  const expected = false;
+
+  assert.deepEqual(actual, expected,
+    'should return false');
   assert.end();
 });
