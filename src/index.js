@@ -428,6 +428,7 @@ function builder(el, builderParams) {
     opener,
     select,
     panel,
+    container,
   };
 
   // Stores the plugin directly in the original select
