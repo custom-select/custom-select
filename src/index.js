@@ -323,6 +323,23 @@ function builder(el, builderParams) {
     return node;
   }
 
+  function remove(node) {
+    var cstNode;
+    if (node instanceof HTMLElement
+      && node.tagName.toUpperCase() === 'OPTION'
+      && select.contains(node)) {
+      cstNode = node.fullSelectCstOption;
+    } else if (node instanceof HTMLElement
+      && node.tagName.toUpperCase() === 'OPTGROUP'
+      && select.contains(node)) {
+      cstNode = node.fullSelectCstOptgroup;
+    } else {
+      throw new TypeError('Invalid Argument');
+    }
+    cstNode.parentNode.removeChild(cstNode);
+    return node.parentNode.removeChild(node);
+  }
+
   function insertBefore(node, targetPar) {
     var target;
     if (targetPar instanceof HTMLElement
@@ -398,6 +415,7 @@ function builder(el, builderParams) {
     get isOpen() { return isOpen; },
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
+    remove,
     opener,
     select,
     panel,

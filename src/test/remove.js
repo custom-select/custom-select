@@ -32,15 +32,15 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the option is not in the select anymore', q => {
-    actual = select.options.indexOf(removed);
-    expected = '-1';
+    actual = [].indexOf.call(select.options, removed);
+    expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
     q.end();
   });
 
   assert.test('... and the custom option is not in the panel anymore', q => {
-    actual = fullselect.panel.querySelector(`[data-value="${removed.getAttribute('value')}"]`);
+    actual = fullselect.panel.querySelectorAll(`[data-value="${removed.getAttribute('value')}"]`);
     expected = 0;
     q.deepEqual(actual.length, expected,
       'should be 0');
@@ -48,7 +48,7 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the custom options are one less', q => {
-    actual = fullselect.panel.querySelectorAll(fullselect.getOptions().optionClass);
+    actual = fullselect.panel.getElementsByClassName(fullselect.getOptions().optionClass);
     expected = 3;
     q.deepEqual(actual.length, expected,
       'should be 3');
@@ -57,7 +57,7 @@ test('Remove an option', assert => {
 });
 
 test('Remove an option group', assert => {
-  var targetGroup = select.children[2].children[1]; // Audi option
+  var targetGroup = select.children[2]; // Auto option group
 
   const removedGroup = fullselect.remove(targetGroup);
 
@@ -72,7 +72,7 @@ test('Remove an option group', assert => {
   assert.test('... and the option group is not in the select anymore', q => {
     actual = [].indexOf.call(select.getElementsByTagName('optgroup'),
       removedGroup.fullSelectOriginalOptgroup);
-    expected = '-1';
+    expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
     q.end();
@@ -81,9 +81,28 @@ test('Remove an option group', assert => {
   assert.test('... and the custom option group is not in the panel anymore', q => {
     actual = [].indexOf.call(select.getElementsByTagName(fullselect.getOptions().optgroupClass),
       removedGroup.fullSelectOriginalOptgroup);
-    expected = '-1';
+    expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
     q.end();
   });
+});
+
+test('Remove: Use a string as the parameter', assert => {
+  assert.throws(() => { select.parentNode.fullSelect.remove('a string'); }, TypeError,
+    'should throw TypeError');
+  assert.end();
+});
+
+test('Remove: Use an invalid HTMLElement parameter', assert => {
+  const option = document.createElement('option');
+  assert.throws(() => { select.parentNode.fullSelect.remove(option); }, TypeError,
+    'should throw TypeError');
+  assert.end();
+});
+
+test('Remove: Use undefined as parameter', assert => {
+  assert.throws(() => { select.parentNode.fullSelect.remove(undefined); }, TypeError,
+    'should throw TypeError');
+  assert.end();
 });

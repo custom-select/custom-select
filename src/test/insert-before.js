@@ -71,28 +71,26 @@ test('Insert an optgroup with an option before an option', assert => {
   assert.end();
 });
 
-test('Use a string as the target parameter argument', assert => {
+test('InsertBefore: Use a string as the target parameter', assert => {
   option = document.createElement('option');
   assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, 'a string'); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
-test('Use undefined as the target parameter', assert => {
-  option = document.createElement('option');
+test('InsertBefore: Use undefined as the target parameter', assert => {
   assert.throws(() => { select.parentNode.fullSelect.insertBefore(option); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
-test('Use an invalid HTMLElement target parameter', assert => {
-  option = document.createElement('option');
+test('InsertBefore: Use an invalid HTMLElement target parameter', assert => {
   assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, option); }, TypeError,
     'should throw TypeError');
   assert.end();
 });
 
-test('Use a string as the target parameter argument', assert => {
+test('InsertBefore: Use undefined as the node parameter', assert => {
   assert.throws(() => { select.parentNode.fullSelect.insertBefore(undefined, target); }, TypeError,
     'should throw TypeError');
   assert.end();
