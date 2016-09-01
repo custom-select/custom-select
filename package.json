@@ -1,7 +1,7 @@
 {
   "name": "custom-select",
   "description": "A lightweight JS script for custom select creation.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "build",
   "repository": {
     "type": "git",
