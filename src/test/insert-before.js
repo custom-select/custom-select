@@ -4,6 +4,7 @@ import fullSelect from './../';
 let option;
 let actual;
 let expected;
+let target;
 
 document.body.innerHTML = '';
 const select = document.createElement('select');
@@ -20,7 +21,7 @@ document.body.appendChild(select);
 const fullselect = fullSelect('select')[0];
 
 test('Insert an option before an optgroup', assert => {
-  var target = select.children[1]; // Moto optgroup
+  target = select.children[1]; // Moto optgroup
   option = document.createElement('option');
   option.value = 'mustang';
   option.text = 'Mustang';
@@ -35,7 +36,7 @@ test('Insert an option before an optgroup', assert => {
 });
 
 test('Insert an option before an option in a optgroup', assert => {
-  var target = select.options[2]; // Mercedes
+  target = select.options[2]; // Mercedes
   option = document.createElement('option');
   option.value = 'subaru';
   option.text = 'Subaru';
@@ -51,7 +52,7 @@ test('Insert an option before an option in a optgroup', assert => {
 });
 
 test('Insert an optgroup with an option before an option', assert => {
-  var target = select.children[1]; // Moto optgroup
+  target = select.children[1]; // Moto optgroup
 
   const optgroup = document.createElement('optgroup');
   optgroup.setAttribute('label', 'Bike');
@@ -67,5 +68,32 @@ test('Insert an optgroup with an option before an option', assert => {
   expected = 'Bike';
   assert.deepEqual(actual, expected,
     'should return Bike');
+  assert.end();
+});
+
+test('Use a string as the target parameter argument', assert => {
+  option = document.createElement('option');
+  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, 'a string'); }, TypeError,
+    'should throw TypeError');
+  assert.end();
+});
+
+test('Use undefined as the target parameter', assert => {
+  option = document.createElement('option');
+  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option); }, TypeError,
+    'should throw TypeError');
+  assert.end();
+});
+
+test('Use an invalid HTMLElement target parameter', assert => {
+  option = document.createElement('option');
+  assert.throws(() => { select.parentNode.fullSelect.insertBefore(option, option); }, TypeError,
+    'should throw TypeError');
+  assert.end();
+});
+
+test('Use a string as the target parameter argument', assert => {
+  assert.throws(() => { select.parentNode.fullSelect.insertBefore(undefined, target); }, TypeError,
+    'should throw TypeError');
   assert.end();
 });

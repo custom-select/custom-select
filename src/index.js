@@ -238,8 +238,12 @@ function builder(el, builderParams) {
     const nodeList = children;
     const cstList = [];
 
+    if (typeof nodeList.length === 'undefined') {
+      throw new TypeError('Invalid Argument');
+    }
+
     for (let i = 0, li = nodeList.length; i < li; i++) {
-      if (nodeList[i].tagName.toUpperCase() === 'OPTGROUP') {
+      if (nodeList[i] instanceof HTMLElement && nodeList[i].tagName.toUpperCase() === 'OPTGROUP') {
         const cstOptgroup = document.createElement('div');
         cstOptgroup.classList.add(builderParams.optgroupClass);
         cstOptgroup.dataset.label = nodeList[i].label;
@@ -258,7 +262,8 @@ function builder(el, builderParams) {
         }
 
         cstList.push(cstOptgroup);
-      } else if (nodeList[i].tagName.toUpperCase() === 'OPTION') {
+      } else if (nodeList[i] instanceof HTMLElement
+          && nodeList[i].tagName.toUpperCase() === 'OPTION') {
         const cstOption = document.createElement('div');
         cstOption.classList.add(builderParams.optionClass);
         cstOption.textContent = nodeList[i].text;
@@ -278,6 +283,8 @@ function builder(el, builderParams) {
           selectedElement = focusedElement = cstOption;
         }
         cstList.push(cstOption);
+      } else {
+        throw new TypeError('Invalid Argument');
       }
     }
     return cstList;
@@ -285,12 +292,15 @@ function builder(el, builderParams) {
 
   function append(nodePar, appendIntoOriginal, targetPar) {
     var target;
-    if (typeof targetPar === 'undefined' || targetPar.tagName.toUpperCase() === 'SELECT') {
+    if (typeof targetPar === 'undefined'
+      || (targetPar === select)) {
       target = panel;
-    } else if (targetPar.tagName.toUpperCase() === 'OPTGROUP') {
+    } else if (targetPar instanceof HTMLElement
+      && targetPar.tagName.toUpperCase() === 'OPTGROUP'
+      && select.contains(targetPar)) {
       target = targetPar.fullSelectCstOptgroup;
     } else {
-      target = targetPar;
+      throw new TypeError('Invalid Argument');
     }
 
     // If the node provided is a single HTMLElement it is stored in an array
@@ -315,12 +325,16 @@ function builder(el, builderParams) {
 
   function insertBefore(node, targetPar) {
     var target;
-    if (targetPar.tagName.toUpperCase() === 'OPTION') {
+    if (targetPar instanceof HTMLElement
+      && targetPar.tagName.toUpperCase() === 'OPTION'
+      && select.contains(targetPar)) {
       target = targetPar.fullSelectCstOption;
-    } else if (targetPar.tagName.toUpperCase() === 'OPTGROUP') {
+    } else if (targetPar instanceof HTMLElement
+      && targetPar.tagName.toUpperCase() === 'OPTGROUP'
+      && select.contains(targetPar)) {
       target = targetPar.fullSelectCstOptgroup;
     } else {
-      return false;
+      throw new TypeError('Invalid Argument');
     }
 
     // The custom markup to append
