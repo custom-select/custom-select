@@ -321,6 +321,28 @@ function builder(el, builderParams) {
     return node;
   }
 
+  function insertBefore(node, targetPar) {
+    var target;
+    if (targetPar instanceof HTMLElement
+      && targetPar.tagName.toUpperCase() === 'OPTION'
+      && select.contains(targetPar)) {
+      target = targetPar.customSelectCstOption;
+    } else if (targetPar instanceof HTMLElement
+      && targetPar.tagName.toUpperCase() === 'OPTGROUP'
+      && select.contains(targetPar)) {
+      target = targetPar.customSelectCstOptgroup;
+    } else {
+      throw new TypeError('Invalid Argument');
+    }
+
+    // The custom markup to append
+    const markupToInsert = parseMarkup([node]);
+
+    target.parentNode.insertBefore(markupToInsert[0], target);
+
+    // Injects the option or optgroup node in the original select and returns the injected node
+    return targetPar.parentNode.insertBefore(node, targetPar);
+  }
   function remove(node) {
     var cstNode;
     if (node instanceof HTMLElement
@@ -347,29 +369,19 @@ function builder(el, builderParams) {
     return removed;
   }
 
-  function insertBefore(node, targetPar) {
-    var target;
-    if (targetPar instanceof HTMLElement
-      && targetPar.tagName.toUpperCase() === 'OPTION'
-      && select.contains(targetPar)) {
-      target = targetPar.customSelectCstOption;
-    } else if (targetPar instanceof HTMLElement
-      && targetPar.tagName.toUpperCase() === 'OPTGROUP'
-      && select.contains(targetPar)) {
-      target = targetPar.customSelectCstOptgroup;
-    } else {
-      throw new TypeError('Invalid Argument');
+  function destroy() {
+    for (let i = 0, l = select.options.length; i < l; i++) {
+      delete select.options[i].customSelectCstOption;
+    }
+    const optGroup = select.getElementsByTagName('optgroup');
+    for (let i = 0, l = optGroup.length; i < l; i++) {
+      delete optGroup.customSelectCstOptgroup;
     }
 
-    // The custom markup to append
-    const markupToInsert = parseMarkup([node]);
+    removeEvents();
 
-    target.parentNode.insertBefore(markupToInsert[0], target);
-
-    // Injects the option or optgroup node in the original select and returns the injected node
-    return targetPar.parentNode.insertBefore(node, targetPar);
+    return container.parentNode.replaceChild(select, container);
   }
-
   //
   // Custom Select DOM tree creation
   //
@@ -425,6 +437,7 @@ function builder(el, builderParams) {
     insertBefore: (node, target) => insertBefore(node, target),
     remove,
     empty,
+    destroy,
     opener,
     select,
     panel,
