@@ -220,10 +220,12 @@ function builder(el, builderParams) {
     if (bool && !select.disabled) {
       container.classList.add(isDisabledClass);
       select.disabled = true;
+      opener.removeAttribute('tabindex');
       removeEvents();
     } else if (!bool && select.disabled) {
       container.classList.remove(isDisabledClass);
       select.disabled = false;
+      opener.setAttribute('tabindex', '0');
       addEvents();
     }
   }
@@ -379,7 +381,6 @@ function builder(el, builderParams) {
   // Creates the opener
   opener = document.createElement('span');
   opener.className = builderParams.openerClass;
-  opener.setAttribute('tabindex', '0');
   opener.innerHTML = `<span>
    ${(select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '')}
    </span>`;
@@ -402,6 +403,7 @@ function builder(el, builderParams) {
   if (select.disabled) {
     container.classList.add(isDisabledClass);
   } else {
+    opener.setAttribute('tabindex', '0');
     addEvents();
   }
 
