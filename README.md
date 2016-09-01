@@ -1,4 +1,4 @@
-# full-select
+# custom-select
 A lightweight JS script for custom select creation.  
 **IMPORTANT**: This library is still in development, it's currently unusable.
 
