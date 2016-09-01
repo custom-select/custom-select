@@ -8,3 +8,4 @@ import './set-get-value';
 import './append';
 import './insert-before';
 import './remove';
+import './empty';

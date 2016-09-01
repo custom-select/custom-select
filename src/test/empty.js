@@ -20,13 +20,13 @@ const fullselect = fullSelect('select')[0];
 let removed;
 
 test('Empty select (remove any option)', assert => {
-  const expectedRemoved = fullselect.select.children;
+  const expectedRemoved = [].slice.call(fullselect.select.children);
   removed = fullselect.empty();
 
   assert.test('... and the returned all select child', q => {
     actual = removed;
     expected = expectedRemoved;
-    q.deepEqual(actual, expected,
+    q.deepLooseEqual(actual, expected,
       'the elements should be the same');
     q.end();
   });
@@ -49,9 +49,9 @@ test('Empty select (remove any option)', assert => {
 
   assert.test('... and a removed root option does not have a parentNode anymore ', q => {
     actual = removed[0].parentNode;
-    expected = undefined;
+    expected = null;
     q.deepEqual(actual, expected,
-      'should be 3');
+      'should be null');
     q.end();
   });
 });

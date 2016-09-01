@@ -340,6 +340,15 @@ function builder(el, builderParams) {
     return node.parentNode.removeChild(node);
   }
 
+  function empty() {
+    const removed = [];
+    while (select.children.length) {
+      panel.removeChild(panel.children[0]);
+      removed.push(select.removeChild(select.children[0]));
+    }
+    return removed;
+  }
+
   function insertBefore(node, targetPar) {
     var target;
     if (targetPar instanceof HTMLElement
@@ -416,6 +425,7 @@ function builder(el, builderParams) {
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
     remove,
+    empty,
     opener,
     select,
     panel,
