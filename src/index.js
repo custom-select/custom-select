@@ -368,7 +368,7 @@ function builder(el, builderParams) {
     addEvents();
   }
 
-  // Stores the plugin public exposed methods an properties directly in the container HTMLElement
+  // Stores the plugin public exposed methods and properties, directly in the container HTMLElement
   container.fullSelect = {
     getOptions: () => builderParams,
     open,
@@ -387,6 +387,9 @@ function builder(el, builderParams) {
     select,
     panel,
   };
+
+  // Stores the plugin directly in the original select
+  select.fullSelect = container.fullSelect;
 
   // Returns the plugin instance, with the public exposed methods and properties
   return container.fullSelect;
