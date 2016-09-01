@@ -293,7 +293,7 @@ function builder(el, builderParams) {
       target = targetPar;
     }
 
-    // If the node provided is an HTMLElement it is stored in an array
+    // If the node provided is a single HTMLElement it is stored in an array
     const node = nodePar instanceof HTMLElement ? [nodePar] : nodePar;
 
     // The custom markup to append
@@ -310,6 +310,7 @@ function builder(el, builderParams) {
         }
       }
     }
+    return node;
   }
 
   function insertBefore(node, targetPar) {
@@ -322,13 +323,13 @@ function builder(el, builderParams) {
       return false;
     }
 
-  // The custom markup to append
+    // The custom markup to append
     const markupToInsert = parseMarkup([node]);
 
     target.parentNode.insertBefore(markupToInsert[0], target);
-    targetPar.parentNode.insertBefore(node, targetPar);
 
-    return markupToInsert[0];
+    // Injects the option or optgroup node in the original select and returns the injected node
+    return targetPar.parentNode.insertBefore(node, targetPar);
   }
 
   //
