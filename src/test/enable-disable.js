@@ -18,10 +18,9 @@ test('With the public provided method disable the select', assert => {
     </optgroup>`;
   document.body.appendChild(select1);
 
-  const cstSelect = fullSelect('select');
-  cstSelect[0].pluginOptions;
+  fullSelect('select');
 
-  select1.parentNode.fullSelect.disable();
+  select1.parentNode.fullSelect.disabled = true;
 
   const actual = select1.disabled;
   const expected = true;
@@ -42,7 +41,7 @@ test('Init a second disabled select', assert => {
 
   fullSelect(select2);
 
-  const actual = select2.parentNode.fullSelect.isDisabled;
+  const actual = select2.parentNode.fullSelect.disabled;
   const expected = true;
 
   assert.deepEqual(actual, expected,
@@ -51,7 +50,8 @@ test('Init a second disabled select', assert => {
 });
 
 test('With the public provided method enable the first select', assert => {
-  select1.parentNode.fullSelect.enable();
+  // Pass a falsy value instad of false
+  select1.parentNode.fullSelect.disabled = 0;
 
   const actual = select1.parentNode.classList.contains('is-disabled');
   const expected = false;

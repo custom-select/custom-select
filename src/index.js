@@ -216,19 +216,15 @@ function builder(el, builderParams) {
     container.removeEventListener('keydown', keydownEvent);
   }
 
-  function enable() {
-    if (select.disabled) {
-      container.classList.remove(isDisabledClass);
-      select.disabled = false;
-      addEvents();
-    }
-  }
-
-  function disable() {
-    if (!select.disabled) {
+  function disabled(bool) {
+    if (bool && !select.disabled) {
       container.classList.add(isDisabledClass);
       select.disabled = true;
       removeEvents();
+    } else if (!bool && select.disabled) {
+      container.classList.remove(isDisabledClass);
+      select.disabled = false;
+      addEvents();
     }
   }
 
@@ -414,13 +410,14 @@ function builder(el, builderParams) {
     get pluginOptions() { return builderParams; },
     open,
     close,
-    enable,
-    disable,
+    get disabled() { return select.disabled; },
+    set disabled(bool) {
+      disabled(bool);
+    },
     get value() { return select.value; },
     set value(val) {
       setValue(val);
     },
-    get isDisabled() { return select.disabled; },
     get isOpen() { return isOpen; },
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
