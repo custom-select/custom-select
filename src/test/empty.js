@@ -17,10 +17,11 @@ select.innerHTML = `
   </optgroup>`;
 document.body.appendChild(select);
 const fullselect = fullSelect('select')[0];
+let removed;
 
-test('Remove any option', assert => {
+test('Empty select (remove any option)', assert => {
   const expectedRemoved = fullselect.select.children;
-  const removed = fullselect.empty();
+  removed = fullselect.empty();
 
   assert.test('... and the returned all select child', q => {
     actual = removed;
@@ -51,6 +52,26 @@ test('Remove any option', assert => {
     expected = undefined;
     q.deepEqual(actual, expected,
       'should be 3');
+    q.end();
+  });
+});
+
+test('Empty select: re-append all removed', assert => {
+  fullselect.append(removed);
+
+  assert.test('... and the select contains all the options', q => {
+    actual = fullselect.select.options.length;
+    expected = 4;
+    q.deepEqual(actual, expected,
+      'the elements should be 4');
+    q.end();
+  });
+
+  assert.test('... and the custom select contains all the options', q => {
+    actual = fullselect.panel.getElementsByClassName(fullselect.getOptions().optionClass).length;
+    expected = 4;
+    q.deepEqual(actual, expected,
+      'the elements should be 4');
     q.end();
   });
 });
