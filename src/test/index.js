@@ -9,3 +9,4 @@ import './append';
 import './insert-before';
 import './remove';
 import './empty';
+import './destroy';
