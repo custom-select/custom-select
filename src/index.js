@@ -233,7 +233,12 @@ function builder(el, builderParams) {
   }
 
   // When the option is outside the visible part of the opened panel, updates the scrollTop position
-  function focusEvent(e) {
+  // This is the default behaviour
+  // To block it the plugin user must
+  // add a "custom-select.focus-outside-panel" eventListener on the panel
+  // with useCapture set to true
+  // and stopPropagatio
+  function scrollToFocused(e) {
     var currPanel = e.currentTarget;
     var currOption = e.target;
     // Up
@@ -249,7 +254,7 @@ function builder(el, builderParams) {
   function addEvents() {
     document.addEventListener('click', clickEvent);
     panel.addEventListener('mouseover', mouseoverEvent);
-    panel.addEventListener('custom-select.focus-outside-panel', focusEvent);
+    panel.addEventListener('custom-select.focus-outside-panel', scrollToFocused);
     select.addEventListener('change', changeEvent);
     container.addEventListener('keydown', keydownEvent);
   }
@@ -257,7 +262,7 @@ function builder(el, builderParams) {
   function removeEvents() {
     document.removeEventListener('click', clickEvent);
     panel.removeEventListener('mouseover', mouseoverEvent);
-    panel.removeEventListener('custom-select.focus-outside-panel', focusEvent);
+    panel.removeEventListener('custom-select.focus-outside-panel', scrollToFocused);
     select.removeEventListener('change', changeEvent);
     container.removeEventListener('keydown', keydownEvent);
   }
