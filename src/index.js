@@ -69,8 +69,9 @@ function builder(el, builderParams) {
     // The option with the provided value becomes the selected one
     // And changes the select current value
     toSelect.selected = true;
-    // Sets the 1:1 corrisponding .custom-select-option as the selected one
-    setSelectedElement(toSelect.customSelectCstOption);
+
+    // Triggers the native change event of the select
+    select.dispatchEvent(new Event('change'));
   }
 
   function moveFocuesedElement(direction) {
@@ -100,6 +101,9 @@ function builder(el, builderParams) {
       opener.classList.add(isActiveClass);
       panel.classList.add(isOpenClass);
 
+      // Dispatches the custom event open
+      container.dispatchEvent(new Event('custom-select.open'));
+
       // Sets the global state
       isOpen = true;
     // Close
@@ -108,6 +112,9 @@ function builder(el, builderParams) {
       panel.classList.remove(isOpenClass);
       // When closing the panel the focused custom option must be the selected one
       setFocusedElement(selectedElement);
+
+      // Dispatches the custom event close
+      container.dispatchEvent(new Event('custom-select.close'));
 
       // Sets the global state
       isOpen = false;

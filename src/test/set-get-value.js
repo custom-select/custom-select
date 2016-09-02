@@ -3,6 +3,7 @@ import customSelect from './../';
 
 var select;
 var cstSelect;
+var eventMessage;
 
 test('With the public property set the value', assert => {
   document.body.innerHTML = '';
@@ -18,12 +19,23 @@ test('With the public property set the value', assert => {
   document.body.appendChild(select);
 
   cstSelect = customSelect('select');
+
+  // Adds the change event on the select for the next test
+  select.addEventListener('change',
+    () => { eventMessage = 'Select has changed it\'s value'; });
+
   cstSelect[0].value = 'flower';
 
   const actual = select.value;
   const expected = 'flower';
 
   assert.deepEqual(actual, expected,
+    'should return flower');
+  assert.end();
+});
+
+test('... and dispatches the change event on the select', assert => {
+  assert.equal(eventMessage, 'Select has changed it\'s value',
     'should return flower');
   assert.end();
 });
@@ -37,7 +49,7 @@ test('... and use public property to get the value', assert => {
   assert.end();
 });
 
-test('... and the correct custom option is selected', assert => {
+test('... and checks that the correct custom option is selected', assert => {
   const actual = select.options[1].customSelectCstOption.classList.contains('is-selected');
   const expected = true;
 

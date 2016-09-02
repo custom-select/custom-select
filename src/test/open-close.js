@@ -4,6 +4,7 @@ import customSelect from './../';
 var options;
 var select1;
 var select2;
+var eventMessage;
 
 test('With the public provided method opens the panel', assert => {
   document.body.innerHTML = '';
@@ -22,6 +23,11 @@ test('With the public provided method opens the panel', assert => {
   const cstSelect = customSelect('select');
   options = cstSelect[0].pluginOptions;
 
+  select1.parentNode.addEventListener('custom-select.open',
+    () => { eventMessage = 'First select is open!'; });
+  select1.parentNode.addEventListener('custom-select.close',
+    () => { eventMessage = 'First select is closed!'; });
+
   select1.customSelect.open = true;
 
   const actual = select1.parentNode.customSelect.open;
@@ -29,6 +35,12 @@ test('With the public provided method opens the panel', assert => {
 
   assert.deepEqual(actual, expected,
     'should return true');
+  assert.end();
+});
+
+test('... and dispatches the custom open event', assert => {
+  assert.equal(eventMessage, 'First select is open!',
+    'should return false "First select is open!"');
   assert.end();
 });
 
@@ -59,6 +71,12 @@ test('... and checks if the second is currently open', assert => {
 
   assert.deepEqual(actual, expected,
     'should return true');
+  assert.end();
+});
+
+test('... and dispatches the custom close event', assert => {
+  assert.equal(eventMessage, 'First select is closed!',
+    'should return false "First select is closed!"');
   assert.end();
 });
 
