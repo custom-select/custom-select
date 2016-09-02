@@ -10,6 +10,8 @@
  * MIT License
  */
 
+import 'custom-event-polyfill';
+
 const defaultParams = {
   containerClass: 'custom-select-container',
   openerClass: 'custom-select-opener',
@@ -46,6 +48,17 @@ function builder(el, builderParams) {
     focusedElement.classList.remove(hasFocusClass);
     focusedElement = cstOption;
     focusedElement.classList.add(hasFocusClass);
+    // Offset update: checks if the focused element is in the visible part of the panelClass
+    // if not dispatches a custom event
+    if (isOpen) {
+      if (cstOption.offsetTop < cstOption.offsetParent.scrollTop
+        || cstOption.offsetTop >
+          (cstOption.offsetParent.scrollTop + cstOption.offsetParent.clientHeight)
+          - cstOption.clientHeight) {
+        cstOption.dispatchEvent(new CustomEvent('custom-select.focus-outside-panel',
+        { bubbles: true }));
+      }
+    }
   }
 
   // Reassigns the focused and selected custom option
@@ -71,7 +84,7 @@ function builder(el, builderParams) {
     toSelect.selected = true;
 
     // Triggers the native change event of the select
-    select.dispatchEvent(new Event('change'));
+    select.dispatchEvent(new CustomEvent('change'));
   }
 
   function moveFocuesedElement(direction) {
@@ -101,23 +114,29 @@ function builder(el, builderParams) {
       opener.classList.add(isActiveClass);
       panel.classList.add(isOpenClass);
 
+      // Updates the scrollTop position of the panel in relation with the focused option
+      panel.scrollTop = panel.getElementsByClassName(hasFocusClass)[0].offsetTop;
+
       // Dispatches the custom event open
-      container.dispatchEvent(new Event('custom-select.open'));
+      container.dispatchEvent(new CustomEvent('custom-select.open'));
 
       // Sets the global state
       isOpen = true;
+
     // Close
     } else {
+      // Removes the css classes
       opener.classList.remove(isActiveClass);
       panel.classList.remove(isOpenClass);
+
+      // Sets the global state
+      isOpen = false;
+
       // When closing the panel the focused custom option must be the selected one
       setFocusedElement(selectedElement);
 
       // Dispatches the custom event close
-      container.dispatchEvent(new Event('custom-select.close'));
-
-      // Sets the global state
-      isOpen = false;
+      container.dispatchEvent(new CustomEvent('custom-select.close'));
     }
     return isOpen;
   }
@@ -213,9 +232,24 @@ function builder(el, builderParams) {
     setSelectedElement(select.options[select.selectedIndex].customSelectCstOption);
   }
 
+  // When the option is outside the visible part of the opened panel, updates the scrollTop position
+  function focusEvent(e) {
+    var currPanel = e.currentTarget;
+    var currOption = e.target;
+    // Up
+    if (currOption.offsetTop < currPanel.scrollTop) {
+      currPanel.scrollTop = currOption.offsetTop;
+    // Down
+    } else {
+      currPanel.scrollTop = (currOption.offsetTop + currOption.clientHeight)
+      - currPanel.clientHeight;
+    }
+  }
+
   function addEvents() {
     document.addEventListener('click', clickEvent);
     panel.addEventListener('mouseover', mouseoverEvent);
+    panel.addEventListener('custom-select.focus-outside-panel', focusEvent);
     select.addEventListener('change', changeEvent);
     container.addEventListener('keydown', keydownEvent);
   }
@@ -223,6 +257,7 @@ function builder(el, builderParams) {
   function removeEvents() {
     document.removeEventListener('click', clickEvent);
     panel.removeEventListener('mouseover', mouseoverEvent);
+    panel.removeEventListener('custom-select.focus-outside-panel', focusEvent);
     select.removeEventListener('change', changeEvent);
     container.removeEventListener('keydown', keydownEvent);
   }

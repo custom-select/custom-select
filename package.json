@@ -41,7 +41,8 @@
   "dependencies": {
     "browserify": "^13.0.1",
     "tape": "^4.5.1",
-    "tape-run": "^2.1.4"
+    "tape-run": "^2.1.4",
+    "custom-event-polyfill": "^0.3.0"
   },
   "author": {
     "name": "Gionatan Lombardi",
