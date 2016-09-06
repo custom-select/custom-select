@@ -73,8 +73,8 @@ test('Insert an optgroup with an option before an option', assert => {
 
 test('InsertBefore: Use a string as the target parameter', assert => {
   option = document.createElement('option');
-  assert.throws(() => { select.parentNode.customSelect.insertBefore(option, 'a string'); }, TypeError,
-    'should throw TypeError');
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(option, 'a string'); },
+   TypeError, 'should throw TypeError');
   assert.end();
 });
 
@@ -91,7 +91,7 @@ test('InsertBefore: Use an invalid HTMLElement target parameter', assert => {
 });
 
 test('InsertBefore: Use undefined as the node parameter', assert => {
-  assert.throws(() => { select.parentNode.customSelect.insertBefore(undefined, target); }, TypeError,
-    'should throw TypeError');
+  assert.throws(() => { select.parentNode.customSelect.insertBefore(undefined, target); },
+    TypeError, 'should throw TypeError');
   assert.end();
 });

@@ -45,7 +45,9 @@ function builder(el, builderParams) {
 
   // Sets the focused element with the neccessary classes substitutions
   function setFocusedElement(cstOption) {
-    focusedElement.classList.remove(builderParams.hasFocusClass);
+    if (focusedElement) {
+      focusedElement.classList.remove(builderParams.hasFocusClass);
+    }
     focusedElement = cstOption;
     focusedElement.classList.add(builderParams.hasFocusClass);
     // Offset update: checks if the focused element is in the visible part of the panelClass
@@ -65,10 +67,12 @@ function builder(el, builderParams) {
   // Updates the opener text
   // IMPORTANT: the setSelectedElement function doesn't change the select value!
   function setSelectedElement(cstOption) {
-    focusedElement.classList.remove(builderParams.hasFocusClass);
-    selectedElement.classList.remove(builderParams.isSelectedClass);
-    cstOption.classList.add(builderParams.isSelectedClass, builderParams.hasFocusClass);
-    selectedElement = focusedElement = cstOption;
+    if (selectedElement) {
+      selectedElement.classList.remove(builderParams.isSelectedClass);
+    }
+    cstOption.classList.add(builderParams.isSelectedClass);
+    selectedElement = cstOption;
+    setFocusedElement(cstOption);
     opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
   }
 
@@ -329,8 +333,7 @@ function builder(el, builderParams) {
 
         // If the select's option is selected
         if (nodeList[i].selected) {
-          cstOption.classList.add(builderParams.isSelectedClass, builderParams.hasFocusClass);
-          selectedElement = focusedElement = cstOption;
+          setSelectedElement(cstOption);
         }
         cstList.push(cstOption);
       } else {
@@ -395,6 +398,7 @@ function builder(el, builderParams) {
     // Injects the option or optgroup node in the original select and returns the injected node
     return targetPar.parentNode.insertBefore(node, targetPar);
   }
+
   function remove(node) {
     var cstNode;
     if (node instanceof HTMLElement

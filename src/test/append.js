@@ -62,8 +62,6 @@ test('Instance library and append an option at the end', assert => {
       'should return mustang');
     q.end();
   });
-
-
   assert.end();
 });
 
@@ -96,6 +94,38 @@ test('Insert an option at the end of a specified original optgroup', assert => {
   assert.end();
 });
 
+test('Insert two selected options', assert => {
+  var option1;
+  var option2;
+
+  option1 = document.createElement('option');
+  option1.value = 'man';
+  option1.text = 'MAN';
+  option1.selected = true;
+
+  option2 = document.createElement('option');
+  option2.value = 'tata';
+  option2.text = 'Tata';
+  option2.setAttribute('selected', 'selected');
+
+  select.customSelect.append([option1, option2]);
+
+  actual = select.value;
+  expected = 'tata';
+  assert.equal(actual, expected,
+    'should return tata');
+  assert.end();
+});
+
+test('... and the correct custom option is-selected', assert => {
+  actual = select.customSelect.panel
+    .getElementsByClassName(select.customSelect.pluginOptions.isSelectedClass)[0].dataset.value;
+  expected = 'tata';
+  assert.equal(actual, expected,
+    'should return tata');
+  assert.end();
+});
+
 test('Insert an optgroup at the end', assert => {
   const optgroup = document.createElement('optgroup');
   optgroup.setAttribute('label', 'Bike');
@@ -108,7 +138,7 @@ test('Insert an optgroup at the end', assert => {
 
   select.parentNode.customSelect.append(optgroup);
 
-  actual = select.customSelect.panel.children[4].dataset.label;
+  actual = select.customSelect.panel.children[6].dataset.label;
   expected = 'Bike';
   assert.equal(actual, expected,
     'should return Bike');
@@ -154,6 +184,6 @@ test('Use an empty array as an argument', assert => {
   expected = [];
   actual = select.parentNode.customSelect.append(expected);
   assert.deepEqual(actual, expected,
-    'should throw the same empty array');
+    'should return the same empty array');
   assert.end();
 });
