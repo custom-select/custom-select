@@ -40,7 +40,7 @@ You can style it by yourself via css, check the examples for inspirations.
 
 ## Plugin init
 ```js
-Array customSelect(elements[, pluginParameters]);
+Array customSelect(elements[, pluginOptions]);
 ```
 
 The *elements* parameter could be:
@@ -63,7 +63,9 @@ customSelect(document.getElementsByClassName('mySelect'));
 ```
 
 
-The *pluginParameters* parameter is an object for plugin configuration, default is:
+The *pluginOptions* parameter is an object that overwrites some default plugin configurations.
+
+The default config is:
 ```js
 {
   containerClass: 'custom-select-container',
@@ -79,14 +81,14 @@ The *pluginParameters* parameter is an object for plugin configuration, default 
 }
 ```
 
-The return is an Array of customSelect [instances](getInstance), that contains all the  [method and properties](MethodAndProperties) exposed.
+The return is an Array of customSelect [instances](#how-to-get-plugin instance), that contains all the public exposed [methods and properties](#methods-&-properties).
 
 ## Style Classes
-All classes can be configured using *pluginParameters*, but container secondary class `customSelect` that is for internal use and should not be touched or used for style.
+All css classes can be configured using *pluginOptions*, but container secondary class, `customSelect`, is only for internal use and should not be removed or used for styling purpose.
 
 ### Structure Classes
 
-Self explained structure classes, and relative may-have status classes
+Self explained structure classes, and relative may-have status classes:
 
 `containerClass: 'custom-select-container'` may have `isDisabledClass`
 
@@ -100,22 +102,22 @@ Self explained structure classes, and relative may-have status classes
 
 ### State Classes
 
-`isSelectedClass: 'is-selected'` means that custom option is selected (as native selected)
+`isSelectedClass: 'is-selected'` - when the custom option is selected (as native selected attribute).
 
-`hasFocusClass: 'has-focus'` means that custom option has focus (mouseover, arrow navigation and keyboard autocomplete changes focus)
+`hasFocusClass: 'has-focus'` - when the custom option has current focus (mouseover, arrow navigation and keyboard autocomplete changes the focus).
 
-`isDisabledClass: 'is-disabled'` means that the select is disabled
+`isDisabledClass: 'is-disabled'` - when the select is disabled.
 
-`isActiveClass: 'is-active'` means that the opener is active (the panel is open)
+`isActiveClass: 'is-active'` - when the opener is active (the panel is open).
 
-`isOpenClass: 'is-open'` means that the panel is open
+`isOpenClass: 'is-open'` - when the panel is open.
 
-## How to get Plugin instance [getInstance]
+## How to get Plugin instance
 
 Init return
 ```js
 const cstSel = customSelect('select');
-console.log(cstSel); // true|false
+console.log(cstSel.open); // true|false
 ```
 The DOM select
 ```js
@@ -130,15 +132,16 @@ const cstSel =  document.querySelector('.customSelect').customSelect
 console.log(cstSel.open); // true|false
 ```
 
-## Methods & Properties [MethodAndProperties]
+## Methods & Properties
 
 ### pluginOptions
-Get the init plugin options
+Get the plugin options.
 ```js
 cstSel.pluginOptions();
 ```
 
 ### open
+Get/set property.
 ```js
 cstSel.open = true; // open the custom select
 console.log(cstSel.open); // true
@@ -147,6 +150,7 @@ console.log(cstSel.open); // false
 ```
 
 ### disabled
+Get/set property.
 ```js
 cstSel.disabled = true; // disable the custom select
 console.log(cstSel.disabled); // true
@@ -155,9 +159,10 @@ console.log(cstSel.disabled); // false
 ```
 
 ### value
-Set the select value, change the native select and the custom select. Use it just like nativeSelect.value
+Get/set property.  
+Change both the native select and the custom select. Use it just like nativeSelect.value
 ```js
-cstSel.value = 'foo'; // the first option with that value will be selected. If there is no option with that value the first one will be selected.
+cstSel.value = 'foo'; // the first option with that value will be selected. If there is no option with that value the first one'll be selected.
 console.log(cstSel.value); // return foo if there was an option with 'foo' value
 ```
 
@@ -172,11 +177,11 @@ cstSel.append(option);
 
 The *elements* parameter could be:
 
-A instance of HTMLElement, tag OPTION:
+An instance of HTMLElement, tag OPTION:
 ```js
 const toBeAppend = document.createElement('option');
 ```
-A instance of HTMLElement, tag OPTGROUP:
+An instance of HTMLElement, tag OPTGROUP:
 ```js
 const toBeAppend = document.createElement('optgroup');
 ```
@@ -185,25 +190,25 @@ A list (NodeList, HTMLCollection, Array, etc) of instance of HTMLElement, tag OP
 const toBeAppend = cstSel.empty();
 ```
 
-The *target* parameter could be the `select (default)` or an optgroup that is already inside the select.
+The *target* parameter must be the `select` **(default)** or an optgroup that is already inside the select.
 
 ### insertBefore(elements, target)
 insert an option or an optgroup before the specified target.
 ```js
 const option = document.createElement('option');
 option.text = 'Foo';
-option.value = 'bar';
-const target = cstSel.select.options[2]; // or you can get it by selectors or any
+option.value = 'foo';
+const target = cstSel.select.options[2];
 cstSel.insertBefore(option, target);
 ```
 
 The *elements* parameter could be:
 
-A instance of HTMLElement, tag OPTION:
+An instance of HTMLElement, tag OPTION:
 ```js
 const toBeAppend = document.createElement('option');
 ```
-A instance of HTMLElement, tag OPTGROUP:
+An instance of HTMLElement, tag OPTGROUP:
 ```js
 const toBeAppend = document.createElement('optgroup');
 ```
@@ -212,7 +217,8 @@ A list (NodeList, HTMLCollection, Array, etc) of instance of HTMLElement, tag OP
 const toBeAppend = cstSel.empty();
 ```
 
-The *target* parameter could be an `option` or an `optgroup` that is already inside the select.
+The *target* parameter must be an `option` or an `optgroup` that is already inside the select.
+
 
 ### remove(node)
 remove an option or an optgroup
