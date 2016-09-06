@@ -1,6 +1,4 @@
 node_modules/
-build/
-examples/build/
 
 ###### Mac OS generated files
 .DS_Store
@@ -15,6 +13,3 @@ Thumbs.db
 # Logs
 logs
 *.log
-
-# Finally to be removed! 
-src/custom-select-light.js.old
