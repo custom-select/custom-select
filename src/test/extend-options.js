@@ -7,7 +7,7 @@ test('Custom options extend check', assert => {
   document.body.appendChild(select);
 
   const actual = customSelect('select',
-    { isOpenClass: 'opened-panel', scrollToSelected: false, newOption: 123 })[0].pluginOptions;
+    { isOpenClass: 'opened-panel', newOption: 123 })[0].pluginOptions;
   const expected = {
     panelClass: 'custom-select-panel',
     optionClass: 'custom-select-option',
@@ -19,7 +19,6 @@ test('Custom options extend check', assert => {
     isDisabledClass: 'is-disabled',
     isActiveClass: 'is-active',
     isOpenClass: 'opened-panel',
-    scrollToSelected: false,
     newOption: 123,
   };
 

@@ -23,7 +23,6 @@ const defaultParams = {
   isDisabledClass: 'is-disabled',
   isActiveClass: 'is-active',
   isOpenClass: 'is-open',
-  scrollToSelected: true,
 };
 
 function builder(el, builderParams) {
