@@ -18,17 +18,17 @@ const defaultParams = {
   panelClass: 'custom-select-panel',
   optionClass: 'custom-select-option',
   optgroupClass: 'custom-select-optgroup',
+  isSelectedClass: 'is-selected',
+  hasFocusClass: 'has-focus',
+  isDisabledClass: 'is-disabled',
+  isActiveClass: 'is-active',
+  isOpenClass: 'is-open',
   scrollToSelected: true,
 };
 
 function builder(el, builderParams) {
   var isOpen = false;
   const containerClass = 'customSelect';
-  const isSelectedClass = 'is-selected';
-  const hasFocusClass = 'has-focus';
-  const isDisabledClass = 'is-disabled';
-  const isActiveClass = 'is-active';
-  const isOpenClass = 'is-open';
   var select = el;
   var container;
   var opener;
@@ -45,9 +45,9 @@ function builder(el, builderParams) {
 
   // Sets the focused element with the neccessary classes substitutions
   function setFocusedElement(cstOption) {
-    focusedElement.classList.remove(hasFocusClass);
+    focusedElement.classList.remove(builderParams.hasFocusClass);
     focusedElement = cstOption;
-    focusedElement.classList.add(hasFocusClass);
+    focusedElement.classList.add(builderParams.hasFocusClass);
     // Offset update: checks if the focused element is in the visible part of the panelClass
     // if not dispatches a custom event
     if (isOpen) {
@@ -65,9 +65,9 @@ function builder(el, builderParams) {
   // Updates the opener text
   // IMPORTANT: the setSelectedElement function doesn't change the select value!
   function setSelectedElement(cstOption) {
-    focusedElement.classList.remove(hasFocusClass);
-    selectedElement.classList.remove(isSelectedClass);
-    cstOption.classList.add(isSelectedClass, hasFocusClass);
+    focusedElement.classList.remove(builderParams.hasFocusClass);
+    selectedElement.classList.remove(builderParams.isSelectedClass);
+    cstOption.classList.add(builderParams.isSelectedClass, builderParams.hasFocusClass);
     selectedElement = focusedElement = cstOption;
     opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
   }
@@ -105,17 +105,18 @@ function builder(el, builderParams) {
     if (bool || typeof bool === 'undefined') {
       // If present closes an opened instance of the plugin
       // Only one at time can be open
-      const openedCustomSelect = document.querySelector(`.${containerClass} .${isOpenClass}`);
+      const openedCustomSelect = document.querySelector(`.${containerClass}
+         .${builderParams.isOpenClass}`);
       if (openedCustomSelect) {
         openedCustomSelect.parentNode.customSelect.open = false;
       }
 
       // Opens only the clicked one
-      opener.classList.add(isActiveClass);
-      panel.classList.add(isOpenClass);
+      opener.classList.add(builderParams.isActiveClass);
+      panel.classList.add(builderParams.isOpenClass);
 
       // Updates the scrollTop position of the panel in relation with the focused option
-      panel.scrollTop = panel.getElementsByClassName(hasFocusClass)[0].offsetTop;
+      panel.scrollTop = panel.getElementsByClassName(builderParams.hasFocusClass)[0].offsetTop;
 
       // Dispatches the custom event open
       container.dispatchEvent(new CustomEvent('custom-select.open'));
@@ -126,8 +127,8 @@ function builder(el, builderParams) {
     // Close
     } else {
       // Removes the css classes
-      opener.classList.remove(isActiveClass);
-      panel.classList.remove(isOpenClass);
+      opener.classList.remove(builderParams.isActiveClass);
+      panel.classList.remove(builderParams.isOpenClass);
 
       // Sets the global state
       isOpen = false;
@@ -269,12 +270,12 @@ function builder(el, builderParams) {
 
   function disabled(bool) {
     if (bool && !select.disabled) {
-      container.classList.add(isDisabledClass);
+      container.classList.add(builderParams.isDisabledClass);
       select.disabled = true;
       opener.removeAttribute('tabindex');
       removeEvents();
     } else if (!bool && select.disabled) {
-      container.classList.remove(isDisabledClass);
+      container.classList.remove(builderParams.isDisabledClass);
       select.disabled = false;
       opener.setAttribute('tabindex', '0');
       addEvents();
@@ -328,7 +329,7 @@ function builder(el, builderParams) {
 
         // If the select's option is selected
         if (nodeList[i].selected) {
-          cstOption.classList.add(isSelectedClass, hasFocusClass);
+          cstOption.classList.add(builderParams.isSelectedClass, builderParams.hasFocusClass);
           selectedElement = focusedElement = cstOption;
         }
         cstList.push(cstOption);
@@ -464,7 +465,7 @@ function builder(el, builderParams) {
 
   // Event Init
   if (select.disabled) {
-    container.classList.add(isDisabledClass);
+    container.classList.add(builderParams.isDisabledClass);
   } else {
     opener.setAttribute('tabindex', '0');
     addEvents();
@@ -534,7 +535,7 @@ export default function customSelect(element, customParams) {
     // Launches the plugin over every HTMLElement
     // And stores every plugin instance
     for (let i = 0, l = nodeList.length; i < l; ++i) {
-      selects.push(builder(nodeList[i], Object.assign(defaultParams, customParams)));
+      selects.push(builder(nodeList[i], Object.assign({}, defaultParams, customParams)));
     }
 
     // Returns all plugin instances

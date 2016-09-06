@@ -20,6 +20,8 @@ test('On click opens the panel', assert => {
   const cstSelects = customSelect('select');
   options = cstSelects[0].pluginOptions;
 
+  console.log(options);
+
   document.getElementsByClassName(options.openerClass)[0].children[0].click();
 
   const actual = document.getElementsByClassName(options.panelClass)[0]
