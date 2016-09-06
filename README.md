@@ -2,6 +2,30 @@
 A lightweight JS script for custom select creation.
 No dependencies needed.
 
+
+## Install
+Download the minified build file: [download here](https://raw.githubusercontent.com/gionatan-lombardi/custom-select/master/build/index.min.js).
+
+Or install with npm:
+```
+$ npm install --save custom-select
+```
+
+## Use
+In HTML with the `script` tag:
+```html
+<script src="index.min.js" type="text/javascript"></script>
+```
+With ES6 modules via the `import` statement:
+```js
+import customSelect from 'custom-select';
+```
+In CommonJs environments with the `require` function:
+```js
+var customSelect = require("custom-select").default;
+```
+**Note**: the `require().default` is necessary due to the babelify export system.
+
 ## How it works
 Start with a simple HTML `<select>`:
 ```html
