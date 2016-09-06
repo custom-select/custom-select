@@ -81,7 +81,7 @@ The default config is:
 }
 ```
 
-The return is an Array of customSelect [instances](#how-to-get-plugin instance), that contains all the public exposed [methods and properties](#methods-&-properties).
+The return is an Array of customSelect [instances](#how-to-get-plugin-instance), that contains all the public exposed [methods and properties](#methods--properties).
 
 ## Style Classes
 All css classes can be configured using *pluginOptions*, but container secondary class, `customSelect`, is only for internal use and should not be removed or used for styling purpose.
