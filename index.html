@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Custom-select by gionatan-lombardi</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Custom-select</h1>
+        <h2>A lightweight JS script for custom select creation.</h2>
+        <a href="https://github.com/gionatan-lombardi/custom-select" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="custom-select" class="anchor" href="#custom-select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select</h1>
+
+<p>A lightweight JS script for custom select creation.
+No dependencies needed.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Download the minified build file <a href="https://raw.githubusercontent.com/gionatan-lombardi/custom-select/master/build/index.min.js">here</a>.</p>
+
+<p>Or install with npm:</p>
+
+<pre><code>$ npm install --save custom-select
+</code></pre>
+
+<h2>
+<a id="use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h2>
+
+<p>In HTML with the <code>script</code> tag:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>index.min.js<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>With ES6 modules via the <code>import</code> statement:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">customSelect</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select<span class="pl-pds">'</span></span>;</pre></div>
+
+<p>In CommonJs environments with the <code>require</code> function:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> customSelect <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>custom-select<span class="pl-pds">"</span></span>).<span class="pl-smi">default</span>;</pre></div>
+
+<p><strong>Note</strong>: the <code>require().default</code> is necessary due to the babelify export system.</p>
+
+<h2>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How it works</h2>
+
+<p>Start with a simple HTML <code>&lt;select&gt;</code>:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>mySelect<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>&gt;Select...&lt;/<span class="pl-ent">option</span>&gt;
+  &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>&gt;Foo&lt;/<span class="pl-ent">option</span>&gt;
+  &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>buz<span class="pl-pds">"</span></span>&gt;Buz&lt;/<span class="pl-ent">option</span>&gt;
+&lt;/<span class="pl-ent">select</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-s"><span class="pl-pds">'</span>select<span class="pl-pds">'</span></span>);</pre></div>
+
+<p><strong>Important</strong>: Don't nest the select inside a label! Use instead the <code>for</code> attribute on the label.</p>
+
+<p>Here's the HTML result:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-container customSelect<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">span</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-opener<span class="pl-pds">"</span></span> <span class="pl-e">tabindex</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">span</span>&gt;Select...&lt;/<span class="pl-ent">span</span>&gt;
+  &lt;/<span class="pl-ent">span</span>&gt;
+  &lt;<span class="pl-ent">select</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>mySelect1<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>&gt;Select...&lt;/<span class="pl-ent">option</span>&gt;
+    &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>&gt;Foo&lt;/<span class="pl-ent">option</span>&gt;
+    &lt;<span class="pl-ent">option</span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>buz<span class="pl-pds">"</span></span>&gt;Buz&lt;/<span class="pl-ent">option</span>&gt;
+  &lt;/<span class="pl-ent">select</span>&gt;
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-panel<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-option is-selected has-focus<span class="pl-pds">"</span></span> <span class="pl-e">data-value</span>=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>&gt;Select...&lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-option<span class="pl-pds">"</span></span> <span class="pl-e">data-value</span>=<span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>&gt;Foo&lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>custom-select-option<span class="pl-pds">"</span></span> <span class="pl-e">data-value</span>=<span class="pl-s"><span class="pl-pds">"</span>buz<span class="pl-pds">"</span></span>&gt;Buz&lt;/<span class="pl-ent">div</span>&gt;
+  &lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<p>Also <a href="#state-classes">state classes</a> will be added and removed while plugin working.
+You can style it by yourself via css, check the examples for inspirations.</p>
+
+<h2>
+<a id="plugin-init" class="anchor" href="#plugin-init" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin init</h2>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">Array</span> <span class="pl-en">customSelect</span>(elements[, pluginOptions]);</pre></div>
+
+<p>The <em>elements</em> parameter could be:</p>
+
+<p>A DOMString selectors:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-s"><span class="pl-pds">'</span>.myForm .mySelect<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>A instance of HTMLElement, tag SELECT:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>mySelect<span class="pl-pds">'</span></span>));</pre></div>
+
+<p>A list (NodeList, HTMLCollection, Array, etc) of instances of HTMLElement, tag SELECT:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-c1">document</span>.<span class="pl-c1">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>.mySelect<span class="pl-pds">'</span></span>));
+<span class="pl-c">//or</span>
+<span class="pl-en">customSelect</span>(<span class="pl-c1">document</span>.<span class="pl-c1">getElementsByClassName</span>(<span class="pl-s"><span class="pl-pds">'</span>mySelect<span class="pl-pds">'</span></span>));</pre></div>
+
+<p>The <em>pluginOptions</em> parameter is an object that overwrites some default plugin configurations.</p>
+
+<p>The default config is:</p>
+
+<div class="highlight highlight-source-js"><pre>{
+  containerClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select-container<span class="pl-pds">'</span></span>,
+  openerClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select-opener<span class="pl-pds">'</span></span>,
+  panelClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select-panel<span class="pl-pds">'</span></span>,
+  optionClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select-option<span class="pl-pds">'</span></span>,
+  optgroupClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>custom-select-optgroup<span class="pl-pds">'</span></span>,
+  isSelectedClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>is-selected<span class="pl-pds">'</span></span>,
+  hasFocusClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>has-focus<span class="pl-pds">'</span></span>,
+  isDisabledClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>is-disabled<span class="pl-pds">'</span></span>,
+  isActiveClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>is-active<span class="pl-pds">'</span></span>,
+  isOpenClass<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>is-open<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<p>The return is an Array of customSelect <a href="#how-to-get-plugin-instance">instances</a>, that contains all the public exposed <a href="#methods--properties">methods and properties</a>.</p>
+
+<h2>
+<a id="style-classes" class="anchor" href="#style-classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Style Classes</h2>
+
+<p>All css classes can be configured using <em>pluginOptions</em>, but container secondary class, <code>customSelect</code>, is only for internal use and should not be removed or used for styling purpose.</p>
+
+<h3>
+<a id="structure-classes" class="anchor" href="#structure-classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Structure Classes</h3>
+
+<p>Self explained structure classes, and relative may-have status classes:</p>
+
+<p><code>containerClass: 'custom-select-container'</code> may have <code>isDisabledClass</code></p>
+
+<p><code>openerClass: 'custom-select-opener'</code> may have <code>isActiveClass</code></p>
+
+<p><code>panelClass: 'custom-select-panel'</code> may have <code>isOpenClass</code></p>
+
+<p><code>optionClass: 'custom-select-option'</code> may have <code>isSelectedClass</code>, <code>hasFocusClass</code></p>
+
+<p><code>optgroupClass: 'custom-select-optgroup'</code></p>
+
+<h3>
+<a id="state-classes" class="anchor" href="#state-classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>State Classes</h3>
+
+<p><code>isSelectedClass: 'is-selected'</code> - when the custom option is selected (as native selected attribute).</p>
+
+<p><code>hasFocusClass: 'has-focus'</code> - when the custom option has current focus (mouseover, arrow navigation and keyboard autocomplete changes the focus).</p>
+
+<p><code>isDisabledClass: 'is-disabled'</code> - when the select is disabled.</p>
+
+<p><code>isActiveClass: 'is-active'</code> - when the opener is active (the panel is open).</p>
+
+<p><code>isOpenClass: 'is-open'</code> - when the panel is open.</p>
+
+<h2>
+<a id="how-to-get-plugin-instance" class="anchor" href="#how-to-get-plugin-instance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to get Plugin instance</h2>
+
+<p>Init return</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">cstSel</span> <span class="pl-k">=</span> <span class="pl-en">customSelect</span>(<span class="pl-s"><span class="pl-pds">'</span>select<span class="pl-pds">'</span></span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span>); <span class="pl-c">// true|false</span></pre></div>
+
+<p>The DOM select</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-s"><span class="pl-pds">'</span>select<span class="pl-pds">'</span></span>);
+<span class="pl-k">const</span> <span class="pl-c1">cstSel</span> <span class="pl-k">=</span>  <span class="pl-c1">document</span>.<span class="pl-c1">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>select<span class="pl-pds">'</span></span>).<span class="pl-smi">customSelect</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span>); <span class="pl-c">// true|false</span></pre></div>
+
+<p>The DOM select container</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">customSelect</span>(<span class="pl-s"><span class="pl-pds">'</span>select<span class="pl-pds">'</span></span>);
+<span class="pl-k">const</span> <span class="pl-c1">cstSel</span> <span class="pl-k">=</span>  <span class="pl-c1">document</span>.<span class="pl-c1">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>.customSelect<span class="pl-pds">'</span></span>).<span class="pl-smi">customSelect</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span>); <span class="pl-c">// true|false</span></pre></div>
+
+<h2>
+<a id="methods--properties" class="anchor" href="#methods--properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods &amp; Properties</h2>
+
+<h3>
+<a id="pluginoptions" class="anchor" href="#pluginoptions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pluginOptions</h3>
+
+<p>Get the plugin options.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-en">pluginOptions</span>();</pre></div>
+
+<h3>
+<a id="open" class="anchor" href="#open" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>open</h3>
+
+<p>Get/set property.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>; <span class="pl-c">// open the custom select</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span>); <span class="pl-c">// true</span>
+<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>; <span class="pl-c">// close the custom select</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">open</span>); <span class="pl-c">// false</span></pre></div>
+
+<h3>
+<a id="disabled" class="anchor" href="#disabled" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>disabled</h3>
+
+<p>Get/set property.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-c1">disabled</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>; <span class="pl-c">// disable the custom select</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-c1">disabled</span>); <span class="pl-c">// true</span>
+<span class="pl-smi">cstSel</span>.<span class="pl-c1">disabled</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>; <span class="pl-c">// enable the custom select</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-c1">disabled</span>); <span class="pl-c">// false</span></pre></div>
+
+<h3>
+<a id="value" class="anchor" href="#value" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>value</h3>
+
+<p>Get/set property.<br>
+Change both the native select and the custom select. Use it just like nativeSelect.value</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-c1">value</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>; <span class="pl-c">// the first option with that value will be selected. If there is no option with that value the first one'll be selected.</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">cstSel</span>.<span class="pl-c1">value</span>); <span class="pl-c">// return foo if there was an option with 'foo' value</span></pre></div>
+
+<h3>
+<a id="appendelements-target" class="anchor" href="#appendelements-target" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>append(elements[, target])</h3>
+
+<p>Append an option or an optgroup to the select.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">option</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>);
+<span class="pl-smi">option</span>.<span class="pl-c1">text</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Foo<span class="pl-pds">'</span></span>;
+<span class="pl-smi">option</span>.<span class="pl-c1">value</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>;
+<span class="pl-smi">cstSel</span>.<span class="pl-c1">append</span>(option);</pre></div>
+
+<p>The <em>elements</em> parameter could be:</p>
+
+<p>An instance of HTMLElement, tag OPTION:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>An instance of HTMLElement, tag OPTGROUP:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>optgroup<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>A list (NodeList, HTMLCollection, Array, etc) of instance of HTMLElement, tag OPTION/OPTGROUP:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-smi">cstSel</span>.<span class="pl-en">empty</span>();</pre></div>
+
+<p>The <em>target</em> parameter must be the <code>select</code> <strong>(default)</strong> or an optgroup that is already inside the select.</p>
+
+<h3>
+<a id="insertbeforeelements-target" class="anchor" href="#insertbeforeelements-target" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>insertBefore(elements, target)</h3>
+
+<p>insert an option or an optgroup before the specified target.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">option</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>);
+<span class="pl-smi">option</span>.<span class="pl-c1">text</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Foo<span class="pl-pds">'</span></span>;
+<span class="pl-smi">option</span>.<span class="pl-c1">value</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">target</span> <span class="pl-k">=</span> <span class="pl-smi">cstSel</span>.<span class="pl-smi">select</span>.<span class="pl-c1">options</span>[<span class="pl-c1">2</span>];
+<span class="pl-smi">cstSel</span>.<span class="pl-c1">insertBefore</span>(option, target);</pre></div>
+
+<p>The <em>elements</em> parameter could be:</p>
+
+<p>An instance of HTMLElement, tag OPTION:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>option<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>An instance of HTMLElement, tag OPTGROUP:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>optgroup<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>A list (NodeList, HTMLCollection, Array, etc) of instance of HTMLElement, tag OPTION/OPTGROUP:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">toBeAppend</span> <span class="pl-k">=</span> <span class="pl-smi">cstSel</span>.<span class="pl-en">empty</span>();</pre></div>
+
+<p>The <em>target</em> parameter must be an <code>option</code> or an <code>optgroup</code> that is already inside the select.</p>
+
+<h3>
+<a id="removenode" class="anchor" href="#removenode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>remove(node)</h3>
+
+<p>remove an option or an optgroup</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-c1">remove</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">select</span>.<span class="pl-c1">options</span>[<span class="pl-c1">1</span>]);</pre></div>
+
+<h3>
+<a id="empty" class="anchor" href="#empty" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>empty()</h3>
+
+<p>empty the select</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-en">empty</span>();</pre></div>
+
+<h3>
+<a id="destroy" class="anchor" href="#destroy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>destroy()</h3>
+
+<p>destroy the plugin, removing custom markup, classes, and listeners.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-en">destroy</span>();</pre></div>
+
+<h3>
+<a id="opener" class="anchor" href="#opener" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>opener</h3>
+
+<p>DOM Element</p>
+
+<h3>
+<a id="select" class="anchor" href="#select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>select</h3>
+
+<p>DOM Element</p>
+
+<h3>
+<a id="panel" class="anchor" href="#panel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>panel</h3>
+
+<p>DOM Element</p>
+
+<h3>
+<a id="container" class="anchor" href="#container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>container</h3>
+
+<p>DOM Element</p>
+
+<h2>
+<a id="events" class="anchor" href="#events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Events</h2>
+
+<h3>
+<a id="custom-selectopen" class="anchor" href="#custom-selectopen" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select.open</h3>
+
+<p>Only on <code>container</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">container</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>custom-select.open<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">e</span>.<span class="pl-c1">target</span><span class="pl-pse">}</span></span> is open 😊<span class="pl-pds">`</span></span>)});</pre></div>
+
+<h3>
+<a id="custom-selectclose" class="anchor" href="#custom-selectclose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select.close</h3>
+
+<p>Only on <code>container</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">container</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>custom-select.close<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">e</span>.<span class="pl-c1">target</span><span class="pl-pse">}</span></span> is closed 😔<span class="pl-pds">`</span></span>)});</pre></div>
+
+<h3>
+<a id="custom-selectdisabled" class="anchor" href="#custom-selectdisabled" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select.disabled</h3>
+
+<p>Only on <code>container</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">container</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>custom-select.disabled<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">e</span>.<span class="pl-c1">target</span><span class="pl-pse">}</span></span> is disabled 👋<span class="pl-pds">`</span></span>)});</pre></div>
+
+<h3>
+<a id="custom-selectenabled" class="anchor" href="#custom-selectenabled" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select.enabled</h3>
+
+<p>Only on <code>container</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">container</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>custom-select.enabled<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">e</span>.<span class="pl-c1">target</span><span class="pl-pse">}</span></span> is enabled 👏<span class="pl-pds">`</span></span>)});</pre></div>
+
+<h3>
+<a id="custom-selectfocus-outside-panel" class="anchor" href="#custom-selectfocus-outside-panel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>custom-select.focus-outside-panel</h3>
+
+<p>Recommended on <code>panel</code>.<br>
+This <code>CustomEvent</code> fires when the focused option moves outside the visible part of the <code>panel</code>.<br>
+It bubbles, so the listener can be placed on every ancestor of the custom options.<br>
+This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.
+By default there's no animation but a simply <code>scrollTop</code> change of the <code>panel</code>.<br>
+You can overwrite this behaviour by simply adding an <code>EventListener</code>, with <code>useCapture</code> argument set to <code>true</code> and an <code>e.stopPropagation()</code> statement inside you listener's callback-function.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Example with jQuery animate</span>
+<span class="pl-smi">cstSel</span>.<span class="pl-smi">panel</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>custom-select.focus-outside-panel<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> {
+    <span class="pl-smi">e</span>.<span class="pl-c1">stopPropagation</span>();
+    <span class="pl-en">$</span>(<span class="pl-smi">cstSel</span>.<span class="pl-smi">panel</span>).<span class="pl-c1">animate</span>({
+      scrollTop<span class="pl-k">:</span> <span class="pl-smi">e</span>.<span class="pl-c1">target</span>.<span class="pl-smi">offsetTop</span>,
+    }, <span class="pl-c1">300</span>)
+  }, <span class="pl-c1">true</span>);</pre></div>
+
+<h3>
+<a id="change" class="anchor" href="#change" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>change</h3>
+
+<p>Only on <code>select</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cstSel</span>.<span class="pl-smi">select</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>change<span class="pl-pds">'</span></span>,
+  (<span class="pl-smi">e</span>) <span class="pl-k">=&gt;</span> { <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">`</span><span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">e</span>.<span class="pl-c1">target</span><span class="pl-pse">}</span></span> has changed it's value 👌<span class="pl-pds">`</span></span>)});</pre></div>
+
+<h2>
+<a id="thats-all" class="anchor" href="#thats-all" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>That's all!</h2>
+
+<p><strong>And now have fun ✌</strong></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/gionatan-lombardi/custom-select/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/gionatan-lombardi/custom-select/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/gionatan-lombardi/custom-select"></a> is maintained by <a href="https://github.com/gionatan-lombardi">gionatan-lombardi</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
