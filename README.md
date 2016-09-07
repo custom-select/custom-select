@@ -276,41 +276,41 @@ DOM Element
 
 ## Events
 
-### open
-On `container`.
+### custom-select.open
+Only on `container`.
 ```js
 cstSel.container.addEventListener('custom-select.open',
   (e) => { console.log(`${e.target} is open 😊`)});
 ```
 
-### close
-On `container`.
+### custom-select.close
+Only on `container`.
 ```js
 cstSel.container.addEventListener('custom-select.close',
   (e) => { console.log(`${e.target} is closed 😔`)});
 ```
 
-### disabled
-On `container`.
+### custom-select.disabled
+Only on `container`.
 ```js
 cstSel.container.addEventListener('custom-select.disabled',
   (e) => { console.log(`${e.target} is disabled 👋`)});
 ```
 
-### enabled
-On `container`.
+### custom-select.enabled
+Only on `container`.
 ```js
 cstSel.container.addEventListener('custom-select.enabled',
   (e) => { console.log(`${e.target} is enabled 👏`)});
 ```
 
-### focus-outside-panel
+### custom-select.focus-outside-panel
 Recommended on `panel`.  
-This `CustomEvent` fires when the focused options is outside the visible part of the `panel`.  
+This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
 It bubbles, so the listener can be placed on every ancestor of the custom options.  
-This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.  
-By default there's no animation but a simply scrollTop change of the `panel`.  
-You can overwrite this behaviour by simply adding an `EventListener`, with `useCapture` argument set to `true` and `e.stopPropagation()`.
+This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.
+By default there's no animation but a simply `scrollTop` change of the `panel`.  
+You can overwrite this behaviour by simply adding an `EventListener`, with `useCapture` argument set to `true` and an `e.stopPropagation()` statement inside you listener's callback-function.
 ```js
 // Example with jQuery animate
 cstSel.panel.addEventListener('custom-select.focus-outside-panel',
@@ -323,7 +323,7 @@ cstSel.panel.addEventListener('custom-select.focus-outside-panel',
 ```
 
 ### change
-Listener added to the `select`.
+Only on `select`.
 ```js
 cstSel.select.addEventListener('change',
   (e) => { console.log(`${e.target} has changed it's value 👌`)});
