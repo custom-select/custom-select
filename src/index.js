@@ -245,7 +245,7 @@ function builder(el, builderParams) {
   // To block it the plugin user must
   // add a "custom-select.focus-outside-panel" eventListener on the panel
   // with useCapture set to true
-  // and stopPropagatio
+  // and stopPropagation
   function scrollToFocused(e) {
     var currPanel = e.currentTarget;
     var currOption = e.target;

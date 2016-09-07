@@ -243,7 +243,6 @@ const toBeAppend = cstSel.empty();
 
 The *target* parameter must be an `option` or an `optgroup` that is already inside the select.
 
-
 ### remove(node)
 remove an option or an optgroup
 ```js
@@ -264,13 +263,71 @@ cstSel.destroy();
 
 ### opener
 DOM Element
+
 ### select
 DOM Element
+
 ### panel
 DOM Element
+
 ### container
 DOM Element
 
+
+## Events
+
+### open
+On `container`.
+```js
+cstSel.container.addEventListener('custom-select.open',
+  (e) => { console.log(`${e.target} is open 😊`)});
+```
+
+### close
+On `container`.
+```js
+cstSel.container.addEventListener('custom-select.close',
+  (e) => { console.log(`${e.target} is closed 😔`)});
+```
+
+### disabled
+On `container`.
+```js
+cstSel.container.addEventListener('custom-select.disabled',
+  (e) => { console.log(`${e.target} is disabled 👋`)});
+```
+
+### enabled
+On `container`.
+```js
+cstSel.container.addEventListener('custom-select.enabled',
+  (e) => { console.log(`${e.target} is enabled 👏`)});
+```
+
+### focus-outside-panel
+Recommended on `panel`.  
+This `CustomEvent` fires when the focused options is outside the visible part of the `panel`.  
+It bubbles, so the listener can be placed on every ancestor of the custom options.  
+This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.  
+By default there's no animation but a simply scrollTop change of the `panel`.  
+You can overwrite this behaviour by simply adding an `EventListener`, with `useCapture` argument set to `true` and `e.stopPropagation()`.
+```js
+// Example with jQuery animate
+cstSel.panel.addEventListener('custom-select.focus-outside-panel',
+  (e) => {
+    e.stopPropagation();
+    $(cstSel.panel).animate({
+      scrollTop: e.target.offsetTop,
+    }, 300)
+  }, true);
+```
+
+### change
+Listener added to the `select`.
+```js
+cstSel.select.addEventListener('change',
+  (e) => { console.log(`${e.target} has changed it's value 👌`)});
+```
 
 ## That's all!
 **And now have fun ✌**
