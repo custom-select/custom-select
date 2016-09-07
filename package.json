@@ -5,10 +5,10 @@
   "main": "build",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gionatan-lombardi/custom-select.git"
+    "url": "https://github.com/custom-select/custom-select.git"
   },
   "bugs": {
-    "url": "https://github.com/gionatan-lombardi/custom-select/issues"
+    "url": "https://github.com/custom-select/custom-select/issues"
   },
   "scripts": {
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",

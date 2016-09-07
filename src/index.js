@@ -4,7 +4,7 @@
  * Needs no dependencies.
  *
  * v0.0.1
- * (https://github.com/gionatan-lombardi/custom-select)
+ * (https://github.com/custom-select/custom-select)
  *
  * Copyright (c) 2016 Gionatan Lombardi & Marco Nucara
  * MIT License
