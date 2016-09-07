@@ -3,6 +3,7 @@ import customSelect from './../';
 
 var select1;
 var select2;
+var eventMessage;
 
 test('With the public provided method disable the select', assert => {
   document.body.innerHTML = '';
@@ -20,6 +21,9 @@ test('With the public provided method disable the select', assert => {
 
   customSelect('select');
 
+  select1.parentNode.addEventListener('custom-select.disabled',
+    () => { eventMessage = 'First select is disabled!'; });
+
   select1.parentNode.customSelect.disabled = true;
 
   const actual = select1.disabled;
@@ -27,6 +31,12 @@ test('With the public provided method disable the select', assert => {
 
   assert.deepEqual(actual, expected,
     'should return true');
+  assert.end();
+});
+
+test('... and dispatches the custom event disabled ', assert => {
+  assert.equal(eventMessage, 'First select is disabled!',
+    'should return false "First select is disabled!"');
   assert.end();
 });
 
@@ -50,6 +60,9 @@ test('Init a second disabled select', assert => {
 });
 
 test('With the public provided method enable the first select', assert => {
+  select1.parentNode.addEventListener('custom-select.enabled',
+    () => { eventMessage = 'First select is enabled!'; });
+
   // Pass a falsy value instad of false
   select1.parentNode.customSelect.disabled = 0;
 
@@ -58,5 +71,11 @@ test('With the public provided method enable the first select', assert => {
 
   assert.deepEqual(actual, expected,
     'should return false');
+  assert.end();
+});
+
+test('... and dispatches the custom event enabled ', assert => {
+  assert.equal(eventMessage, 'First select is enabled!',
+    'should return false "First select is enabled!"');
   assert.end();
 });

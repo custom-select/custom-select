@@ -276,11 +276,13 @@ function builder(el, builderParams) {
       container.classList.add(builderParams.isDisabledClass);
       select.disabled = true;
       opener.removeAttribute('tabindex');
+      container.dispatchEvent(new CustomEvent('custom-select.disabled'));
       removeEvents();
     } else if (!bool && select.disabled) {
       container.classList.remove(builderParams.isDisabledClass);
       select.disabled = false;
       opener.setAttribute('tabindex', '0');
+      container.dispatchEvent(new CustomEvent('custom-select.enabled'));
       addEvents();
     }
   }
