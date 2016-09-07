@@ -306,6 +306,7 @@ cstSel.container.addEventListener('custom-select.enabled',
 
 ### custom-select.focus-outside-panel
 Recommended on `panel`.  
+  
 This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
 It bubbles, so the listener can be placed on every ancestor of the custom options.  
 This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.
