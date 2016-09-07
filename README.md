@@ -2,7 +2,8 @@
 A lightweight JS script for custom select creation.
 No dependencies needed.
 
-
+[![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
+  
 ## Install
 Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/index.min.js).
 
@@ -306,7 +307,7 @@ cstSel.container.addEventListener('custom-select.enabled',
 
 ### custom-select.focus-outside-panel
 Recommended on `panel`.  
-  
+
 This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
 It bubbles, so the listener can be placed on every ancestor of the custom options.  
 This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.
