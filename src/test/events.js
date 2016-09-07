@@ -84,9 +84,9 @@ test('On click outside the selects closes the opened one', assert => {
 });
 
 test('On click on an option sets selected class', assert => {
-  // Add change events listenere for next test
+  // Add change events listener for next test
   select1.addEventListener('change',
-    () => { eventMessage = 'Select has changed it\'s value'; });
+    () => { eventMessage = 'First select has changed it\'s value'; });
 
   // first select
   document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open = true;
@@ -147,8 +147,8 @@ test('... and updates opener text', assert => {
 });
 
 test('... and dispatches the change event', assert => {
-  assert.equal(eventMessage, 'Select has changed it\'s value',
-    'Select has changed it\'s value');
+  assert.equal(eventMessage, 'First select has changed it\'s value',
+    'First select has changed it\'s value');
   assert.end();
 });
 
@@ -282,51 +282,35 @@ test('On keydown on the second select...', assert => {
     }, 2000);
   });
 
-  // assert.test('... with a second ArrowDown the focus remains on the last option', q => {
-  //   currentContainer.dispatchEvent(e);
-  //
-  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
-  //   expected = 'honda';
-  //
-  //   q.deepEqual(actual, expected,
-  //     'should return true');
-  //   q.end();
-  // });
-  //
-  // assert.test('... an ArrowUp sets the focus on the prev option', q => {
-  //   e.keyCode = 38;
-  //
-  //   currentContainer.dispatchEvent(e);
-  //
-  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
-  //   expected = 'ferrari';
-  //
-  //   q.deepEqual(actual, expected,
-  //     'should return true');
-  //   q.end();
-  // });
-  //
-  // assert.test('... a second ArrowUp sets the focus on first option', q => {
-  //   currentContainer.dispatchEvent(e);
-  //
-  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
-  //   expected = '';
-  //
-  //   q.deepEqual(actual, expected,
-  //     'should return true');
-  //   q.end();
-  // });
-  //
-  // assert.test('... with a third ArrowUp the focus remains on the first option', q => {
-  //   currentContainer.dispatchEvent(e);
-  //
-  //   actual = currentContainer.querySelector('.has-focus').getAttribute('data-value');
-  //   expected = '';
-  //
-  //   q.deepEqual(actual, expected,
-  //     'should return true');
-  //   q.end();
-  // });
+  assert.test('Enter closes the panel', q => {
+    // Add change events listener for next test
+    select2.addEventListener('change',
+      () => { eventMessage = 'Second select has changed it\'s value'; });
+  // Resets the eventMessage value for further checks
+    eventMessage = false;
+
+    e.keyCode = 13;
+    currentContainer.dispatchEvent(e);
+
+    q.false(currentContainer.customSelect.panel.classList.contains('is-open'),
+      'should return false');
+    q.end();
+  });
+
+  assert.test('... and changes the select value', q => {
+    actual = currentContainer.children[1].value;
+    expected = 'banana';
+
+    q.deepEqual(actual, expected,
+      'should return "banana"');
+    q.end();
+  });
+
+  assert.test('... and dispatches the change event', q => {
+    q.equal(eventMessage, 'Second select has changed it\'s value',
+      'Second select has changed it\'s value');
+    q.end();
+  });
 
   assert.end();
 });

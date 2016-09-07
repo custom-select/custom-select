@@ -199,6 +199,8 @@ function builder(el, builderParams) {
           setSelectedElement(focusedElement);
           // Sets the corrisponding select's option to selected updating the select's value too
           selectedElement.customSelectOriginalOption.selected = true;
+          // Triggers the native change event of the select
+          select.dispatchEvent(new CustomEvent('change'));
           open(false);
           break;
         case 27:
