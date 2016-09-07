@@ -19,7 +19,7 @@ var _extends = Object.assign || function (target) {
     * Needs no dependencies.
     *
     * v0.0.1
-    * (https://github.com/gionatan-lombardi/custom-select)
+    * (https://github.com/custom-select/custom-select)
     *
     * Copyright (c) 2016 Gionatan Lombardi & Marco Nucara
     * MIT License
@@ -256,7 +256,7 @@ function builder(el, builderParams) {
   // To block it the plugin user must
   // add a "custom-select.focus-outside-panel" eventListener on the panel
   // with useCapture set to true
-  // and stopPropagatio
+  // and stopPropagation
   function scrollToFocused(e) {
     var currPanel = e.currentTarget;
     var currOption = e.target;

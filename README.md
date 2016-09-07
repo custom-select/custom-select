@@ -4,7 +4,7 @@ No dependencies needed.
 
 
 ## Install
-Download the minified build file [here](https://raw.githubusercontent.com/gionatan-lombardi/custom-select/master/build/index.min.js).
+Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/index.min.js).
 
 Or install with npm:
 ```
