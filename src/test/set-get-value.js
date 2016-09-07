@@ -36,7 +36,7 @@ test('With the public property set the value', assert => {
 
 test('... and dispatches the change event on the select', assert => {
   assert.equal(eventMessage, 'Select has changed it\'s value',
-    'should return flower');
+    'Select has changed it\'s value');
   assert.end();
 });
 

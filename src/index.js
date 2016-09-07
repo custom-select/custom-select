@@ -159,6 +159,8 @@ function builder(el, builderParams) {
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.customSelectOriginalOption.selected = true;
       open(false);
+      // Triggers the native change event of the select
+      select.dispatchEvent(new CustomEvent('change'));
     // Click outside the container closes the panel
     } else if (isOpen) {
       open(false);

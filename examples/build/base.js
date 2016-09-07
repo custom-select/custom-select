@@ -170,6 +170,8 @@ function builder(el, builderParams) {
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.customSelectOriginalOption.selected = true;
       open(false);
+      // Triggers the native change event of the select
+      select.dispatchEvent(new CustomEvent('change'));
       // Click outside the container closes the panel
     } else if (isOpen) {
       open(false);
@@ -286,11 +288,13 @@ function builder(el, builderParams) {
       container.classList.add(builderParams.isDisabledClass);
       select.disabled = true;
       opener.removeAttribute('tabindex');
+      container.dispatchEvent(new CustomEvent('custom-select.disabled'));
       removeEvents();
     } else if (!bool && select.disabled) {
       container.classList.remove(builderParams.isDisabledClass);
       select.disabled = false;
       opener.setAttribute('tabindex', '0');
+      container.dispatchEvent(new CustomEvent('custom-select.enabled'));
       addEvents();
     }
   }

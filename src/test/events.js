@@ -2,12 +2,15 @@ import test from 'tape';
 import customSelect from './../';
 
 var options;
+var select1;
+var select2;
+var eventMessage;
 
 test('On click opens the panel', assert => {
   document.body.innerHTML = '';
 
-  const select = document.createElement('select');
-  select.innerHTML = `
+  select1 = document.createElement('select');
+  select1.innerHTML = `
     <option value="">Select...</option>
     <optgroup label="Cars">
       <option value="ferrari">Ferrari</option>
@@ -15,7 +18,7 @@ test('On click opens the panel', assert => {
     <optgroup label="Motorcycles">
       <option value="honda">Honda</option>
     </optgroup>`;
-  document.body.appendChild(select);
+  document.body.appendChild(select1);
 
   const cstSelects = customSelect('select');
   options = cstSelects[0].pluginOptions;
@@ -31,15 +34,15 @@ test('On click opens the panel', assert => {
 });
 
 test('On click on second select closes the first...', assert => {
-  const select = document.createElement('select');
-  select.innerHTML = `
+  select2 = document.createElement('select');
+  select2.innerHTML = `
     <option value="">Select...</option>
     <option value="apple">Apple</option>
     <option value="banana">Banana</option>;
     <option value="avocado">Avocado</option>`;
-  document.body.appendChild(select);
+  document.body.appendChild(select2);
 
-  customSelect(select);
+  customSelect(select2);
 
   document.getElementsByClassName(options.openerClass)[1].click();
 
@@ -81,6 +84,10 @@ test('On click outside the selects closes the opened one', assert => {
 });
 
 test('On click on an option sets selected class', assert => {
+  // Add change events listenere for next test
+  select1.addEventListener('change',
+    () => { eventMessage = 'Select has changed it\'s value'; });
+
   // first select
   document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open = true;
   document.getElementsByClassName(options.optionClass)[2].click();
@@ -136,6 +143,12 @@ test('... and updates opener text', assert => {
 
   assert.deepEqual(actual, expected,
     'should return Honda');
+  assert.end();
+});
+
+test('... and dispatches the change event', assert => {
+  assert.equal(eventMessage, 'Select has changed it\'s value',
+    'Select has changed it\'s value');
   assert.end();
 });
 
