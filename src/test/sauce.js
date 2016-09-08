@@ -2,17 +2,17 @@ import fs from 'fs';
 
 import Runner from 'sauce-tap-runner';
 import async from 'async';
-import pkg from '../package';
+import pkg from '../../package';
 
 function test(options, callback) {
-  callback = callback || (() => {})
+  callback = callback || (() => {});
 
   if (!options) {
-    throw new Error("must supply an options object")
+    throw new Error("must supply an options object");
   }
 
   if (!options.name) {
-    throw new Error("must supply a project `name` option")
+    throw new Error("must supply a project `name` option");
   }
 
   options.user = options.user || process.env.SAUCE_USERNAME
@@ -56,12 +56,12 @@ function test(options, callback) {
       const comboName =
         `${capabilities.platform} ${capabilities.browserName} ` +
         `${capabilities.version || "latest"}`
-      capabilities = {
-        ...capabilities,
-          name: `${options.name} ${comboName}`,
+      capabilities = [
+        ...capabilities, {
+        name: `${options.name} ${comboName}`,
         "capture-html": true,
-        build: options.build,
-      }
+        build: options.build,}
+      ]
       return (cb) => {
         log()
         log()
