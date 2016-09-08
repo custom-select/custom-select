@@ -67,6 +67,11 @@
       <option value="foo">Foo</option>
       <option value="buzz">Buzz</option>
     </select>
-    <script src="build/base.js"></script>
+    <script src="../build/index.min.js"></script>
+    <script>
+      var customSelect = window.customSelect;
+      var mySelects = customSelect('select');
+      console.log(mySelects);
+    </script>
   </body>
 </html>
