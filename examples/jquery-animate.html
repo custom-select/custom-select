@@ -58,12 +58,23 @@
     <script>
       var customSelect = window.customSelect;
       var mySelect = customSelect('select')[0];
+      // You can't use jQuery on() 'cause it doesn't listen to native CustomEvents
       mySelect.panel.addEventListener('custom-select.focus-outside-panel', function(e) {
         e.stopPropagation();
         $(mySelect.panel).animate({
           scrollTop: e.target.offsetTop,
-        }, 600)
+        }, 500)
       }, true);
+      mySelect.container.addEventListener('custom-select.open', function(e) {
+        $(mySelect.panel).animate({
+          height: '6.4em',
+        });
+      });
+      mySelect.container.addEventListener('custom-select.close', function(e) {
+        $(mySelect.panel).animate({
+          height: '0',
+        });
+      })
     </script>
   </body>
 </html>
