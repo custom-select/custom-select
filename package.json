@@ -16,11 +16,7 @@
     "prebuild": "npm run clean",
     "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/index.min.js -t [ babelify ] -p [minifyify --no-map] && browserify examples/src/base.js -o examples/build/base.js -t [ babelify ]",
     "prepublish": "npm run clean && npm run test && npm run build",
-<<<<<<< HEAD
     "saucelabs": "babel-node src/test/sauce.js"
-=======
-    "saucelabs": "babel-node --stage 0 scripts/tests/sauce.js"
->>>>>>> parent of 7939148... Sauce Runner try 2
   },
   "keywords": [
     "select",
