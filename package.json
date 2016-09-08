@@ -39,6 +39,7 @@
     "rimraf": "^2.5.2"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "browserify": "^13.0.1",
     "custom-event-polyfill": "^0.3.0",
     "sauce-tap-runner": "^0.1.2",
