@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Select - Example - jQuery animate</title>
+    <link rel="stylesheet" href="../build/style.css">
+    <style type="text/css">
+      body {
+        font-family: Arial;
+        font-size: 1.2rem;
+      }
+      .custom-select-container {
+        width: 300px;
+      }
+      .custom-select-opener {
+        white-space: nowrap;
+        height: 2.3em;
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+      }
+      .custom-select-opener:focus {
+        outline: none;
+        border-color: CornflowerBlue;
+      }
+      .custom-select-opener span {
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+      }
+      .custom-select-panel {
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello, Custom Select!</h1>
+    <label for="mySelect2">Select with optgroup</label>
+    <select id="mySelect2">
+      <option value>Select...</option>
+      <optgroup label="Cips">
+        <option value="zizz">Zizz</option>
+      </optgroup>
+      <optgroup label="Lips">
+        <option value="fruit">mango</option>
+        <option value="flower">rose</option>
+        <option value="fruit">pineapple</option>
+        <option value="flower">lotus</option>
+        <option value="flower">lily</option>
+        <option value="lorem">Lorem ipsum dolor</option>
+      </optgroup>
+    </select>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../build/index.min.js"></script>
+    <script>
+      var customSelect = window.customSelect;
+      var mySelect = customSelect('select')[0];
+      mySelect.panel.addEventListener('custom-select.focus-outside-panel', function(e) {
+        e.stopPropagation();
+        $(mySelect.panel).animate({
+          scrollTop: e.target.offsetTop,
+        }, 600)
+      }, true);
+    </script>
+  </body>
+</html>
