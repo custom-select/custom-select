@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build",
-    "test": "browserify src/test/index.js -o src/test/sauce-bundle.js -t [ babelify ] && node src/test/sauce-bundle.js",
+    "test": "browserify src/test/index.js -o src/test/sauce-bundle.js -t [ babelify ] && node src/test/sauce.js",
     "prebuild": "npm run clean",
     "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/index.min.js -t [ babelify ] -p [minifyify --no-map] && browserify examples/src/base.js -o examples/build/base.js -t [ babelify ]",
     "prepublish": "npm run clean && npm run test && npm run build"
