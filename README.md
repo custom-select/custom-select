@@ -3,7 +3,7 @@ A lightweight JS script for custom select creation.
 No dependencies needed.
 
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
-  
+
 ## Install
 Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/index.min.js).
 
@@ -159,13 +159,13 @@ console.log(cstSel.open); // true|false
 
 ## Methods & Properties
 
-### pluginOptions
+### pluginOptions `property [readonly]`
 Get the plugin options.
 ```js
-cstSel.pluginOptions();
+cstSel.pluginOptions;
 ```
 
-### open
+### open `property`
 Get/set property.
 ```js
 cstSel.open = true; // open the custom select
@@ -174,7 +174,7 @@ cstSel.open = false; // close the custom select
 console.log(cstSel.open); // false
 ```
 
-### disabled
+### disabled `property`
 Get/set property.
 ```js
 cstSel.disabled = true; // disable the custom select
@@ -183,7 +183,7 @@ cstSel.disabled = false; // enable the custom select
 console.log(cstSel.disabled); // false
 ```
 
-### value
+### value `property`
 Get/set property.  
 Change both the native select and the custom select. Use it just like nativeSelect.value
 ```js
@@ -191,7 +191,7 @@ cstSel.value = 'foo'; // the first option with that value will be selected. If t
 console.log(cstSel.value); // return foo if there was an option with 'foo' value
 ```
 
-### append(elements[, target])
+### append(elements[, target]) `method`
 Append an option or an optgroup to the select.
 ```js
 const option = document.createElement('option');
@@ -217,7 +217,7 @@ const toBeAppend = cstSel.empty();
 
 The *target* parameter must be the `select` **(default)** or an optgroup that is already inside the select.
 
-### insertBefore(elements, target)
+### insertBefore(elements, target) `method`
 insert an option or an optgroup before the specified target.
 ```js
 const option = document.createElement('option');
@@ -244,34 +244,34 @@ const toBeAppend = cstSel.empty();
 
 The *target* parameter must be an `option` or an `optgroup` that is already inside the select.
 
-### remove(node)
+### remove(node) `method`
 remove an option or an optgroup
 ```js
 cstSel.remove(cstSel.select.options[1]);
 ```
 
-### empty()
+### empty() `method`
 empty the select
 ```js
 cstSel.empty();
 ```
 
-### destroy()
+### destroy() `method`
 destroy the plugin, removing custom markup, classes, and listeners.
 ```js
 cstSel.destroy();
 ```
 
-### opener
+### opener `property [readonly]`
 DOM Element
 
-### select
+### select `property [readonly]`
 DOM Element
 
-### panel
+### panel `property [readonly]`
 DOM Element
 
-### container
+### container `property [readonly]`
 DOM Element
 
 
@@ -306,7 +306,7 @@ cstSel.container.addEventListener('custom-select.enabled',
 ```
 
 ### custom-select.focus-outside-panel
-Recommended on `panel`.  
+Fired on custom option, recommended listener on `panel`.  
 
 This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
 It bubbles, so the listener can be placed on every ancestor of the custom options.  
