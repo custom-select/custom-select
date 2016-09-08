@@ -15,8 +15,8 @@
     "test": "cross-env NODE_PATH=src browserify -t babelify src/test/index.js | tape-run",
     "prebuild": "npm run clean",
     "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/index.min.js -t [ babelify ] -p [minifyify --no-map] && browserify examples/src/base.js -o examples/build/base.js -t [ babelify ]",
-    "prepublish": "npm run clean && npm run test && npm run build",
-    "saucelabs": "babel-node src/test/sauce.js"
+    "prepublish": "babel-node --stage 0 scripts/tests/sauce.js",
+    "saucelabs": "babel-node --stage 0 scripts/tests/sauce.js"
   },
   "keywords": [
     "select",
