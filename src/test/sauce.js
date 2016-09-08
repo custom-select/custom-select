@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import fs from 'fs';
 
 import Runner from 'sauce-tap-runner';
@@ -82,70 +83,42 @@ function test(options, callback) {
 
             log(colorTap(results.raw))
             log()
+=======
+var Runner = require('sauce-tap-runner'),
+  browserify = require('browserify'),
+  async = require('async');
 
-            cb(null, results)
-          }
-        )
-      }
-    }
-  )
+var tests = new Runner('custom-select', 'd5276d0e-2b8e-4088-ade3-6bdba28cdc95'),
+  // Browserify is not required, can use either a string or stream of JS code
+  src = "sauce-bundle.js";
 
-  // we could imagine to run parallel tests
-  // https://github.com/conradz/sauce-tap-runner/issues/2
-  // async.parallelLimit(
-  async.series(
-    runs,
-    // if parallel can be used, this arguments must be added
-    // options.limit,
-    (err, results) => {
-      if (err) {throw err}
+async.series([run('chrome'), run('firefox')], closeTests);
 
-      // TODO: add a summary
+function run(browser) {
+    // Return a function that when called will run tests in the specified
+    // browser
 
-      const allOk = results.some((result) => result.ok)
+    return function(callback) {
+        tests.run(src, { browserName: browser }, function(err, results) {
+            if (err) {
+                return callback(err);
+            }
 
-      log("# All tests run completed")
-
-      tests.close(() => {
-        if (callback) {
-          return callback(err)
-        }
-      })
-    }
-  )
+            console.log(results);
+            callback();
+        });
+    };
 }
+>>>>>>> parent of 86078d0... Sauce Runner try
 
-test({
-  name: pkg.name,
-  user: "custom-select",
-  accessKey: "d5276d0e-2b8e-4088-ade3-6bdba28cdc95",
-  src: 'src/test/index.js',
-  desiredCapabilities: [
-    {
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11',
-    },
-    {
-      browserName: 'chrome',
-      platform: 'Windows 8.1',
-    },
-    {
-      browserName: 'firefox',
-      platform: 'Windows 8.1',
-    },
-    {
-      browserName: 'safari',
-      platform: 'OS X 10.10',
-    },
-    {
-      browserName: 'iphone',
-    },
-    {
-      browserName: 'ipad',
-    },
-  ],
-  options: {
-    timeout: 60 * 1000,
-  },
-})
+function closeTests(err) {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log('Tests completed');
+    }
+
+    tests.close(function() {
+        // Runner is closed
+    });
+}
