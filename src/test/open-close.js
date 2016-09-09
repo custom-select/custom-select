@@ -23,9 +23,9 @@ test('With the public provided method opens the panel', assert => {
   const cstSelect = customSelect('select');
   options = cstSelect[0].pluginOptions;
 
-  select1.parentNode.addEventListener('custom-select.open',
+  select1.parentNode.addEventListener('custom-select:open',
     () => { eventMessage = 'First select is open!'; });
-  select1.parentNode.addEventListener('custom-select.close',
+  select1.parentNode.addEventListener('custom-select:close',
     () => { eventMessage = 'First select is closed!'; });
 
   select1.customSelect.open = true;

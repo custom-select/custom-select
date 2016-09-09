@@ -21,7 +21,7 @@ test('With the public provided method disable the select', assert => {
 
   customSelect('select');
 
-  select1.parentNode.addEventListener('custom-select.disabled',
+  select1.parentNode.addEventListener('custom-select:disabled',
     () => { eventMessage = 'First select is disabled!'; });
 
   select1.parentNode.customSelect.disabled = true;
@@ -60,7 +60,7 @@ test('Init a second disabled select', assert => {
 });
 
 test('With the public provided method enable the first select', assert => {
-  select1.parentNode.addEventListener('custom-select.enabled',
+  select1.parentNode.addEventListener('custom-select:enabled',
     () => { eventMessage = 'First select is enabled!'; });
 
   // Pass a falsy value instad of false

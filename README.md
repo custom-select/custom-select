@@ -5,7 +5,7 @@ No dependencies needed.
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
 
 ## Install
-Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/index.min.js).
+Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/custom-select.min.js).
 
 Or install with npm:
 ```
@@ -277,35 +277,35 @@ DOM Element
 
 ## Events
 
-### custom-select.open
+### custom-select:open
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.open',
+cstSel.container.addEventListener('custom-select:open',
   (e) => { console.log(`${e.target} is open 😊`)});
 ```
 
-### custom-select.close
+### custom-select:close
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.close',
+cstSel.container.addEventListener('custom-select:close',
   (e) => { console.log(`${e.target} is closed 😔`)});
 ```
 
-### custom-select.disabled
+### custom-select:disabled
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.disabled',
+cstSel.container.addEventListener('custom-select:disabled',
   (e) => { console.log(`${e.target} is disabled 👋`)});
 ```
 
-### custom-select.enabled
+### custom-select:enabled
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.enabled',
+cstSel.container.addEventListener('custom-select:enabled',
   (e) => { console.log(`${e.target} is enabled 👏`)});
 ```
 
-### custom-select.focus-outside-panel
+### custom-select:focus-outside-panel
 Fired on custom option, recommended listener on `panel`.  
 
 This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
@@ -315,7 +315,7 @@ By default there's no animation but a simply `scrollTop` change of the `panel`.
 You can overwrite this behaviour by simply adding an `EventListener`, with `useCapture` argument set to `true` and an `e.stopPropagation()` statement inside you listener's callback-function.
 ```js
 // Example with jQuery animate
-cstSel.panel.addEventListener('custom-select.focus-outside-panel',
+cstSel.panel.addEventListener('custom-select:focus-outside-panel',
   (e) => {
     e.stopPropagation();
     $(cstSel.panel).animate({
@@ -331,5 +331,22 @@ cstSel.select.addEventListener('change',
   (e) => { console.log(`${e.target} has changed it's value 👌`)});
 ```
 
-## That's all!
+## jQuery adaptor
+If you really can't live without jQuery, an adaptor was made for you 😩: [download jQuery version here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/jquery.custom-select.min.js).
+
+### jQuery init
+```js
+$('#mySelect').customSelect();
+```
+### jQuery methods use
+```js
+$('#mySelect').customSelect('open', true);
+```
+
+### jQuery property read
+```js
+$('#mySelect').customSelect('panel');
+```
+
+## That's all folks!
 **And now have fun ✌**

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Select - Example - GSAP panel animation</title>
-    <link rel="stylesheet" href="../build/style.css">
+    <link rel="stylesheet" href="../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -36,9 +36,6 @@
         max-height: none;
         height: 0;
       }
-      .custom-select-panel.is-open {
-        max-height: none;
-      }
     </style>
   </head>
   <body>
@@ -61,11 +58,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
-    <script src="../build/index.min.js"></script>
+    <script src="../build/custom-select.min.js"></script>
     <script>
       var customSelect = window.customSelect;
       var mySelect = customSelect('select')[0];
-      mySelect.panel.addEventListener('custom-select.focus-outside-panel', function(e) {
+      mySelect.panel.addEventListener('custom-select:focus-outside-panel', function(e) {
         e.stopPropagation();
         var currPanel = e.currentTarget;
         var currOption = e.target;
@@ -79,11 +76,10 @@
           TweenLite.to(currPanel, 0.5, {scrollTo: (currOption.offsetTop + currOption.clientHeight - currPanel.clientHeight)});
         }
       }, true);
-      mySelect.container.addEventListener('custom-select.open', function(e) {
-        TweenLite.set(mySelect.panel, {height:"auto"});
-        TweenLite.from(mySelect.panel, 2, {height: 0, ease: Quart.easeOut});
+      mySelect.container.addEventListener('custom-select:open', function(e) {
+        TweenLite.to(mySelect.panel, 2, {height: '10.7em', ease: Quart.easeOut});
       });
-      mySelect.container.addEventListener('custom-select.close', function(e) {
+      mySelect.container.addEventListener('custom-select:close', function(e) {
         TweenLite.to(mySelect.panel, 2, {height: 0, ease: Quart.easeOut});
       })
     </script>

@@ -61,7 +61,7 @@ function builder(el, builderParams) {
     // if not dispatches a custom event
     if (isOpen) {
       if (cstOption.offsetTop < cstOption.offsetParent.scrollTop || cstOption.offsetTop > cstOption.offsetParent.scrollTop + cstOption.offsetParent.clientHeight - cstOption.clientHeight) {
-        cstOption.dispatchEvent(new CustomEvent('custom-select.focus-outside-panel', { bubbles: true }));
+        cstOption.dispatchEvent(new CustomEvent('custom-select:focus-outside-panel', { bubbles: true }));
       }
     }
   }
@@ -124,7 +124,7 @@ function builder(el, builderParams) {
       panel.scrollTop = panel.getElementsByClassName(builderParams.hasFocusClass)[0].offsetTop;
 
       // Dispatches the custom event open
-      container.dispatchEvent(new CustomEvent('custom-select.open'));
+      container.dispatchEvent(new CustomEvent('custom-select:open'));
 
       // Sets the global state
       isOpen = true;
@@ -142,7 +142,7 @@ function builder(el, builderParams) {
       setFocusedElement(selectedElement);
 
       // Dispatches the custom event close
-      container.dispatchEvent(new CustomEvent('custom-select.close'));
+      container.dispatchEvent(new CustomEvent('custom-select:close'));
     }
     return isOpen;
   }
@@ -245,7 +245,7 @@ function builder(el, builderParams) {
   // When the option is outside the visible part of the opened panel, updates the scrollTop position
   // This is the default behaviour
   // To block it the plugin user must
-  // add a "custom-select.focus-outside-panel" eventListener on the panel
+  // add a "custom-select:focus-outside-panel" eventListener on the panel
   // with useCapture set to true
   // and stopPropagation
   function scrollToFocused(e) {
@@ -263,7 +263,7 @@ function builder(el, builderParams) {
   function addEvents() {
     document.addEventListener('click', clickEvent);
     panel.addEventListener('mouseover', mouseoverEvent);
-    panel.addEventListener('custom-select.focus-outside-panel', scrollToFocused);
+    panel.addEventListener('custom-select:focus-outside-panel', scrollToFocused);
     select.addEventListener('change', changeEvent);
     container.addEventListener('keydown', keydownEvent);
   }
@@ -271,7 +271,7 @@ function builder(el, builderParams) {
   function removeEvents() {
     document.removeEventListener('click', clickEvent);
     panel.removeEventListener('mouseover', mouseoverEvent);
-    panel.removeEventListener('custom-select.focus-outside-panel', scrollToFocused);
+    panel.removeEventListener('custom-select:focus-outside-panel', scrollToFocused);
     select.removeEventListener('change', changeEvent);
     container.removeEventListener('keydown', keydownEvent);
   }
@@ -281,13 +281,13 @@ function builder(el, builderParams) {
       container.classList.add(builderParams.isDisabledClass);
       select.disabled = true;
       opener.removeAttribute('tabindex');
-      container.dispatchEvent(new CustomEvent('custom-select.disabled'));
+      container.dispatchEvent(new CustomEvent('custom-select:disabled'));
       removeEvents();
     } else if (!bool && select.disabled) {
       container.classList.remove(builderParams.isDisabledClass);
       select.disabled = false;
       opener.setAttribute('tabindex', '0');
-      container.dispatchEvent(new CustomEvent('custom-select.enabled'));
+      container.dispatchEvent(new CustomEvent('custom-select:enabled'));
       addEvents();
     }
   }
@@ -389,12 +389,12 @@ function builder(el, builderParams) {
     }
 
     // The custom markup to append
-    var markupToInsert = parseMarkup([node]);
+    var markupToInsert = parseMarkup(node.length ? node : [node]);
 
     target.parentNode.insertBefore(markupToInsert[0], target);
 
     // Injects the option or optgroup node in the original select and returns the injected node
-    return targetPar.parentNode.insertBefore(node, targetPar);
+    return targetPar.parentNode.insertBefore(node.length ? node[0] : node, targetPar);
   }
 
   function remove(node) {
