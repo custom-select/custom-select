@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Custom Select - Example - jQuery animate</title>
-    <link rel="stylesheet" href="../build/style.css">
+    <link rel="stylesheet" href="../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -38,6 +38,13 @@
   </head>
   <body>
     <h1>Hello, Custom Select!</h1>
+    <label for="mySelect1">Simple select</label>
+    <select id="mySelect1">
+      <option value>Select...</option>
+      <option value="foo">Foo</option>
+      <option value="buzz">Buzz</option>
+    </select>
+    <br>
     <label for="mySelect2">Select with optgroup</label>
     <select id="mySelect2">
       <option value>Select...</option>
@@ -54,26 +61,26 @@
       </optgroup>
     </select>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="../build/index.min.js"></script>
+    <script src="../build/jquery.custom-select.min.js"></script>
     <script>
-      var customSelect = window.customSelect;
-      var mySelect = customSelect('select')[0];
+      var mySelect = $('select').customSelect();
+      $('#mySelect2').customSelect('panel').css({'max-height': 'none', 'height': 0})
       // You can't use jQuery on() 'cause it doesn't listen to native CustomEvents
-      mySelect.panel.addEventListener('custom-select.focus-outside-panel', function(e) {
+      $('#mySelect2').customSelect('panel')[0].addEventListener('custom-select.focus-outside-panel', function(e) {
         e.stopPropagation();
-        $(mySelect.panel).animate({
+        $('#mySelect2').customSelect('panel').animate({
           scrollTop: e.target.offsetTop,
-        }, 500)
+        }, 500);
       }, true);
-      mySelect.container.addEventListener('custom-select.open', function(e) {
-        $(mySelect.panel).animate({
-          height: '6.4em',
-        });
+      $('#mySelect2').customSelect('container')[0].addEventListener('custom-select.open', function(e) {
+        $('#mySelect2').customSelect('panel').animate({
+          height: '200px',
+        }, 1000);
       });
-      mySelect.container.addEventListener('custom-select.close', function(e) {
-        $(mySelect.panel).animate({
+      $('#mySelect2').customSelect('container')[0].addEventListener('custom-select.close', function(e) {
+        $('#mySelect2').customSelect('panel').animate({
           height: '0',
-        });
+        }, 1000);
       })
     </script>
   </body>
