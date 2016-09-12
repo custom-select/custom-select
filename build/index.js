@@ -55,14 +55,18 @@ function builder(el, builderParams) {
     if (focusedElement) {
       focusedElement.classList.remove(builderParams.hasFocusClass);
     }
-    focusedElement = cstOption;
-    focusedElement.classList.add(builderParams.hasFocusClass);
-    // Offset update: checks if the focused element is in the visible part of the panelClass
-    // if not dispatches a custom event
-    if (isOpen) {
-      if (cstOption.offsetTop < cstOption.offsetParent.scrollTop || cstOption.offsetTop > cstOption.offsetParent.scrollTop + cstOption.offsetParent.clientHeight - cstOption.clientHeight) {
-        cstOption.dispatchEvent(new CustomEvent('custom-select:focus-outside-panel', { bubbles: true }));
+    if (typeof cstOption !== 'undefined') {
+      focusedElement = cstOption;
+      focusedElement.classList.add(builderParams.hasFocusClass);
+      // Offset update: checks if the focused element is in the visible part of the panelClass
+      // if not dispatches a custom event
+      if (isOpen) {
+        if (cstOption.offsetTop < cstOption.offsetParent.scrollTop || cstOption.offsetTop > cstOption.offsetParent.scrollTop + cstOption.offsetParent.clientHeight - cstOption.clientHeight) {
+          cstOption.dispatchEvent(new CustomEvent('custom-select:focus-outside-panel', { bubbles: true }));
+        }
       }
+    } else {
+      focusedElement = undefined;
     }
   }
 
@@ -73,10 +77,15 @@ function builder(el, builderParams) {
     if (selectedElement) {
       selectedElement.classList.remove(builderParams.isSelectedClass);
     }
-    cstOption.classList.add(builderParams.isSelectedClass);
-    selectedElement = cstOption;
+    if (typeof cstOption !== 'undefined') {
+      cstOption.classList.add(builderParams.isSelectedClass);
+      selectedElement = cstOption;
+      opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
+    } else {
+      selectedElement = undefined;
+      opener.children[0].textContent = '';
+    }
     setFocusedElement(cstOption);
-    opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
   }
 
   function setValue(value) {
@@ -121,7 +130,9 @@ function builder(el, builderParams) {
       panel.classList.add(builderParams.isOpenClass);
 
       // Updates the scrollTop position of the panel in relation with the focused option
-      panel.scrollTop = panel.getElementsByClassName(builderParams.hasFocusClass)[0].offsetTop;
+      if (selectedElement) {
+        panel.scrollTop = selectedElement.offsetTop;
+      }
 
       // Dispatches the custom event open
       container.dispatchEvent(new CustomEvent('custom-select:open'));
@@ -361,13 +372,9 @@ function builder(el, builderParams) {
     // If the node provided is a single HTMLElement it is stored in an array
     var node = nodePar instanceof HTMLElement ? [nodePar] : nodePar;
 
-    // The custom markup to append
-    var markupToInsert = parseMarkup(node);
-
-    // Injects the created DOM content in the panel
-    for (var i = 0, l = markupToInsert.length; i < l; i++) {
-      target.appendChild(markupToInsert[i]);
-      if (appendIntoOriginal) {
+    // Injects the options|optgroup in the select
+    if (appendIntoOriginal) {
+      for (var i = 0, l = node.length; i < l; i++) {
         if (target === panel) {
           select.appendChild(node[i]);
         } else {
@@ -375,6 +382,15 @@ function builder(el, builderParams) {
         }
       }
     }
+
+    // The custom markup to append
+    var markupToInsert = parseMarkup(node);
+
+    // Injects the created DOM content in the panel
+    for (var _i = 0, _l = markupToInsert.length; _i < _l; _i++) {
+      target.appendChild(markupToInsert[_i]);
+    }
+
     return node;
   }
 
@@ -419,6 +435,7 @@ function builder(el, builderParams) {
       panel.removeChild(panel.children[0]);
       removed.push(select.removeChild(select.children[0]));
     }
+    setSelectedElement();
     return removed;
   }
 
@@ -427,7 +444,7 @@ function builder(el, builderParams) {
       delete select.options[i].customSelectCstOption;
     }
     var optGroup = select.getElementsByTagName('optgroup');
-    for (var _i = 0, _l = optGroup.length; _i < _l; _i++) {
+    for (var _i2 = 0, _l2 = optGroup.length; _i2 < _l2; _i2++) {
       delete optGroup.customSelectCstOptgroup;
     }
 
@@ -534,17 +551,17 @@ function customSelect(element, customParams) {
       }
       // The plugin is called on any HTMLElements list (NodeList, HTMLCollection, Array, etc.)
     } else if (element && element.length) {
-      for (var _i2 = 0, _l2 = element.length; _i2 < _l2; ++_i2) {
-        if (element[_i2] instanceof HTMLElement && element[_i2].tagName.toUpperCase() === 'SELECT') {
-          nodeList.push(element[_i2]);
+      for (var _i3 = 0, _l3 = element.length; _i3 < _l3; ++_i3) {
+        if (element[_i3] instanceof HTMLElement && element[_i3].tagName.toUpperCase() === 'SELECT') {
+          nodeList.push(element[_i3]);
         }
       }
     }
 
     // Launches the plugin over every HTMLElement
     // And stores every plugin instance
-    for (var _i3 = 0, _l3 = nodeList.length; _i3 < _l3; ++_i3) {
-      selects.push(builder(nodeList[_i3], _extends({}, defaultParams, customParams)));
+    for (var _i4 = 0, _l4 = nodeList.length; _i4 < _l4; ++_i4) {
+      selects.push(builder(nodeList[_i4], _extends({}, defaultParams, customParams)));
     }
 
     // Returns all plugin instances
