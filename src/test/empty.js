@@ -13,7 +13,7 @@ select.innerHTML = `
   </optgroup>
   <optgroup label="Auto">
     <option value="mercedes">Mercedes</option>
-    <option value="audi">Audi</option>
+    <option value="audi" selected>Audi</option>
   </optgroup>`;
 document.body.appendChild(select);
 const customselect = customSelect('select')[0];
@@ -54,6 +54,22 @@ test('Empty select (remove any option)', assert => {
       'should be null');
     q.end();
   });
+
+  assert.test('... and the custom select opener has no text ', q => {
+    actual = customselect.opener.textContent;
+    expected = '';
+    q.equal(actual, expected,
+      'should be ""');
+    q.end();
+  });
+
+  assert.test('... and the custom select has no value ', q => {
+    actual = customselect.value;
+    expected = '';
+    q.equal(actual, expected,
+      'should be ""');
+    q.end();
+  });
 });
 
 test('Empty select: re-append all removed', assert => {
@@ -68,10 +84,27 @@ test('Empty select: re-append all removed', assert => {
   });
 
   assert.test('... and the custom select contains all the options', q => {
-    actual = customselect.panel.getElementsByClassName(customselect.pluginOptions.optionClass).length;
+    actual = customselect.panel.getElementsByClassName(customselect.pluginOptions.optionClass)
+      .length;
     expected = 4;
     q.deepEqual(actual, expected,
       'the elements should be 4');
+    q.end();
+  });
+
+  assert.test('... and the select has the correct value', q => {
+    actual = customselect.select.value;
+    expected = 'audi';
+    q.deepEqual(actual, expected,
+      'the elements should be "audi"');
+    q.end();
+  });
+
+  assert.test('... and the custom opener has the correct text', q => {
+    actual = customselect.opener.textContent;
+    expected = 'Audi';
+    q.deepEqual(actual, expected,
+      'the elements should be "Audi"');
     q.end();
   });
 });
