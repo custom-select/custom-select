@@ -399,6 +399,7 @@ function builder(el, builderParams) {
 
   function remove(node) {
     var cstNode;
+    var r;
     if (node instanceof HTMLElement && node.tagName.toUpperCase() === 'OPTION' && select.contains(node)) {
       cstNode = node.customSelectCstOption;
     } else if (node instanceof HTMLElement && node.tagName.toUpperCase() === 'OPTGROUP' && select.contains(node)) {
@@ -407,7 +408,9 @@ function builder(el, builderParams) {
       throw new TypeError('Invalid Argument');
     }
     cstNode.parentNode.removeChild(cstNode);
-    return node.parentNode.removeChild(node);
+    r = node.parentNode.removeChild(node);
+    changeEvent();
+    return r;
   }
 
   function empty() {

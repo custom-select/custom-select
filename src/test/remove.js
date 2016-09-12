@@ -18,6 +18,9 @@ select.innerHTML = `
 document.body.appendChild(select);
 const customselect = customSelect('select')[0];
 
+// Change the select value to the one of the option that'll be removed
+select.value = 'audi';
+
 test('Remove an option', assert => {
   var target = select.children[2].children[1]; // Audi option
 
@@ -52,6 +55,14 @@ test('Remove an option', assert => {
     expected = 3;
     q.deepEqual(actual.length, expected,
       'should be 3');
+    q.end();
+  });
+
+  assert.test('... and the value is that of the first option', q => {
+    actual = customselect.panel.getElementsByClassName(customselect.pluginOptions.optionClass);
+    expected = '';
+    q.equal(customselect.value, expected,
+      'should be ""');
     q.end();
   });
 });
