@@ -305,7 +305,7 @@ function builder(el, builderParams) {
       if (nodeList[i] instanceof HTMLElement && nodeList[i].tagName.toUpperCase() === 'OPTGROUP') {
         const cstOptgroup = document.createElement('div');
         cstOptgroup.classList.add(builderParams.optgroupClass);
-        cstOptgroup.dataset.label = nodeList[i].label;
+        cstOptgroup.setAttribute('data-label', nodeList[i].label);
 
         // IMPORTANT: Stores in a property of the created custom option group
         // a hook to the the corrisponding select's option group
@@ -326,7 +326,7 @@ function builder(el, builderParams) {
         const cstOption = document.createElement('div');
         cstOption.classList.add(builderParams.optionClass);
         cstOption.textContent = nodeList[i].text;
-        cstOption.dataset.value = nodeList[i].value;
+        cstOption.setAttribute('data-value', nodeList[i].value);
 
         // IMPORTANT: Stores in a property of the created custom option
         // a hook to the the corrisponding select's option
