@@ -29,7 +29,6 @@ var defaultParams = {
   isSelectedClass: 'is-selected',
   hasFocusClass: 'has-focus',
   isDisabledClass: 'is-disabled',
-  isActiveClass: 'is-active',
   isOpenClass: 'is-open'
 };
 
@@ -120,14 +119,13 @@ function builder(el, builderParams) {
     if (bool || typeof bool === 'undefined') {
       // If present closes an opened instance of the plugin
       // Only one at time can be open
-      var openedCustomSelect = document.querySelector('.' + containerClass + '\n         .' + builderParams.isOpenClass);
+      var openedCustomSelect = document.querySelector('.' + containerClass + '.' + builderParams.isOpenClass);
       if (openedCustomSelect) {
-        openedCustomSelect.parentNode.customSelect.open = false;
+        openedCustomSelect.customSelect.open = false;
       }
 
       // Opens only the clicked one
-      opener.classList.add(builderParams.isActiveClass);
-      panel.classList.add(builderParams.isOpenClass);
+      container.classList.add(builderParams.isOpenClass);
 
       // Updates the scrollTop position of the panel in relation with the focused option
       if (selectedElement) {
@@ -143,8 +141,7 @@ function builder(el, builderParams) {
       // Close
     } else {
       // Removes the css classes
-      opener.classList.remove(builderParams.isActiveClass);
-      panel.classList.remove(builderParams.isOpenClass);
+      container.classList.remove(builderParams.isOpenClass);
 
       // Sets the global state
       isOpen = false;

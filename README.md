@@ -101,7 +101,6 @@ The default config is:
   isSelectedClass: 'is-selected',
   hasFocusClass: 'has-focus',
   isDisabledClass: 'is-disabled',
-  isActiveClass: 'is-active',
   isOpenClass: 'is-open'
 }
 ```
@@ -115,11 +114,11 @@ All css classes can be configured using *pluginOptions*, but container secondary
 
 Self explained structure classes, and relative may-have status classes:
 
-`containerClass: 'custom-select-container'` may have `isDisabledClass`
+`containerClass: 'custom-select-container'` may have `isDisabledClass`, `isOpenClass`
 
-`openerClass: 'custom-select-opener'` may have `isActiveClass`
+`openerClass: 'custom-select-opener'`
 
-`panelClass: 'custom-select-panel'` may have `isOpenClass`
+`panelClass: 'custom-select-panel'`
 
 `optionClass: 'custom-select-option'` may have `isSelectedClass`, `hasFocusClass`
 
@@ -132,8 +131,6 @@ Self explained structure classes, and relative may-have status classes:
 `hasFocusClass: 'has-focus'` - when the custom option has current focus (mouseover, arrow navigation and keyboard autocomplete changes the focus).
 
 `isDisabledClass: 'is-disabled'` - when the select is disabled.
-
-`isActiveClass: 'is-active'` - when the opener is active (the panel is open).
 
 `isOpenClass: 'is-open'` - when the panel is open.
 

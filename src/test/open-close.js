@@ -56,16 +56,13 @@ test('Opens the second select and closes the first...', assert => {
 
   document.querySelectorAll('.customSelect')[1].customSelect.open = true;
 
-  const actual = select1.customSelect.open;
-  const expected = false;
-
-  assert.deepEqual(actual, expected,
+  assert.false(select1.customSelect.open,
     'should return false');
   assert.end();
 });
 
 test('... and checks if the second is currently open', assert => {
-  const actual = document.getElementsByClassName(options.panelClass)[1]
+  const actual = document.getElementsByClassName(options.containerClass)[1]
     .classList.contains('is-open');
   const expected = true;
 
@@ -83,7 +80,7 @@ test('... and dispatches the custom close event', assert => {
 test('With the public provided method closes the second', assert => {
   document.querySelectorAll('.customSelect')[1].customSelect.open = false;
 
-  const actual = select2.customSelect.panel.classList.contains('is-open');
+  const actual = select2.customSelect.container.classList.contains('is-open');
   const expected = false;
 
   assert.deepEqual(actual, expected,

@@ -17,7 +17,6 @@ test('Custom options extend check', assert => {
     isSelectedClass: 'is-selected',
     hasFocusClass: 'has-focus',
     isDisabledClass: 'is-disabled',
-    isActiveClass: 'is-active',
     isOpenClass: 'opened-panel',
     newOption: 123,
   };

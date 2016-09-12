@@ -25,7 +25,7 @@ test('On click opens the panel', assert => {
 
   document.getElementsByClassName(options.openerClass)[0].children[0].click();
 
-  const actual = document.getElementsByClassName(options.panelClass)[0]
+  const actual = document.getElementsByClassName(options.containerClass)[0]
     .classList.contains('is-open');
 
   assert.true(actual,
@@ -46,7 +46,7 @@ test('On click on second select closes the first...', assert => {
 
   document.getElementsByClassName(options.openerClass)[1].click();
 
-  const actual = document.getElementsByClassName(options.panelClass)[0]
+  const actual = document.getElementsByClassName(options.containerClass)[0]
     .classList.contains('is-open');
 
   assert.false(actual,
@@ -54,17 +54,8 @@ test('On click on second select closes the first...', assert => {
   assert.end();
 });
 
-test('... activates the second opener', assert => {
-  const actual = document.getElementsByClassName(options.openerClass)[1]
-    .classList.contains('is-active');
-
-  assert.true(actual,
-    'should return true');
-  assert.end();
-});
-
 test('... opens the second panel.', assert => {
-  const actual = document.getElementsByClassName(options.panelClass)[1]
+  const actual = document.getElementsByClassName(options.containerClass)[1]
     .classList.contains('is-open');
 
   assert.true(actual,
@@ -236,8 +227,7 @@ test('On keydown on the second select...', assert => {
     Object.defineProperty(e, 'keyCode', { value: 32, writable: true });
     currentContainer.dispatchEvent(e);
 
-    actual = currentContainer.getElementsByClassName(options.panelClass)[0]
-      .classList.contains('is-open');
+    actual = currentContainer.classList.contains('is-open');
 
     q.true(actual,
       'should return true');
@@ -292,7 +282,7 @@ test('On keydown on the second select...', assert => {
     e.keyCode = 13;
     currentContainer.dispatchEvent(e);
 
-    q.false(currentContainer.customSelect.panel.classList.contains('is-open'),
+    q.false(currentContainer.customSelect.container.classList.contains('is-open'),
       'should return false');
     q.end();
   });

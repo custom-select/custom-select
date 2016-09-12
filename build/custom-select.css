@@ -31,7 +31,7 @@
   z-index: 1;
   width: 100%;
 }
-.custom-select-panel.is-open {
+.custom-select-container.is-open .custom-select-panel {
   max-height: 10.7em;
   overflow-y: auto
 }
