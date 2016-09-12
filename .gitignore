@@ -1,4 +1,5 @@
 node_modules/
+build/
 
 ###### Mac OS generated files
 .DS_Store
