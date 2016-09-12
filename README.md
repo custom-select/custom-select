@@ -335,14 +335,20 @@ If you really can't live without jQuery, an adaptor was made for you 😩: [down
 ```js
 $('#mySelect').customSelect();
 ```
-### jQuery methods use
+
+### jQuery property set
 ```js
 $('#mySelect').customSelect('open', true);
 ```
 
-### jQuery property read
+### jQuery property get
 ```js
-$('#mySelect').customSelect('panel');
+$('#mySelect').customSelect('open');
+```
+
+### jQuery methods
+```js
+$('#mySelect').customSelect('remove', $('#mySelect')[0].options[1]);
 ```
 
 ## That's all folks!
