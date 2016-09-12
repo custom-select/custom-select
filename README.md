@@ -347,3 +347,12 @@ $('#mySelect').customSelect('panel');
 
 ## That's all folks!
 **And now have fun ✌**
+
+## Browser support
+Oh wait, I was almost forgetting:
+* Firefox 10 (maybe also older, but come on...)
+* Chrome
+* Safari 7.0
+* Internet Explorer 10
+* Android 4.0
+* Mobile Safari 6.0
