@@ -5,7 +5,7 @@ No dependencies needed.
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
 
 ## Install
-Download the minified build file [here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/custom-select.min.js).
+Download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
 
 Or install with npm:
 ```
@@ -329,7 +329,7 @@ cstSel.select.addEventListener('change',
 ```
 
 ## jQuery adaptor
-If you really can't live without jQuery, an adaptor was made for you 😩: [download jQuery version here](https://raw.githubusercontent.com/custom-select/custom-select/master/build/jquery.custom-select.min.js).
+If you really can't live without jQuery, an adaptor was made for you 😩: [download jQuery version here](https://github.com/custom-select/custom-select/releases/latest).
 
 ### jQuery init
 ```js
