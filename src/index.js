@@ -25,8 +25,9 @@ const defaultParams = {
 };
 
 function builder(el, builderParams) {
-  var isOpen = false;
   const containerClass = 'customSelect';
+  var isOpen = false;
+  var uId = '';
   var select = el;
   var container;
   var opener;
@@ -71,9 +72,13 @@ function builder(el, builderParams) {
   function setSelectedElement(cstOption) {
     if (selectedElement) {
       selectedElement.classList.remove(builderParams.isSelectedClass);
+      selectedElement.removeAttribute('id');
+      opener.removeAttribute('aria-activedescendant');
     }
     if (typeof cstOption !== 'undefined') {
       cstOption.classList.add(builderParams.isSelectedClass);
+      cstOption.setAttribute('id', `${containerClass}-${uId}-selectedOption`);
+      opener.setAttribute('aria-activedescendant', `${containerClass}-${uId}-selectedOption`);
       selectedElement = cstOption;
       opener.children[0].textContent = selectedElement.customSelectOriginalOption.text;
     } else {
@@ -335,6 +340,7 @@ function builder(el, builderParams) {
         cstOption.classList.add(builderParams.optionClass);
         cstOption.textContent = nodeList[i].text;
         cstOption.setAttribute('data-value', nodeList[i].value);
+        cstOption.setAttribute('role', 'option');
 
         // IMPORTANT: Stores in a property of the created custom option
         // a hook to the the corrisponding select's option
@@ -471,6 +477,9 @@ function builder(el, builderParams) {
   // Creates the opener
   opener = document.createElement('span');
   opener.className = builderParams.openerClass;
+  opener.setAttribute('role', 'combobox');
+  opener.setAttribute('aria-autocomplete', 'list');
+  opener.setAttribute('aria-expanded', 'false');
   opener.innerHTML = `<span>
    ${(select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '')}
    </span>`;
@@ -479,7 +488,15 @@ function builder(el, builderParams) {
   // and injects the markup of the select inside
   // with some tag and attributes replacement
   panel = document.createElement('div');
+  // Create random id
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 5; i++) {
+    uId += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  panel.id = `${containerClass}-${select.id}-${uId}`;
   panel.className = builderParams.panelClass;
+  panel.setAttribute('role', 'listbox');
+  opener.setAttribute('aria-owns', panel.id);
 
   append(select.children, false);
 
