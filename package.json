@@ -1,7 +1,7 @@
 {
   "name": "custom-select",
   "description": "A lightweight JS script for custom select creation.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "main": "build",
   "repository": {
     "type": "git",
@@ -37,13 +37,13 @@
     "eslint-plugin-jsx-a11y": "^2.2.0",
     "eslint-plugin-react": "^6.2.0",
     "minifyify": "^7.3.3",
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "tape": "^4.5.1",
+    "tape-run": "^2.1.4"
   },
   "dependencies": {
     "browserify": "^13.0.1",
-    "custom-event-polyfill": "^0.3.0",
-    "tape": "^4.5.1",
-    "tape-run": "^2.1.4"
+    "custom-event-polyfill": "^0.3.0"
   },
   "author": {
     "name": "Gionatan Lombardi",
