@@ -5,18 +5,17 @@ No dependencies needed.
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
 
 ## Install
-Download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
 
-Or install with npm:
+
+Install with npm (recommended)
 ```
 $ npm install --save custom-select
 ```
+Oo download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
+(jquery version is alternative, not needed!)
 
 ## Use
-In HTML with the `script` tag:
-```html
-<script src="index.min.js" type="text/javascript"></script>
-```
+
 With ES6 modules via the `import` statement:
 ```js
 import customSelect from 'custom-select';
@@ -26,6 +25,10 @@ In CommonJs environments with the `require` function:
 var customSelect = require("custom-select").default;
 ```
 **Note**: the `require().default` is necessary due to the babelify export system.
+In HTML with the `script` tag:
+```html
+<script src="index.min.js" type="text/javascript"></script>
+```
 
 ## How it works
 Start with a simple HTML `<select>`:
@@ -40,6 +43,7 @@ Start with a simple HTML `<select>`:
 customSelect('select');
 ```
 You can nest the select in their `label` or you can use the `for` attribute on the label.
+Nested will work fine but it's formally wrong due to [label element specification](https://www.w3.org/TR/html5/forms.html#the-label-element).
 
 Here's the HTML result:
 ```html
@@ -61,7 +65,9 @@ Here's the HTML result:
 ```
 
 Also [state classes](#state-classes) will be added and removed while plugin working.
-You can style it by yourself via css, check the examples for inspirations.
+
+You can use default css included in plugin [release](https://github.com/custom-select/custom-select/releases/latest) or style it by yourself.
+You can also use advanced techniques for using native select on Mobile/touch devices. Check the examples for inspirations.
 
 ## Plugin init
 ```js
@@ -108,7 +114,7 @@ The default config is:
 The return is an Array of customSelect [instances](#how-to-get-plugin-instance), that contains all the public exposed [methods and properties](#methods--properties).
 
 ## Style Classes
-All css classes can be configured using *pluginOptions*, but container secondary class, `customSelect`, is only for internal use and should not be removed or used for styling purpose.
+All css classes can be configured using *pluginOptions*, except container secondary class `customSelect` which is only for internal use and should not be removed or used for styling purpose.
 
 ### Structure Classes
 
@@ -138,7 +144,7 @@ Self explained structure classes, and relative may-have status classes:
 
 Init return
 ```js
-const cstSel = customSelect('select');
+const cstSel = customSelect('select')[0]; // return is an array of instances!
 console.log(cstSel.open); // true|false
 ```
 The DOM select
@@ -356,9 +362,9 @@ $('#mySelect').customSelect('remove', $('#mySelect')[0].options[1]);
 
 ## Browser support
 Oh wait, I was almost forgetting:
-* Firefox 10 (maybe also older, but come on...)
 * Chrome
 * Safari 7.0
-* Internet Explorer 10
+* Firefox 10 (maybe also older, but come on...)
 * Android 4.0
 * Mobile Safari 6.0
+* Internet Explorer 10

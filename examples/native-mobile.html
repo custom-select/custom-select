@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Select - Example - base</title>
+    <link rel="stylesheet" href="../build/custom-select.css">
+    <script>
+      /*
+       * In this example we use native select on touch devices only.
+       * You could combine touch detection and media query for a better result or you could detect the the specific OS
+       * for decide when to use customSelect panel and when to use native select.
+       * Modernizer could be a good choice in this way.
+       */
+      if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        document.documentElement.classList.add('is-touch');
+      }
+    </script>
+    <style type="text/css">
+      body {
+        font-family: Arial;
+        font-size: 1.2rem;
+      }
+
+      html.is-touch .custom-select-container select{
+        visibility: visible;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      html.is-touch .custom-select-panel{
+        display: none;
+      }
+
+      .custom-select-container {
+        width: 300px;
+      }
+      .custom-select-opener {
+        white-space: nowrap;
+        height: 2.3em;
+        margin-top: 0.5em;
+        margin-bottom: 1em;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+      }
+      .custom-select-opener:focus {
+        outline: none;
+        border-color: CornflowerBlue;
+      }
+      .custom-select-opener span {
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
+      }
+      .custom-select-panel {
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello, Custom Select!</h1>
+    <label>Simple select
+      <select id="mySelect1">
+        <option value>Select...</option>
+        <option value="foo">Foo</option>
+        <option value="buzz">Buzz</option>
+      </select>
+    </label>
+    <br>
+    <label for="mySelect2">Select with optgroup</label>
+    <select id="mySelect2">
+      <option value>Select...</option>
+      <optgroup label="animals">
+        <option value="feline">lion</option>
+        <option value="feline">tiger</option>
+        <option value="feline">cat</option>
+        <option value="reptile">lizard</option>
+      </optgroup>
+      <optgroup label="vegetables">
+        <option value="fruit">mango</option>
+        <option value="flower">rose</option>
+        <option value="fruit">pineapple</option>
+        <option value="flower">lotus</option>
+        <option value="flower" selected>lily</option>
+      </optgroup>
+    </select>
+    <br>
+    <label for="mySelect3">Disabled Select</label>
+    <select id="mySelect3" disabled>
+      <option value>Select...</option>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+    <script src="../build/custom-select.min.js"></script>
+    <script>
+      var mySelects = customSelect('select');
+      console.log(mySelects);
+    </script>
+  </body>
+</html>
