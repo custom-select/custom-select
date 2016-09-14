@@ -39,7 +39,7 @@ Start with a simple HTML `<select>`:
 ```js
 customSelect('select');
 ```
-**Important**: Don't nest the select inside a label! Use instead the `for` attribute on the label.
+You can nest the select in their `label` or you can use the `for` attribute on the label.
 
 Here's the HTML result:
 ```html

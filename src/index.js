@@ -169,8 +169,15 @@ function builder(el, builderParams) {
       open(false);
       // Triggers the native change event of the select
       select.dispatchEvent(new CustomEvent('change'));
+    // click on label or select (click on label corrispond to select click)
+    } else if (e.target === select) {
+      // if the original select is focusable (for any external reason) let the focus
+      // else trigger the focus on opener
+      if (opener !== document.activeElement && select !== document.activeElement) {
+        opener.focus();
+      }
     // Click outside the container closes the panel
-    } else if (isOpen) {
+    } else if (isOpen && !container.contains(e.target)) {
       open(false);
     }
   }
@@ -494,6 +501,7 @@ function builder(el, builderParams) {
     container.classList.add(builderParams.isDisabledClass);
   } else {
     opener.setAttribute('tabindex', '0');
+    select.setAttribute('tabindex', '-1');
     addEvents();
   }
 
