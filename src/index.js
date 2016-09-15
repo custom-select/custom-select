@@ -34,6 +34,7 @@ function builder(el, builderParams) {
   var focusedElement;
   var selectedElement;
   var panel;
+  var currLabel;
 
   var resetSearchTimeout;
   var searchKey = '';
@@ -130,6 +131,10 @@ function builder(el, builderParams) {
       // Opens only the clicked one
       container.classList.add(builderParams.isOpenClass);
 
+      // aria-expanded update
+      container.classList.add(builderParams.isOpenClass);
+      opener.setAttribute('aria-expanded', 'true');
+
       // Updates the scrollTop position of the panel in relation with the focused option
       if (selectedElement) {
         panel.scrollTop = selectedElement.offsetTop;
@@ -145,6 +150,9 @@ function builder(el, builderParams) {
     } else {
       // Removes the css classes
       container.classList.remove(builderParams.isOpenClass);
+
+      // aria-expanded update
+      opener.setAttribute('aria-expanded', 'false');
 
       // Sets the global state
       isOpen = false;
@@ -493,7 +501,7 @@ function builder(el, builderParams) {
   for (let i = 0; i < 5; i++) {
     uId += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  panel.id = `${containerClass}-${select.id}-${uId}`;
+  panel.id = `${containerClass}-${uId}-panel`;
   panel.className = builderParams.panelClass;
   panel.setAttribute('role', 'listbox');
   opener.setAttribute('aria-owns', panel.id);
@@ -505,6 +513,18 @@ function builder(el, builderParams) {
   select.parentNode.replaceChild(container, select);
   container.appendChild(select);
   container.appendChild(panel);
+
+  // ARIA labelledby - label
+  if (document.querySelector(`label[for="${select.id}"]`)) {
+    currLabel = document.querySelector(`label[for="${select.id}"]`);
+  } else if (container.parentNode.tagName.toUpperCase() === 'LABEL') {
+    currLabel = container.parentNode;
+  }
+  if (typeof currLabel !== 'undefined') {
+    currLabel.setAttribute('id', `${containerClass}-${uId}-label`);
+    opener.setAttribute('aria-labelledby', `${containerClass}-${uId}-label`);
+  }
+
 
   // Event Init
   if (select.disabled) {
