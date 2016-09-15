@@ -11,7 +11,7 @@ Install with npm (recommended)
 ```
 $ npm install --save custom-select
 ```
-Oo download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
+Or download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
 (jquery version is alternative, not needed!)
 
 ## Use
@@ -24,7 +24,8 @@ In CommonJs environments with the `require` function:
 ```js
 var customSelect = require("custom-select").default;
 ```
-**Note**: the `require().default` is necessary due to the babelify export system.
+**Note**: the `require().default` is necessary due to the babelify export system.  
+  
 In HTML with the `script` tag:
 ```html
 <script src="index.min.js" type="text/javascript"></script>
@@ -43,7 +44,7 @@ Start with a simple HTML `<select>`:
 customSelect('select');
 ```
 You can nest the select in their `label` or you can use the `for` attribute on the label.
-Nested will work fine but it's formally wrong due to [label element specification](https://www.w3.org/TR/html5/forms.html#the-label-element).
+Nested will work fine but it's formally wrong due to [label element specification](https://www.w3.org/TR/html5/forms.html#the-label-element): only a `select` element can be nested in a `label` tag.
 
 Here's the HTML result:
 ```html
