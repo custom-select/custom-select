@@ -487,6 +487,7 @@ function builder(el, builderParams) {
   opener.className = builderParams.openerClass;
   opener.setAttribute('role', 'combobox');
   opener.setAttribute('aria-autocomplete', 'list');
+  opener.setAttribute('aria-haspopup', 'true');
   opener.setAttribute('aria-expanded', 'false');
   opener.innerHTML = `<span>
    ${(select.selectedIndex !== -1 ? select.options[select.selectedIndex].text : '')}
@@ -524,7 +525,6 @@ function builder(el, builderParams) {
     currLabel.setAttribute('id', `${containerClass}-${uId}-label`);
     opener.setAttribute('aria-labelledby', `${containerClass}-${uId}-label`);
   }
-
 
   // Event Init
   if (select.disabled) {
