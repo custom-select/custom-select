@@ -39,7 +39,7 @@
     "minifyify": "^7.3.3",
     "rimraf": "^2.5.2",
     "tape": "^4.5.1",
-    "tape-run": "^2.1.4"
+    "tape-run": "^3.0.0"
   },
   "dependencies": {
     "browserify": "^13.0.1",
