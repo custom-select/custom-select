@@ -34,8 +34,8 @@ test('With the public property set the value', assert => {
   assert.end();
 });
 
-test('... and dispatches the change event on the select', assert => {
-  assert.equal(eventMessage, 'Select has changed it\'s value',
+test('... and, like the native select, doesn\'t dispatch the change event', assert => {
+  assert.notEqual(eventMessage, 'Select has changed it\'s value',
     'Select has changed it\'s value');
   assert.end();
 });

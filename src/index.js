@@ -100,8 +100,7 @@ function builder(el, builderParams) {
     // And changes the select current value
     toSelect.selected = true;
 
-    // Triggers the native change event of the select
-    select.dispatchEvent(new CustomEvent('change'));
+    setSelectedElement(select.options[select.selectedIndex].customSelectCstOption);
   }
 
   function moveFocuesedElement(direction) {
