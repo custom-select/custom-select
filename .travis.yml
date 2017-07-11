@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-- 4.5.0
+- 6.10.2
 addons:
   apt:
     packages:
     - xvfb
+before_install:
+  - npm i -g npm@5.2.0
 install:
 - export DISPLAY=':99.0'
 - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
