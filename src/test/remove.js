@@ -35,7 +35,7 @@ test('Remove an option', assert => {
   });
 
   assert.test('... and the option is not in the select anymore', q => {
-    actual = [].indexOf.call(select.options, removed);
+    actual = Array.prototype.indexOf.call(select.options, removed);
     expected = -1;
     q.deepEqual(actual, expected,
       'should be -1');
@@ -81,7 +81,7 @@ test('Remove an option group', assert => {
   });
 
   assert.test('... and the option group is not in the select anymore', q => {
-    actual = [].indexOf.call(select.getElementsByTagName('optgroup'),
+    actual = Array.prototype.indexOf.call(select.getElementsByTagName('optgroup'),
       removedGroup.customSelectOriginalOptgroup);
     expected = -1;
     q.deepEqual(actual, expected,
@@ -90,7 +90,7 @@ test('Remove an option group', assert => {
   });
 
   assert.test('... and the custom option group is not in the panel anymore', q => {
-    actual = [].indexOf.call(select.getElementsByTagName(customselect.pluginOptions.optgroupClass),
+    actual = Array.prototype.indexOf.call(select.getElementsByTagName(customselect.pluginOptions.optgroupClass),
       removedGroup.customSelectOriginalOptgroup);
     expected = -1;
     q.deepEqual(actual, expected,
