@@ -20,7 +20,7 @@ const customselect = customSelect('select')[0];
 let removed;
 
 test('Empty select (remove any option)', assert => {
-  const expectedRemoved = [].slice.call(customselect.select.children);
+  const expectedRemoved = Array.prototype.slice.call(customselect.select.children);
   removed = customselect.empty();
 
   assert.test('... and the returned all select child', q => {
