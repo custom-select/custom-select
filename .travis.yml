@@ -28,6 +28,7 @@ deploy:
   email: "gionatan.lombardi@gmail.com"
   api_key:
     secure: ReO5KgiSEULvmaweN3h0cTbkJUXLE13zgzNJOHIB6UUP53DUG+FP8tXTP0y6n86ExtpeiqDCdtnQBGVPVfrrvJv5rzP3d/Y3DaIPRFBB2vc3cZn6RLElfUueBw+VKQ8WLU/DJEkwHkIkiHFp/W88zF/WwL37B+kxXAv1J6+rw0Hwdg5h9nDMlLc2CAbQLCTRTlvq4cpo8rILTf/2wqmHa95UyhICyhmN8qc25Eqm5fpG5Q5xHIqDddYTIHiuuCTwmGLvqjKf84HHhbjhBVe8nanykGS2fmoIWQlI8I7cFFKvBGUL9bO1Q1j0uC1VuF1uRFdBBr3qtk6VE2Zwa/mPtpJfLxLAdcUUduL48L1fszZKW0pnIXJERkv1O2aYNo20X3qVDbu8PVynfAKKKIDA5QOJLeZekeZDpA+xjyhsAIqET8Z0SSzhzKQVKzbEWO8jhq6XxISyO0qFV3pDZqbUfE4yaPCGKbIL/X+xfy+RDS4izPmbl8xsLVppiKpIGDx2Eb0y56ULHeUkAcYeG3xDj9xYbqbBiouWvfTKLZj+L4nsjWmOOG1Z4gV6fyoWQGxEkUtE14xWVBhkjN8db85BqKNEM3YcK/i5CRx9rpSPy0jNefnlA6XjfQSlQrDE7ObezpKMfG7DU+0N9BukdzfggD5YpKsTQFA/dNHSE9/5RPk=
+  skip_cleanup: true
   on:
     tags: true
     repo: custom-select/custom-select
