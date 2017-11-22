@@ -14,8 +14,7 @@
     "clean": "rimraf build && mkdir build && rimraf examples/build && mkdir examples/build && cpx src/css/custom-select.css build/",
     "test": "cross-env NODE_PATH=src browserify -t babelify src/test/index.js | tape-run",
     "prebuild": "npm run clean",
-    "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/custom-select.min.js -t [ babelify ] -p [minifyify --no-map] && browserify src/jquery-adaptor.js -o build/jquery.custom-select.min.js -t [ babelify ] -p [minifyify --no-map]",
-    "prepublishOnly": "npm run build"
+    "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/custom-select.min.js -t [ babelify ] -p [minifyify --no-map] && browserify src/jquery-adaptor.js -o build/jquery.custom-select.min.js -t [ babelify ] -p [minifyify --no-map]"
   },
   "keywords": [
     "select",
