@@ -264,7 +264,10 @@ function builder(el, builderParams) {
   }
 
   function changeEvent() {
-    setSelectedElement(select.options[select.selectedIndex].customSelectCstOption);
+    var index = select.selectedIndex,
+      element = index === -1 ? undefined : select.options[index].customSelectCstOption;
+
+    setSelectedElement(element);
   }
 
   // When the option is outside the visible part of the opened panel, updates the scrollTop position
