@@ -26,18 +26,18 @@ const defaultParams = {
 
 function builder(el, builderParams) {
   const containerClass = 'customSelect';
-  var isOpen = false;
-  var uId = '';
-  var select = el;
-  var container;
-  var opener;
-  var focusedElement;
-  var selectedElement;
-  var panel;
-  var currLabel;
+  let isOpen = false;
+  let uId = '';
+  const select = el;
+  let container;
+  let opener;
+  let focusedElement;
+  let selectedElement;
+  let panel;
+  let currLabel;
 
-  var resetSearchTimeout;
-  var searchKey = '';
+  let resetSearchTimeout;
+  let searchKey = '';
 
   //
   // Inner Functions
@@ -58,8 +58,7 @@ function builder(el, builderParams) {
           || cstOption.offsetTop >
             (cstOption.offsetParent.scrollTop + cstOption.offsetParent.clientHeight)
             - cstOption.clientHeight) {
-          cstOption.dispatchEvent(new CustomEvent('custom-select:focus-outside-panel',
-          { bubbles: true }));
+          cstOption.dispatchEvent(new CustomEvent('custom-select:focus-outside-panel', { bubbles: true }));
         }
       }
     } else {
@@ -91,10 +90,10 @@ function builder(el, builderParams) {
 
   function setValue(value) {
     // Gets the option with the provided value
-    var toSelect = select.querySelector(`option[value='${value}']`);
+    let toSelect = select.querySelector(`option[value='${value}']`);
     // If no option has the provided value get the first
     if (!toSelect) {
-      toSelect = select.options[0];
+      [toSelect] = select.options;
     }
     // The option with the provided value becomes the selected one
     // And changes the select current value
@@ -264,8 +263,8 @@ function builder(el, builderParams) {
   }
 
   function changeEvent() {
-    var index = select.selectedIndex,
-      element = index === -1 ? undefined : select.options[index].customSelectCstOption;
+    const index = select.selectedIndex;
+    const element = index === -1 ? undefined : select.options[index].customSelectCstOption;
 
     setSelectedElement(element);
   }
@@ -277,8 +276,8 @@ function builder(el, builderParams) {
   // with useCapture set to true
   // and stopPropagation
   function scrollToFocused(e) {
-    var currPanel = e.currentTarget;
-    var currOption = e.target;
+    const currPanel = e.currentTarget;
+    const currOption = e.target;
     // Up
     if (currOption.offsetTop < currPanel.scrollTop) {
       currPanel.scrollTop = currOption.offsetTop;
@@ -380,7 +379,7 @@ function builder(el, builderParams) {
   }
 
   function append(nodePar, appendIntoOriginal, targetPar) {
-    var target;
+    let target;
     if (typeof targetPar === 'undefined'
       || (targetPar === select)) {
       target = panel;
@@ -418,7 +417,7 @@ function builder(el, builderParams) {
   }
 
   function insertBefore(node, targetPar) {
-    var target;
+    let target;
     if (targetPar instanceof HTMLElement
       && targetPar.tagName.toUpperCase() === 'OPTION'
       && select.contains(targetPar)) {
@@ -441,8 +440,7 @@ function builder(el, builderParams) {
   }
 
   function remove(node) {
-    var cstNode;
-    var r;
+    let cstNode;
     if (node instanceof HTMLElement
       && node.tagName.toUpperCase() === 'OPTION'
       && select.contains(node)) {
@@ -455,9 +453,9 @@ function builder(el, builderParams) {
       throw new TypeError('Invalid Argument');
     }
     cstNode.parentNode.removeChild(cstNode);
-    r = node.parentNode.removeChild(node);
+    const removedNode = node.parentNode.removeChild(node);
     changeEvent();
-    return r;
+    return removedNode;
   }
 
   function empty() {
@@ -578,7 +576,7 @@ function builder(el, builderParams) {
 
 export default function customSelect(element, customParams) {
   // Overrides the default options with the ones provided by the user
-  var nodeList = [];
+  const nodeList = [];
   const selects = [];
 
   return (function init() {

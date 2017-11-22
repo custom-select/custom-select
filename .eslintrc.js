@@ -9,7 +9,7 @@ module.exports = {
         "import"
     ],
     "rules": {
-      "no-var": 0,
-      "vars-on-top": 1
+      "vars-on-top": 1,
+      "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     }
 };
