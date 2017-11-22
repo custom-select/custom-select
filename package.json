@@ -1,7 +1,7 @@
 {
   "name": "custom-select",
   "description": "A lightweight JS script for custom select creation.",
-  "version": "1.1.11",
+  "version": "1.1.9",
   "main": "build",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "test": "cross-env NODE_PATH=src browserify -t babelify src/test/index.js | tape-run",
     "prebuild": "npm run clean",
     "build": "babel src/index.js -s -o build/index.js && browserify src/global.js -o build/custom-select.min.js -t [ babelify ] -p [minifyify --no-map] && browserify src/jquery-adaptor.js -o build/jquery.custom-select.min.js -t [ babelify ] -p [minifyify --no-map]",
-    "prepublishOnly": "npm install && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "select",
