@@ -1,7 +1,7 @@
 {
-  "name": "base",
+  "name": "Custom Select - Example - Base",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "codesandbox-entry.js",
   "private": true,
   "dependencies": {
     "custom-select": "latest"
