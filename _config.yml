@@ -2,7 +2,7 @@ title: Custom-select
 description: A lightweight JS script for custom select creation.
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
 
 gems:
   - jekyll-mentions
