@@ -1,8 +1,16 @@
 # custom-select
-A lightweight JS script for custom select creation.
+A lightweight JavaScript library for custom HTML `<select>` creation and managing.
 No dependencies needed.
 
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
+
+## Demos
+[Base](https://codesandbox.io/embed/qqpnn467qw)  
+[Bootstrap](https://codesandbox.io/embed/l3rxlj8qql)  
+[Control buttons](https://codesandbox.io/embed/w7qq4l6zxk)  
+[GSAP](https://codesandbox.io/embed/q3r133wmq6)  
+[jQuery](https://codesandbox.io/embed/50qpv6z9q4)  
+[Mobile Touch Devices](https://codesandbox.io/embed/lp0k307qxz)  
 
 ## Install
 
