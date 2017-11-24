@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Select - Example - jQuery animate</title>
-    <link rel="stylesheet" href="../build/custom-select.css">
+    <title>Custom Select - Example - jQuery</title>
+    <link rel="stylesheet" href="../../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -65,32 +65,7 @@
       </optgroup>
     </select>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="../build/jquery.custom-select.min.js"></script>
-    <script>
-      var mySelect = $('select').customSelect();
-      $('#mySelect2').customSelect('panel').css({'max-height': 'none', 'height': 0})
-      // You can't use jQuery on() 'cause it doesn't have the useCapture feature.
-      // @link http://stackoverflow.com/questions/17249125/event-capturing-jquery
-      // The plugin already has the same listener registered on the panel that'll fires first.
-      // To avoid this you have to change the listening phase to capturing instead of bubbling
-      // #link https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-flow-capture-h3
-      $('#mySelect2').customSelect('panel').get(0).addEventListener('custom-select:focus-outside-panel', function(e) {
-        e.stopPropagation();
-        console.log('cippo!');
-        $('#mySelect2').customSelect('panel').animate({
-          scrollTop: e.target.offsetTop,
-        }, 500);
-      }, true);
-      $('#mySelect2').customSelect('container').on('custom-select:open', function(e) {
-        $('#mySelect2').customSelect('panel').animate({
-          height: '200px',
-        }, 1000);
-      });
-      $('#mySelect2').customSelect('container').on('custom-select:close', function(e) {
-        $('#mySelect2').customSelect('panel').animate({
-          height: '0',
-        }, 1000);
-      })
-    </script>
+    <script src="../../build/jquery.custom-select.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
