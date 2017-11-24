@@ -1,21 +1,29 @@
 # custom-select
-A lightweight JS script for custom select creation.
+A lightweight JavaScript library for custom HTML `<select>` creation and managing.
 No dependencies needed.
 
+[![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
+
+## Demos
+[Base](https://codesandbox.io/embed/qqpnn467qw)  
+[Bootstrap](https://codesandbox.io/embed/l3rxlj8qql)  
+[Control buttons](https://codesandbox.io/embed/w7qq4l6zxk)  
+[GSAP](https://codesandbox.io/embed/q3r133wmq6)  
+[jQuery](https://codesandbox.io/embed/50qpv6z9q4)  
+[Mobile Touch Devices](https://codesandbox.io/embed/lp0k307qxz)  
 
 ## Install
-Download the minified build file [here](https://raw.githubusercontent.com/gionatan-lombardi/custom-select/master/build/index.min.js).
 
-Or install with npm:
+
+Install with npm (recommended)
 ```
 $ npm install --save custom-select
 ```
+Or download the minified build file [here](https://github.com/custom-select/custom-select/releases/latest).
+(jquery version is alternative, not needed!)
 
 ## Use
-In HTML with the `script` tag:
-```html
-<script src="index.min.js" type="text/javascript"></script>
-```
+
 With ES6 modules via the `import` statement:
 ```js
 import customSelect from 'custom-select';
@@ -24,7 +32,12 @@ In CommonJs environments with the `require` function:
 ```js
 var customSelect = require("custom-select").default;
 ```
-**Note**: the `require().default` is necessary due to the babelify export system.
+**Note**: the `require().default` is necessary due to the babelify export system.  
+  
+In HTML with the `script` tag:
+```html
+<script src="index.min.js" type="text/javascript"></script>
+```
 
 ## How it works
 Start with a simple HTML `<select>`:
@@ -38,7 +51,8 @@ Start with a simple HTML `<select>`:
 ```js
 customSelect('select');
 ```
-**Important**: Don't nest the select inside a label! Use instead the `for` attribute on the label.
+You can nest the select in their `label` or you can use the `for` attribute on the label.
+Nested will work fine but it's formally wrong due to [label element specification](https://www.w3.org/TR/html5/forms.html#the-label-element): only a `select` element can be nested in a `label` tag.
 
 Here's the HTML result:
 ```html
@@ -60,7 +74,9 @@ Here's the HTML result:
 ```
 
 Also [state classes](#state-classes) will be added and removed while plugin working.
-You can style it by yourself via css, check the examples for inspirations.
+
+You can use default css included in plugin [release](https://github.com/custom-select/custom-select/releases/latest) or style it by yourself.
+You can also use advanced techniques for using native select on Mobile/touch devices. Check the examples for inspirations.
 
 ## Plugin init
 ```js
@@ -100,7 +116,6 @@ The default config is:
   isSelectedClass: 'is-selected',
   hasFocusClass: 'has-focus',
   isDisabledClass: 'is-disabled',
-  isActiveClass: 'is-active',
   isOpenClass: 'is-open'
 }
 ```
@@ -108,17 +123,17 @@ The default config is:
 The return is an Array of customSelect [instances](#how-to-get-plugin-instance), that contains all the public exposed [methods and properties](#methods--properties).
 
 ## Style Classes
-All css classes can be configured using *pluginOptions*, but container secondary class, `customSelect`, is only for internal use and should not be removed or used for styling purpose.
+All css classes can be configured using *pluginOptions*, except container secondary class `customSelect` which is only for internal use and should not be removed or used for styling purpose.
 
 ### Structure Classes
 
 Self explained structure classes, and relative may-have status classes:
 
-`containerClass: 'custom-select-container'` may have `isDisabledClass`
+`containerClass: 'custom-select-container'` may have `isDisabledClass`, `isOpenClass`
 
-`openerClass: 'custom-select-opener'` may have `isActiveClass`
+`openerClass: 'custom-select-opener'`
 
-`panelClass: 'custom-select-panel'` may have `isOpenClass`
+`panelClass: 'custom-select-panel'`
 
 `optionClass: 'custom-select-option'` may have `isSelectedClass`, `hasFocusClass`
 
@@ -132,15 +147,13 @@ Self explained structure classes, and relative may-have status classes:
 
 `isDisabledClass: 'is-disabled'` - when the select is disabled.
 
-`isActiveClass: 'is-active'` - when the opener is active (the panel is open).
-
 `isOpenClass: 'is-open'` - when the panel is open.
 
 ## How to get Plugin instance
 
 Init return
 ```js
-const cstSel = customSelect('select');
+const cstSel = customSelect('select')[0]; // return is an array of instances!
 console.log(cstSel.open); // true|false
 ```
 The DOM select
@@ -158,13 +171,13 @@ console.log(cstSel.open); // true|false
 
 ## Methods & Properties
 
-### pluginOptions
+### pluginOptions `property [readonly]`
 Get the plugin options.
 ```js
-cstSel.pluginOptions();
+cstSel.pluginOptions;
 ```
 
-### open
+### open `property`
 Get/set property.
 ```js
 cstSel.open = true; // open the custom select
@@ -173,7 +186,7 @@ cstSel.open = false; // close the custom select
 console.log(cstSel.open); // false
 ```
 
-### disabled
+### disabled `property`
 Get/set property.
 ```js
 cstSel.disabled = true; // disable the custom select
@@ -182,7 +195,7 @@ cstSel.disabled = false; // enable the custom select
 console.log(cstSel.disabled); // false
 ```
 
-### value
+### value `property`
 Get/set property.  
 Change both the native select and the custom select. Use it just like nativeSelect.value
 ```js
@@ -190,7 +203,7 @@ cstSel.value = 'foo'; // the first option with that value will be selected. If t
 console.log(cstSel.value); // return foo if there was an option with 'foo' value
 ```
 
-### append(elements[, target])
+### append(elements[, target]) `method`
 Append an option or an optgroup to the select.
 ```js
 const option = document.createElement('option');
@@ -216,7 +229,7 @@ const toBeAppend = cstSel.empty();
 
 The *target* parameter must be the `select` **(default)** or an optgroup that is already inside the select.
 
-### insertBefore(elements, target)
+### insertBefore(elements, target) `method`
 insert an option or an optgroup before the specified target.
 ```js
 const option = document.createElement('option');
@@ -243,69 +256,70 @@ const toBeAppend = cstSel.empty();
 
 The *target* parameter must be an `option` or an `optgroup` that is already inside the select.
 
-### remove(node)
+### remove(node) `method`
 remove an option or an optgroup
 ```js
 cstSel.remove(cstSel.select.options[1]);
 ```
 
-### empty()
+### empty() `method`
 empty the select
 ```js
 cstSel.empty();
 ```
 
-### destroy()
+### destroy() `method`
 destroy the plugin, removing custom markup, classes, and listeners.
 ```js
 cstSel.destroy();
 ```
 
-### opener
+### opener `property [readonly]`
 DOM Element
 
-### select
+### select `property [readonly]`
 DOM Element
 
-### panel
+### panel `property [readonly]`
 DOM Element
 
-### container
+### container `property [readonly]`
 DOM Element
 
 
 ## Events
 
-### custom-select.open
+### custom-select:open
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.open',
+cstSel.container.addEventListener('custom-select:open',
   (e) => { console.log(`${e.target} is open 😊`)});
 ```
 
-### custom-select.close
+### custom-select:close
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.close',
+cstSel.container.addEventListener('custom-select:close',
   (e) => { console.log(`${e.target} is closed 😔`)});
 ```
 
-### custom-select.disabled
+### custom-select:disabled
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.disabled',
+cstSel.container.addEventListener('custom-select:disabled',
   (e) => { console.log(`${e.target} is disabled 👋`)});
 ```
 
-### custom-select.enabled
+### custom-select:enabled
 Only on `container`.
 ```js
-cstSel.container.addEventListener('custom-select.enabled',
+cstSel.container.addEventListener('custom-select:enabled',
   (e) => { console.log(`${e.target} is enabled 👏`)});
 ```
 
-### custom-select.focus-outside-panel
-Recommended on `panel`.  
+### custom-select:focus-outside-panel
+Fired on custom option, recommended listener on `panel`.  
+
 This `CustomEvent` fires when the focused option moves outside the visible part of the `panel`.  
 It bubbles, so the listener can be placed on every ancestor of the custom options.  
 This event is useful for custom animations on select's autocomplete-search, when the focus moves to the found option.
@@ -313,7 +327,7 @@ By default there's no animation but a simply `scrollTop` change of the `panel`.
 You can overwrite this behaviour by simply adding an `EventListener`, with `useCapture` argument set to `true` and an `e.stopPropagation()` statement inside you listener's callback-function.
 ```js
 // Example with jQuery animate
-cstSel.panel.addEventListener('custom-select.focus-outside-panel',
+cstSel.panel.addEventListener('custom-select:focus-outside-panel',
   (e) => {
     e.stopPropagation();
     $(cstSel.panel).animate({
@@ -329,5 +343,37 @@ cstSel.select.addEventListener('change',
   (e) => { console.log(`${e.target} has changed it's value 👌`)});
 ```
 
-## That's all!
+## jQuery adaptor
+If you really can't live without jQuery, an adaptor was made for you 😩: [download jQuery version here](https://github.com/custom-select/custom-select/releases/latest).
+
+### jQuery init
+```js
+$('#mySelect').customSelect();
+```
+
+### jQuery property set
+```js
+$('#mySelect').customSelect('open', true);
+```
+
+### jQuery property get
+```js
+$('#mySelect').customSelect('open');
+```
+
+### jQuery methods
+```js
+$('#mySelect').customSelect('remove', $('#mySelect')[0].options[1]);
+```
+
+## That's all folks!
 **And now have fun ✌**
+
+## Browser support
+Oh wait, I was almost forgetting:
+* Chrome
+* Safari 7.0
+* Firefox 10 (maybe also older, but come on...)
+* Android 4.0
+* Mobile Safari 6.0
+* Internet Explorer 10
