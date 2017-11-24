@@ -1,0 +1,9 @@
+{
+  "name": "custom-select-example-native-mobile",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "custom-select": "latest"
+  }
+}
