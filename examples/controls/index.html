@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Select - Example - controls</title>
-    <link rel="stylesheet" href="../build/custom-select.css">
+    <title>Custom Select - Example - Controls</title>
+    <link rel="stylesheet" href="../../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -83,24 +83,7 @@
       </select>
       <button type="button">Empty</button><button type="button">Restore</button><button type="button">Toggle Enable</button>
     </div>
-    <script src="../build/custom-select.min.js"></script>
-    <script>
-      customSelect('select');
-
-      [].forEach.call(document.querySelectorAll('.example-wrapper'), function(wrapper){
-        var buttons = wrapper.querySelectorAll('button');
-        var removed = [];
-        buttons[0].addEventListener('click', function(){
-          removed = removed.concat(wrapper.querySelector('select').customSelect.empty());
-        });
-        buttons[1].addEventListener('click', function(){
-          wrapper.querySelector('select').customSelect.append(removed);
-          removed = [];
-        });
-        buttons[2].addEventListener('click', function(){
-          wrapper.querySelector('select').customSelect.disabled = !wrapper.querySelector('select').customSelect.disabled
-        });
-      });
-    </script>
+	  <script src="../../build/custom-select.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
