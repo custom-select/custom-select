@@ -4,19 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Select - Example - native mobile</title>
-    <link rel="stylesheet" href="../build/custom-select.css">
-    <script>
-      /*
-       * In this example we use native select on touch devices only.
-       * You could combine touch detection and media query for a better result or you could detect the the specific OS
-       * for decide when to use customSelect panel and when to use native select.
-       * Modernizer could be a good choice in this way.
-       */
-      if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-        document.documentElement.classList.add('is-touch');
-      }
-    </script>
+    <title>Custom Select - Example - Native Mobile</title>
+    <link rel="stylesheet" href="../../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -95,10 +84,7 @@
       <option value="mercedes">Mercedes</option>
       <option value="audi">Audi</option>
     </select>
-    <script src="../build/custom-select.min.js"></script>
-    <script>
-      var mySelects = customSelect('select');
-      console.log(mySelects);
-    </script>
+    <script src="../../build/custom-select.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

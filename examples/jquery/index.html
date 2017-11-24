@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Select - Example - base</title>
-    <link rel="stylesheet" href="../build/custom-select.css">
+    <title>Custom Select - Example - jQuery</title>
+    <link rel="stylesheet" href="../../build/custom-select.css">
     <style type="text/css">
       body {
         font-family: Arial;
@@ -38,7 +38,8 @@
   </head>
   <body>
     <h1>Hello, Custom Select!</h1>
-    <label>Simple select
+    <label>
+      Simple select
       <select id="mySelect1">
         <option value>Select...</option>
         <option value="foo">Foo</option>
@@ -63,19 +64,8 @@
         <option value="flower" selected>lily</option>
       </optgroup>
     </select>
-    <br>
-    <label for="mySelect3">Disabled Select</label>
-    <select id="mySelect3" disabled>
-      <option value>Select...</option>
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
-    </select>
-    <script src="../build/custom-select.min.js"></script>
-    <script>
-      var mySelects = customSelect('select');
-      console.log(mySelects);
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../build/jquery.custom-select.min.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
