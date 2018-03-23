@@ -1,7 +1,7 @@
 {
   "name": "custom-select",
   "description": "A lightweight JavaScript library for custom HTML <select> creation and managing. No dependencies needed.",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "main": "build",
   "repository": {
     "type": "git",
