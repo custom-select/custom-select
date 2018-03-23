@@ -173,7 +173,10 @@ function builder(el, builderParams) {
         open();
       }
     // Custom Option click
-    } else if (e.target.classList.contains(builderParams.optionClass) && panel.contains(e.target)) {
+    } else if (
+      e.target.classList
+      && e.target.classList.contains(builderParams.optionClass)
+      && panel.contains(e.target)) {
       setSelectedElement(e.target);
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.customSelectOriginalOption.selected = true;
@@ -195,7 +198,7 @@ function builder(el, builderParams) {
 
   function mouseoverEvent(e) {
     // On mouse move over and options it bacames the focused one
-    if (e.target.classList.contains(builderParams.optionClass)) {
+    if (e.target.classList && e.target.classList.contains(builderParams.optionClass)) {
       setFocusedElement(e.target);
     }
   }
