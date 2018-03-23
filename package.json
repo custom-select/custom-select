@@ -39,8 +39,8 @@
     "eslint-plugin-react": "^7.5.1",
     "minifyify": "^7.3.5",
     "rimraf": "^2.6.2",
-    "tape": "^4.8.0",
-    "tape-run": "^3.0.0"
+    "tape": "^4.9.0",
+    "tape-run": "^3.0.4"
   },
   "dependencies": {
     "custom-event-polyfill": "^0.3.0"
