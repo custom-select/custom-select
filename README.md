@@ -36,7 +36,11 @@ var customSelect = require("custom-select").default;
   
 In HTML with the `script` tag:
 ```html
-<script src="index.min.js" type="text/javascript"></script>
+<script src="custom-select.min.js" type="text/javascript"></script>
+```
+and optionally:
+```html
+<link rel="stylesheet" href="custom-select.css">
 ```
 
 ## How it works
