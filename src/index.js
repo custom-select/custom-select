@@ -17,6 +17,7 @@ const defaultParams = {
   openerClass: 'custom-select-opener',
   panelClass: 'custom-select-panel',
   optionClass: 'custom-select-option',
+  optionIsDisabledClass: 'is-disabled',
   optgroupClass: 'custom-select-optgroup',
   isSelectedClass: 'is-selected',
   hasFocusClass: 'has-focus',
@@ -105,12 +106,16 @@ function builder(el, builderParams) {
   function moveFocuesedElement(direction) {
     // Get all the .custom-select-options
     // Get the index of the current focused one
+    const focusableOptions = Array.prototype.filter.call(select.options, el => el.disabled !== true);
+
     const currentFocusedIndex =
-      [].indexOf.call(select.options, focusedElement.customSelectOriginalOption);
+      Array.prototype.indexOf.call(focusableOptions, focusedElement.customSelectOriginalOption);
+
+
     // If the next or prev custom option exist
     // Sets it as the new focused one
-    if (select.options[currentFocusedIndex + direction]) {
-      setFocusedElement(select.options[currentFocusedIndex + direction].customSelectCstOption);
+    if (focusableOptions[currentFocusedIndex + direction]) {
+      setFocusedElement(focusableOptions[currentFocusedIndex + direction].customSelectCstOption);
     }
   }
 
@@ -176,7 +181,8 @@ function builder(el, builderParams) {
     } else if (
       e.target.classList
       && e.target.classList.contains(builderParams.optionClass)
-      && panel.contains(e.target)) {
+      && panel.contains(e.target)
+      && e.target.customSelectOriginalOption.disabled !== true) {
       setSelectedElement(e.target);
       // Sets the corrisponding select's option to selected updating the select's value too
       selectedElement.customSelectOriginalOption.selected = true;
@@ -198,7 +204,9 @@ function builder(el, builderParams) {
 
   function mouseoverEvent(e) {
     // On mouse move over and options it bacames the focused one
-    if (e.target.classList && e.target.classList.contains(builderParams.optionClass)) {
+    if (e.target.classList
+      && e.target.classList.contains(builderParams.optionClass)
+      && e.target.customSelectOriginalOption.disabled !== true) {
       setFocusedElement(e.target);
     }
   }
@@ -373,6 +381,11 @@ function builder(el, builderParams) {
         if (nodeList[i].selected) {
           setSelectedElement(cstOption);
         }
+
+        if (nodeList[i].disabled) {
+          cstOption.classList.add(builderParams.optionIsDisabledClass);
+        }
+
         cstList.push(cstOption);
       } else {
         throw new TypeError('Invalid Argument');

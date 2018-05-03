@@ -41,6 +41,9 @@
 .custom-select-option.has-focus {
   background-color: LightBlue;
 }
+.custom-select-option.is-disabled {
+  opacity: 0.5;
+}
 .custom-select-option.is-selected::before {
   content: "✔";
   padding-right: 0.5em;
