@@ -11,6 +11,7 @@ test('Custom options extend check', assert => {
   const expected = {
     panelClass: 'custom-select-panel',
     optionClass: 'custom-select-option',
+    optionIsDisabledClass: 'is-disabled',
     openerClass: 'custom-select-opener',
     containerClass: 'custom-select-container',
     optgroupClass: 'custom-select-optgroup',

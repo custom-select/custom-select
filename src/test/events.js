@@ -17,6 +17,7 @@ test('On click opens the panel', assert => {
     </optgroup>
     <optgroup label="Motorcycles">
       <option value="honda">Honda</option>
+      <option disabled value="yamaha">Yamaha</option>
     </optgroup>`;
   document.body.appendChild(select1);
 
@@ -140,6 +141,43 @@ test('... and updates opener text', assert => {
 test('... and dispatches the change event', assert => {
   assert.equal(eventMessage, 'First select has changed it\'s value',
     'First select has changed it\'s value');
+  assert.end();
+});
+
+
+test('On click on a disabled option', assert => {
+  // Add change events listener for next test
+  select1.addEventListener('change',
+    () => { eventMessage = 'First select has changed it\'s value'; });
+
+  // first select
+  document.getElementsByClassName(options.openerClass)[1].parentNode.customSelect.open = true;
+  document.getElementsByClassName(options.optionClass)[3].click();
+
+  const actual = document.querySelectorAll(`.${options.optionClass}`)[3]
+    .classList.contains('is-selected');
+
+  assert.false(actual,
+    'should not have is-selected class');
+  assert.end();
+});
+
+test('... and focus class', assert => {
+  const actual = document.getElementsByClassName(options.optionClass)[3]
+    .classList.contains('has-focus');
+
+  assert.false(actual,
+    'should not have has-focus class');
+  assert.end();
+});
+
+test('... and sets the original select value', assert => {
+  const actual = document.getElementsByTagName('select')[0].value;
+
+  const expected = 'honda';
+
+  assert.deepEqual(actual, expected,
+    'should return honda');
   assert.end();
 });
 

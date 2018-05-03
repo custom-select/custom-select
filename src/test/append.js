@@ -145,6 +145,31 @@ test('Insert an optgroup at the end', assert => {
   assert.end();
 });
 
+test('Insert a disabled option', assert => {
+  var option;
+
+  option = document.createElement('option');
+  option.value = 'bho';
+  option.text = 'Bho';
+  option.selected = true;
+  option.disabled = true;
+
+  select.customSelect.append(option);
+
+  actual = select.value;
+  expected = 'bho';
+  assert.equal(actual, expected,
+    'should return bho');
+
+  actual = select.options[9].customSelectCstOption.classList.contains(select.customSelect.pluginOptions.optionIsDisabledClass)
+
+  console.log(select.innerHTML);
+
+  assert.true(actual,
+    'should have is-disabled class');
+  assert.end();
+});
+
 test('Use a string as a the node parameter', assert => {
   assert.throws(() => { select.parentNode.customSelect.append('a string'); }, TypeError,
     'should throw TypeError');
