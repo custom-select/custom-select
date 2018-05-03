@@ -9,5 +9,6 @@ import './append';
 import './insert-before';
 import './remove';
 import './remove-last';
+import './disable-option';
 import './empty';
 import './destroy';

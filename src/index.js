@@ -474,6 +474,22 @@ function builder(el, builderParams) {
     return removedNode;
   }
 
+  function disableOption(option, state=true) {
+    if (option instanceof HTMLElement
+      && option.tagName.toUpperCase() === 'OPTION'
+      && select.contains(option)) {
+
+      option.disabled = state;
+      if (option.disabled) {
+        option.customSelectCstOption.classList.add(builderParams.isDisabledClass);
+      } else {
+        option.customSelectCstOption.classList.remove(builderParams.isDisabledClass);
+      }
+    } else {
+      throw new TypeError('Invalid Argument');
+    }
+  }
+
   function empty() {
     const removed = [];
     while (select.children.length) {
@@ -575,6 +591,7 @@ function builder(el, builderParams) {
     append: (node, target) => append(node, true, target),
     insertBefore: (node, target) => insertBefore(node, target),
     remove,
+    disableOption,
     empty,
     destroy,
     opener,
