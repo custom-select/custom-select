@@ -266,6 +266,14 @@ remove an option or an optgroup
 cstSel.remove(cstSel.select.options[1]);
 ```
 
+### disableOption(option[, state]) `method`
+disable an option
+```js
+cstSel.disableOption(cstSel.select.options[1]); // disable
+cstSel.disableOption(cstSel.select.options[1], true); // disable
+cstSel.disableOption(cstSel.select.options[1], false); // enable
+```
+
 ### empty() `method`
 empty the select
 ```js
