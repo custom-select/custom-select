@@ -3,6 +3,8 @@ A lightweight JavaScript library for custom HTML `<select>` creation and managin
 No dependencies needed.
 
 [![Build Status](https://travis-ci.org/custom-select/custom-select.svg?branch=master)](https://travis-ci.org/custom-select/custom-select)
+[![npm](https://img.shields.io/npm/v/custom-select.svg)](https://www.npmjs.com/package/custom-select)
+[![npm](https://img.shields.io/npm/dm/custom-select.svg)](https://www.npmjs.com/package/custom-select)
 
 ## Demos
 [Base](https://codesandbox.io/embed/qqpnn467qw)  
