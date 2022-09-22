@@ -41,7 +41,7 @@
     "minifyify": "^7.3.5",
     "rimraf": "^2.6.2",
     "tape": "^4.9.0",
-    "tape-run": "^3.0.4"
+    "tape-run": "^10.0.0"
   },
   "dependencies": {
     "custom-event-polyfill": "^1.0.7"
