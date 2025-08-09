@@ -477,7 +477,7 @@ function builder(el, builderParams) {
     }
     const optGroup = select.getElementsByTagName('optgroup');
     for (let i = 0, l = optGroup.length; i < l; i++) {
-      delete optGroup.customSelectCstOptgroup;
+      delete optGroup[i].customSelectCstOptgroup;
     }
 
     removeEvents();
