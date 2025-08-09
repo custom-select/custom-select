@@ -30,4 +30,13 @@ test('Destroy the custom select', assert => {
       'should return true');
     q.end();
   });
+
+  assert.test('... and optgroup references are removed', q => {
+    const optgroups = select.querySelectorAll('optgroup');
+    for (let i = 0; i < optgroups.length; i++) {
+      q.equal(typeof optgroups[i].customSelectCstOptgroup, 'undefined',
+        'should remove reference to custom optgroup');
+    }
+    q.end();
+  });
 });
