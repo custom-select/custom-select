@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: xvfb-run --auto-servernum npm test
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run build
+      - name: Publish to npm
+        # Generate an npm token with publish rights and add it as NPM_TOKEN
+        # in your repository settings under Settings > Secrets and variables > Actions
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create GitHub release
+        # Uses the built-in GITHUB_TOKEN to upload release assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/custom-select.min.js
+            build/jquery.custom-select.min.js
+            build/custom-select.css
