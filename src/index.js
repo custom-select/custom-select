@@ -114,10 +114,18 @@ function builder(el, builderParams) {
     }
   }
 
+  function isSelectDisabled() {
+    const matches = select.matches || select.msMatchesSelector
+      || select.webkitMatchesSelector || select.mozMatchesSelector;
+    return matches ? matches.call(select, ':disabled') : select.disabled;
+  }
+
   // Open/Close function (toggle)
   function open(bool) {
     // Open
     if (bool || typeof bool === 'undefined') {
+      if (isSelectDisabled()) return isOpen;
+
       // If present closes an opened instance of the plugin
       // Only one at time can be open
       const openedCustomSelect =
@@ -165,6 +173,11 @@ function builder(el, builderParams) {
   }
 
   function clickEvent(e) {
+    if (isSelectDisabled()) {
+      if (isOpen) open(false);
+      return;
+    }
+
     // Opener click
     if (e.target === opener || opener.contains(e.target)) {
       if (isOpen) {
@@ -204,6 +217,11 @@ function builder(el, builderParams) {
   }
 
   function keydownEvent(e) {
+    if (isSelectDisabled()) {
+      if (isOpen) open(false);
+      return;
+    }
+
     if (!isOpen) {
       // On "Arrow down", "Arrow up" and "Space" keys opens the panel
       if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32) {

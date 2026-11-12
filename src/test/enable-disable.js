@@ -79,3 +79,29 @@ test('... and dispatches the custom event enabled ', assert => {
     'should return false "First select is enabled!"');
   assert.end();
 });
+
+test('A fieldset disabled while open prevents option selection', assert => {
+  document.body.innerHTML = '<fieldset><select><option value="apple">Apple</option><option value="orange">Orange</option></select></fieldset>';
+  const fieldset = document.querySelector('fieldset');
+  const select = fieldset.querySelector('select');
+  const picker = customSelect(select)[0];
+  const option = fieldset.querySelector('.custom-select-option[data-value="orange"]');
+  let changes = 0;
+
+  select.addEventListener('change', () => { changes++; });
+  picker.open = true;
+  fieldset.disabled = true;
+  option.click();
+
+  assert.equal(select.value, 'apple', 'disabled select retains the value');
+  assert.equal(changes, 0, 'disabled select emits no change');
+
+  fieldset.disabled = false;
+  picker.open = true;
+  option.click();
+
+  assert.equal(select.value, 'orange', 'selection works after re-enabling');
+  assert.equal(changes, 1, 're-enabled select emits one change');
+  picker.destroy();
+  assert.end();
+});
